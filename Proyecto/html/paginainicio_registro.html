@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <!-- ==========================
+    INICIO
+    Configuración de la distribución de idioma
+    y el link a el CSS
+    ========================== -->
+    <link rel="stylesheet" href="../css/paginainicio_registro.css">
+    <meta charset="UTF-8">
+    <!-- ==========================
+    FORM
+    Formulario para el registro de la pagina,
+    pide informacion como nombre, gmail, contraseña,
+    comfirmar contraseña y un boton para enviar el formulario
+    ========================== -->
+    <div id="registro">
+    <form id="register">
+    <div id="nombre-usuario">
+        <label for="ingresar-nombre">Ingresar nombe de usuario</label>
+        <input type="text" placeholder="Buscar..." id="espacio-texto" required>
+    </div>
+    <div id="correo-electronico">
+        <label for="ingresar-correo">Ingresar correo electronico</label>
+        <input type="email" placeholder="Buscar..." id="espacio-texto" required>
+    </div>
+    <div id="contraseña">
+        <label for="ingresar-contraseña">Ingresar contraseña</label>
+        <input type="password" placeholder="Buscar..." id="espacio-texto" required>
+    </div>
+    <div id="confirmar-contraseña">
+        <label for="ingresar-confirmacion">Confirmar contraseña</label>
+        <input type="password" placeholder="Buscar..." id="espacio-texto" required>
+    </div>
+    <div id="boton">
+    <button type="submit" class="enviar"><a href="">Ingresar</a></button>
+    </div>
+    <!-- ==========================
+    CUENTA CREADA
+    Un link que te lleva a iniciar sesion por si
+    ya tienes una cuenta creada en la pagina
+    ========================== -->
+    <div id="cuenta-creada">
+        <p>Ya tienes una cuenta?</p>
+        <a href="../html/paginainicio_inicio-sesion.html">Inicia sesión</a>
+    </div>
+    </div>
+    </form>
+</html>
