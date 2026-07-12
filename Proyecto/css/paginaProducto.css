@@ -31,7 +31,8 @@ img{
    para el nav de la pagina
 ========================== */
 
-nav{
+
+nav {
     width: 100%;
     margin: 0 auto;
     display: grid;
@@ -223,6 +224,7 @@ main{
 .venta-producto {
     width: 100%;
     padding: 2rem;
+    padding-top: 2.5rem;
     background-color: #444444;
     display: flex;
     flex-direction: column;
@@ -241,6 +243,7 @@ main{
 .imagen-producto {
     display: block;
     height: auto;
+    padding: 1.5rem;
     margin-left: 2rem;
 }
 
@@ -282,7 +285,6 @@ main{
 .caracteristica {
     padding: 2px 6px;
 }
-
 
 .carrito-form {
   display: flex;
@@ -361,7 +363,8 @@ main{
   border: 1px solid #444;
   border-radius: 6px;
   overflow: hidden;
-  margin: 10px 0;
+  margin-top: 10px;
+  
 }
 
 .especificaciones-toggle summary {
@@ -372,7 +375,6 @@ main{
   display: flex;
   justify-content: space-between;
   align-items: center;
-
   background-color: #373737;
 }
 
@@ -390,6 +392,9 @@ main{
   padding: 1rem;
   font-size: 1.1rem;
   line-height: 1.6;
+  border: 1px solid #373737;
+  border-bottom-left-radius: 1rem;
+  border-bottom-right-radius: 1rem;
 }
 
 .contenido-especificaciones h3 {
@@ -417,6 +422,13 @@ main{
   color: #bbb;
 }
 
+.contenido-destacado {
+    padding: 16px;
+    border: 1px solid #ededed;
+    box-shadow: 0 0 8px rgba(200, 200, 200, 0.5);
+    border-radius: 12px;
+}
+
 .contenido-especificaciones p {
   margin: 0;
   color: #ededed;
@@ -427,15 +439,209 @@ main{
 ========================== */
 
 
+.divisor-negro {
+    height: 1px;
+    width: 100%;
+    margin: auto;
+    background: #151515;
+}
 
+.dudas {
+    width: 100%;
+    padding: 1rem 2rem;
+    background: #444;
+}
+
+.dudas h2 {
+    color: #ededed;
+    font-size: 2.25rem;
+    padding: 1.75rem 0;
+    font-weight: 500;
+}
+
+.dudas form {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 1.5rem;
+}
+
+.dudas input {
+    flex: 1;
+    padding: 0.6rem;
+    margin: 0 1rem;
+    border: 2px solid #292929;
+    border-radius: 12px;
+    background-color: transparent;
+    color: #ededed;
+    font-size: 1.1rem;
+    font-family: inherit;
+    transition: transform 0.8 ease;
+}
+
+.dudas input::placeholder {
+    color: inherit;
+}
+
+.dudas input:focus {
+    outline: none;
+    transform: scale(1.01);
+    border-color: #222;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+}
+
+.dudas button {
+  background: linear-gradient(to left, #340b85, #2573d8);
+  color: #fff;
+  border: none;
+  border-radius: 16px;
+  min-width: 128px;
+
+  font-size: 1.1rem;
+  font-weight: 500;
+
+  cursor: pointer;
+
+  padding: 0 24px;
+  transition: opacity 0.2s;
+}
+
+.dudas button:hover {
+  opacity: 0.7;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+}
+
+.dudas-toggle {
+    color: #ededed;
+    border: 1px solid #444;
+    border-radius: 6px;
+    overflow: hidden;
+    margin: 16px 0;
+    padding-bottom: 1rem;
+}
+
+.dudas-toggle summary {
+    padding: 14px 20px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #373737;
+}
+
+.dudas-toggle summary::after {
+  content: '▼';
+  font-size: 1rem;
+  transition: transform 0.2s ease;
+}
+
+.dudas-toggle[open] summary::after {
+  transform: rotate(180deg);
+}
+
+.dudas-contenido {
+  padding: 1rem;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  border: 1px solid #373737;
+  border-bottom-left-radius: 1rem;
+  border-bottom-right-radius: 1rem;
+}
+
+/* ==========================
+   PRODUCTOS RELACIONADOS
+========================== */
+
+.productos-relacionados {
+    width: 100%;
+    padding: 0rem 2rem 2rem 2rem;
+    background: #444;
+}
+
+.productos-relacionados h2 {
+    color: #ededed;
+    font-size: 2.25rem;
+    padding: 1.75rem 0;
+    font-weight: 500;
+}
+
+.productos-contenedor {
+    width: 100%;
+    height: 70vh;
+    padding: 1rem 0;
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    align-items: center;
+    margin: 0 auto;
+}
+
+.producto-card {
+    background: #373737;
+    border-radius: 16px;
+    padding: 20px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    min-height: 420px; 
+    width: 100%;
+    min-width: 0;
+}
+
+.producto-card img{
+    width: 180px;
+    height: 180px;      
+    object-fit: contain;
+    margin-top: 16px;
+    margin-bottom: 12px;
+       
+}
+
+.card-contenido{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    text-align: center;
+    font-size: 1.1rem;
+}
+
+
+.producto-card ul{
+    color: #fff;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    word-break: break-word;
+}
+
+.producto-card li{
+    word-break: break-word;
+}
+
+.producto-card button{
+    background-color: transparent;
+    border: 2px solid #fff;
+    border-radius: 8px;
+    padding: 10px 18px;
+    font-size: 14px;
+    text-transform: uppercase;
+    cursor: pointer;
+    color: #fff;
+}
+
+.producto-precio {
+    margin-top: 5px;
+    color: #315894;
+}
 
 
 /* ==========================
-   PIE DE LA PAGINA
-   Diseño de el  pie de pagina
-   con redes sociales,
-   direccion, numero y
-   promociones
+   PIE DE LA PAGINA -> Igual que el principal
 ========================== */
 
 footer{
