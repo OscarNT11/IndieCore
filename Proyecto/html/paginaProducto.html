@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+    <!-- ==========================
+    HEAD
+    Configuración de la distribución de idioma,
+    determinar el dispositivo viewport, los links a distintas
+    fuentes de texto y el link a el CSS
+    ========================== -->
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../css/paginaProducto.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Playfair:ital,opsz,wght@0,5..1200,300..900;1,5..1200,300..900&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <!-- ==========================
+        NAV
+        Configuración de el nav de la pagina,
+        usando imagenes, links, y espacios de texto
+        ========================== -->
+        <header>
+            <nav>
+                <div id="tecno-logo">
+                <img src="../img/Tecno Parts logo.png" alt="No se encontro la imagen">
+                </div>
+                <div id="barra-busqueda">
+                    <input type="text" placeholder="Buscar..." id="espacio-texto">
+                    <div id="lupa">
+                    <img src="../img/Lupa.png" alt="No se encontro la imagen">
+                    </div>
+                </div>
+                <div id="inicia-sesion">
+                    <img src="../img/inicio sesion.png" alt="No">
+                    <a href="../html/paginainicio_inicio-sesion.html">Iniciar Sesion</a>
+                </div>
+                <div id="carrito">
+                     <img src="../img/Carrito.png" alt="No">
+                </div>
+                <div id="nav-abajo">
+                    <div id="menu">
+                        <img src="../img/" alt="">
+                        <a href=""><b>Menú</b></a>
+                    </div>
+                    <a href="">Ofertas</a>
+                    <a href="">Nuevo</a>
+                    <a href="">Marcas</a>
+                    <a href="" id="ultimas-unidades">Ultimas Unidades</a>
+                    <a href="">Destacados</a>
+                    <a href="">Reseñas</a>
+                    <a href="">Contactanos</a>
+                </div>
+            </nav>
+        </header>
+
+        <main>
+            <!-- ==========================
+        DETALLES PRINCIPALES
+        ========================== -->
+
+           <section class="venta-producto">
+
+            <div class="producto-principal">
+                <picture class="imagen-producto">
+                    <img src="../img/grafica rtx 5090.png" alt="Imagen de grafica rtx 5090">
+                </picture>
+
+                <article class="tarjeta-producto">
+                    <h2>GeForce RTX 5900 WINDFORCE 32Gar</h2>
+                    <p class="producto-precio"><strong>UYU 6 696</strong></p>
+                    <p>En 12 cuotas de: UYU ### <p>
+
+                    <ul class="producto-caracteristicas">
+                    <h3>Características del Producto</h3>
+                        <li class="caracteristica">Desarrollado con la arquitectura NVIDIA Blackwell</li>
+                        <li class="caracteristica">Desaraollado con GeForce RTXᵀᴹ 590</li>
+                        <li class="caracteristica">Integrado con interfaz de memoria GDD57 de 512 bits ed 32GB</li>
+                        <li class="caracteristica">Sistema de Refrigeración WINDFORCE</li>
+                        <li class="caracteristica">Ventilador HAWK</li>
+                        <li class="caracteristica">Gel conductor térmico de calidad de servidor</li>
+                        <li class="caracteristica">BIOS dual (Rendimiento / Silencioso)</li>
+                        <li class="caracteristica">Soporto VGA Versátil</li>
+                    </ul>
+
+        
+                    <form class="carrito-form">
+
+                        <div class="cantidad-contenedor">
+                            <label for="cantidad">Cantidad :</label>
+                            <input type="number" id="cantidad" name="quantity" value="1" min="1">
+                        </div>
+
+                        <button type="submit" class="btn-carrito">
+                            <span>Añadir al carrito</span>
+                              <img src="../img/Carrito.png" alt="Carrito" class="icono-carrito">                           </button>
+                        </form>
+
+                </article>
+            </div>
+
+            <div class="especificaciones-producto">
+                <details class="especificaciones-toggle">
+                <summary>Ver Especificaciones Técnicas</summary>
+  
+                <div class="contenido-especificaciones">
+                    <h3>Detalles del Producto</h3>
+                        <ul>
+                        <li><strong>Modelo:</strong> Gigabyte GeForce RTX 5090 GAMING OC 32G</li>
+                        <li><strong>Memoria:</strong> 32 GB GDDR7 SDRAM</li>
+                        <li><strong>Tipo de bus:</strong> PCI Express 5.0 (Ancho de 512 bits)</li>
+                        <li><strong>Motor gráfico:</strong> NVIDIA GeForce RTX 5090 (Arquitectura Blackwell)</li>
+                        <li><strong>Velocidad de memoria:</strong> 28 Gbps</li>
+                        <li><strong>Núcleos CUDA:</strong> 21760</li>
+                        <li><strong>Resolución máxima:</strong> 7680 x 4320</li>
+                        <li><strong>Interfaces:</strong> 3 x DisplayPort 2.1a / 1 x HDMI</li>
+                        <li><strong>Monitores soportados:</strong> Máximo 4</li>
+                        <li><strong>Dimensiones:</strong> 34.2 cm (Profundidad) x 15.2 cm (Altura) x 7 cm (Anchura)</li>
+                        <li><strong>Fuente recomendada:</strong> 1000 W</li>
+                        <li><strong>Conector de alimentación:</strong> 16 pines (Adaptador incluido: 4x8 pines a cable 12VHPWR)</li>
+                        <li><strong>Garantía:</strong> 3 años de garantía general</li>
+                        </ul>
+
+                    <h3>Características Destacadas</h3>
+                    <p>Refrigeración GIGABYTE WINDFORCE con diseño de ventilador triple, Vapor chamber, GIGABYTE RGB Halo, Dual Bios, NVIDIA DLSS 4, NVIDIA Reflex 2, Ray Tracing Cores de 4ª gen y Tensor Cores de 5ª gen.</p>
+                </div>
+                </details>
+            </div>
+
+           </section>
+           
+           <!-- ==========================
+           DUDAS CLIENTE
+        ========================== -->
+           <section class="dudas">
+
+           </section>
+
+           <section class="productos-relacionados">
+
+           </section>
+
+        </main>
+
+        <footer>
+            <!-- ==========================
+            REDES
+            Seccion de la pagina donde se muestra 
+            informacion importante sobre la empresa
+            "Techno Parts", siendo direccion, numero
+            de telefono, y garantizando compras verificadas
+            ========================== -->
+            <section id="redes">
+                <div class="red-social">
+                    <img src="../img/Ubicacion.png" alt="No se encontro la imagen">
+                    <div class="redes-con">
+                        <h2>Nuestras Tiendas</h2>
+                        <p>Encuentra la más cercana de tu casa</p>
+                    </div>
+                </div>
+                <div class="red-social">
+                    <img src="../img/LLamada.png" alt="No se encontro la imagen">
+                    <div class="redes-con">
+                        <h2>Llamanos al ### ### ###</h2>
+                        <p>Atencion personal</p>
+                    </div>
+                </div>
+                <div class="red-social">
+                    <img src="../img/Candado.png" alt="No se encontro la imagen">
+                    <div class="redes-con">
+                        <h2>Compra garantizada</h2>
+                        <p>Te devolvemos tu dinero</p>
+                    </div>
+                </div>
+            </section>
+            <!-- ==========================
+            PROMOCIONES
+            Seccion de la pagina donde se muestran
+            imagenes sobre los patrocinadores de la pagina
+            haciendo publicidad.
+            ========================== -->
+            <section id="promociones">
+                <img src="../img/Teclado anuncio.png" alt="No se encontro la imagen">
+                <img src="../img/Switch anuncio.png" alt="No se encontro la imagen">
+            </section>
+        </footer>
+    </body>
+</html>
