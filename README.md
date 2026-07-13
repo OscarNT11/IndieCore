@@ -1,2 +1,2 @@
 # IndieCore
-Trabajo Final del 3eer año de Bachillerato, Informática - UTU
+Trabajo Final del 3er año de Bachillerato, Informática - UTU
