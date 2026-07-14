@@ -1,3 +1,6 @@
+/*-- ==========================
+    Agustín Calvette 6/7/2026
+    ========================== */
 
 /* ==========================
    *{
@@ -365,9 +368,9 @@ main{
     width: 94%;
     margin: 0 auto;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 30px;
-    align-items: center;
+    grid-template-columns:repeat(4, 1fr auto);
+    gap: 20px;
+    
 }
 
 .objeto{
