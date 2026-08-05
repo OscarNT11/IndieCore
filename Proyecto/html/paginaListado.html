@@ -10,7 +10,12 @@
         <title>lista</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="stylesheet" href="../css/generales.css">
         <link rel="stylesheet" href="../css/css-listado.css">
+        <link rel="stylesheet" href="../css/responsiveDesign.css">
+
+
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Playfair:ital,opsz,wght@0,5..1200,300..900;1,5..1200,300..900&display=swap" rel="stylesheet">
@@ -27,38 +32,55 @@
              hay pequeños cambios como clase para los link 
              y que el link "menu" ya no esta en un div
             ========================== -->
-         <header>
-            
-            <nav>
-                <div id="tecno-logo">
-                <img src="../img/Tecno Parts logo.png" alt="No se encontro la imagen">
-                </div>
-                <div id="barra-busqueda">
-                    <input type="text" placeholder="Buscar..." id="espacio-texto">
-                    <div id="lupa">
-                    <img src="../img/Lupa.png" alt="No se encontro la imagen">
-                    </div>
-                </div>
-                <div id="inicia-sesion">
-                    <img src="../img/inicio sesion.png" alt="No">
-                    <a href="../html/paginainicio_inicio-sesion.html">Iniciar Sesion</a>
-                </div>
-                <div id="carrito">
-                     <img src="../img/Carrito.png" alt="No">
-                </div>
-                <div id="nav-abajo">
-                    
-                    <a href=""id="menu" class="barra"><b>Menú</b></a>
-                    <a href=""class="barra">Ofertas</a>
-                    <a href=""class="barra">Nuevo</a>
-                    <a href=""class="barra">Marcas</a>
-                    <a href="" id="ultimas-unidades"class="barra">Ultimas Unidades</a>
-                    <a href=""class="barra">Destacados</a>
-                    <a href=""class="barra">Reseñas</a>
-                    <a href=""class="barra">Contactanos</a>
-                </div>
+        <header class="header">
+
+            <div class="header-nav" id="nav-superior">
+
+                <!-- LOGO A ENLACE -->
+                <a href="#body" class="header-logo">
+                <img src="../img/logoTecnoParts.png" alt="Logo Tecno Parts">
+                </a>
+
+                <!-- FORMULARIO PARA BUSCAR DETERMINADO PRODUCTO / SESION -->
+                <form class="header-busqueda">
+                    <input type="text" placeholder="Buscar...">
+                    <!-- BOTON SUBMIT QUE BUSQUE LO SOLICITADO -->
+                    <button type="submit" aria-label="lupa">
+                        <svg><use href="../img/iconos.svg#icono-lupa"></use></svg>
+                    </button>
+
+                </form>
+
+                <!-- BOTON / ENLACE QUE ABRA UNA VENTANA MODAL DE FORMULARIO  -->
+                <button class="btn-ingresar">
+                    <svg><use href="../img/iconos.svg#icono-persona"></use></svg>
+                    <p>Iniciar Sesion</p>
+                </button>
+
+                <!-- BOTON / ENLACE QUE ABRE UNA VENTANA MODAL
+                  (O DIRIGE A OTRA PARTE) DE LOS PRODUCTOS A COMPRAR -->
+                <button class="btn-carrito">
+                    <svg><use href="../img/iconos.svg#icono-carrito"></use></svg>
+                </button>
+
+            </div>
+
+                <!-- AQUÍ VA EL VERDEDADERO NAV, ENLACES DE ANCLAS -->
+            <nav class="header-nav" id="nav-inferior">
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="">Menu</a></li>
+                    <li class="nav-item"><a href="">Ofertas</a></li>
+                    <li class="nav-item"><a href="">Nuevo</a></li>
+                    <li class="nav-item"><a href="">Marcas</a></li>
+                    <li class="nav-item"><a href="">Ultimas Unidades</a></li>
+                    <li class="nav-item"><a href="">Destacado</a></li>
+                    <li class="nav-item"><a href="">Reseña</a></li>
+                    <li class="nav-item"><a href="">Contactanos</a></li>
+                </ul>
             </nav>
-        </header> 
+
+
+        </header>
          <!-- ==========================
              main
              seccion principal
@@ -71,8 +93,8 @@
             ========================== -->
          <div class="atributos">
             <ol class="lista-atributos">
-            <li class="atributo"><a href="./paginaListado.html">sonido</a></li>
-            <li class="atributo"><a href="./paginaListado.html">visual</a></li>
+            <li class="atributo"><a href="./paginaListado.html">Sonido</a></li>
+            <li class="atributo"><a href="./paginaListado.html">Visual</a></li>
             <li class="atributo"><a href="./paginaListado.html">memoria</a></li>
             <li class="atributo"><a href="./paginaListado.html">procesamiento</a></li>
             <li class="atributo"><a href="./paginaListado.html">aparato</a></li>
@@ -215,34 +237,51 @@
             "Techno Parts", siendo direccion, numero
             de telefono, y garantizando compras verificadas igual que en el de pagina inicio
             ========================== -->
-        <footer>
-        
+        <footer class="footer">
+            <!-- ==========================
+            REDES
+            Seccion de la pagina donde se muestra 
+            informacion importante sobre la empresa
+            "Techno Parts", siendo direccion, numero
+            de telefono, y garantizando compras verificadas
+            ========================== -->
             <section id="redes">
+
                 <div class="red-social">
-                    <img src="../img/Ubicacion.png" alt="No se encontro la imagen" class="fotterimg">
+                    <img src="../img/Ubicacion.png" alt="No se encontro la imagen">
                     <div class="redes-con">
                         <h2>Nuestras Tiendas</h2>
                         <p>Encuentra la más cercana de tu casa</p>
                     </div>
                 </div>
+
                 <div class="red-social">
-                    <img src="../img/LLamada.png" alt="No se encontro la imagen"class="fotterimg">
+                    <img src="../img/LLamada.png" alt="No se encontro la imagen">
                     <div class="redes-con">
                         <h2>Llamanos al ### ### ###</h2>
                         <p>Atencion personal</p>
                     </div>
                 </div>
+
                 <div class="red-social">
-                    <img src="../img/Candado.png" alt="No se encontro la imagen"class="fotterimg">
+                    <img src="../img/Candado.png" alt="No se encontro la imagen">
                     <div class="redes-con">
                         <h2>Compra garantizada</h2>
                         <p>Te devolvemos tu dinero</p>
                     </div>
                 </div>
+
             </section>
+            <!-- ==========================
+            PROMOCIONES
+            Seccion de la pagina donde se muestran
+            imagenes sobre los patrocinadores de la pagina
+            haciendo publicidad.
+            ========================== -->
             <section id="promociones">
                 <img src="../img/Teclado anuncio.png" alt="No se encontro la imagen">
                 <img src="../img/Switch anuncio.png" alt="No se encontro la imagen">
             </section>
+
         </footer>
     </body>
