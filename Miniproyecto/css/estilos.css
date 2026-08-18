@@ -1,0 +1,110 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+header{
+    margin-bottom: 5%;
+}
+
+body{
+    background-color: #1C2541;
+    color: white;
+    margin-top: 3%;
+}
+
+#contenedor{
+    padding: 5px;
+    padding-bottom: 10px;
+    width: 75%;
+    background-color:#14554b ;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5% #5BC0BE;
+}
+
+#contenedor h2{
+    color: #0B132B;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+input{
+    width: 250px;
+    padding: 10px;
+    border: 2px solid #3498db;
+    border-radius: 8px;
+    font-size: 16px;
+    background-color: #0d1925;
+    color: white;
+    transition: transform 0.2s ease;
+}
+
+input:hover{
+    transform: scale(1.1);
+}
+
+button{
+    background-color: #1C2541;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: transform 0.3s ease;
+    margin: 5px;
+}
+
+button:hover{
+    transform: scale(1.1);
+}
+
+#listaTareas{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 5px;
+    padding: 10px;
+    width: 75%;
+    background-color:#0d1925 ;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5% #1b3a39;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+#listaTareas:empty{
+    display: none;
+}
+
+.tarjeta{
+    background-color: #26476e;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+.completada h3{
+    text-decoration: line-through;
+    opacity: 0.6;
+}
+
+.completada p{
+    text-decoration: line-through;
+    opacity: 0.6;
+}
+
+.animar{
+    animation: entrar 0.4s ease;
+}
+
+@keyframes entrar{
+    from{
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+    to{
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
