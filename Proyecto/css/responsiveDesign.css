@@ -1,0 +1,337 @@
+/* ==========================
+   DISEÑO RESPONSIVE
+   Ajustes para celulares
+   (pantallas de hasta 1023 px)
+========================== */
+
+@media (max-width:1023px) {
+
+    .header-logo{
+        width: 116px;
+    }
+
+    #lupa img{
+        width: 75%;
+    }
+
+    .btn-ingresar img{
+        width: 45px;
+    }
+
+    #nav-inferior{
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 15px;
+    }
+
+    #nav-inferior a{
+        font-size: clamp(15px, 4vw, 15px);
+        text-align: center;
+    }
+
+    #menu a{
+        font-size: clamp(15px, 4vw, 15px);
+    }
+
+    #inicio{
+        text-align:center;
+        gap:40px;
+    }
+
+    #texto-inicio h1{
+        font-size: clamp(46px, 9vw, 70px);
+    }
+
+    #texto-inicio h2{
+        font-size: 35px;
+        padding: 8px 20px;
+    }
+
+    #inicio img{
+        max-width: 220px;
+    }
+
+    #grafica-1{
+        width:220px;
+    }
+
+    #grafica-2{
+        width:180px;
+        margin-left: -70px;
+    }
+
+    #grafica-3{
+        width:160px;
+        margin-left: -110px;
+    }
+
+    #categorias-inicio{
+        grid-template-columns: repeat(4,1fr);
+    }
+
+    #img-cat-internos img{
+        width: 90%;
+        max-width: 280px;
+    }
+
+    #img-cat-perifericos img{
+        width: 90%;
+        max-width: 280px;
+    }
+
+    #img-cat-larga img{
+        width: 90%;
+        max-width:350px;
+    }
+
+      #redes{
+        width: 90%;
+        gap: 10px;
+    }
+
+    .red-social img{
+        width: 60px;
+        height: 60px;
+    }
+
+    .redes-con h2{
+        font-size: 18px;
+    }
+
+    .redes-con p{
+        font-size: 14px;
+    }
+
+    .redes-con{
+        gap: 10px;
+        margin-left: 10px;
+    }
+
+}
+
+/* ==========================
+   DISEÑO RESPONSIVE
+   Ajustes para celulares
+   (pantallas de hasta 767 px)
+========================== */
+
+@media (max-width:767px) {
+
+    .header-nav{
+        justify-items: center;
+        gap: 15px;
+    }
+
+    #barra-busqueda{
+        width: 95%;
+    }
+
+    #nav-inferior{
+        display:grid;
+        grid-template-columns:repeat(4, 1fr);
+        gap:20px;
+        width:95%;
+    }
+
+    .btn-ingresar{
+        justify-content: center;
+    }
+
+    .btn-ingresar img{
+        width: 40px;
+    }
+
+    #carrito{
+        justify-content: center;
+        display: flex;
+        width: 100%;
+    }
+
+    #carrito img{
+        width: 50px;
+        margin: 0 auto;
+    }
+
+    #nav-inferior a{
+        width:100%;
+        font-size:16px;
+    }
+
+    #menu{
+        width:60%;
+    }
+
+    #inicio{
+        flex-direction:column;
+        text-align:center;
+        gap:40px;
+    }
+
+    #texto-inicio h1{
+        font-size: clamp(36px, 8vw, 60px);
+    }
+
+    #texto-inicio h2{
+        font-size: clamp(36px, 4vw, 30px);
+        margin:auto;
+    }
+
+    #grafica-1{
+        width: 180px;
+        margin-left: 50px;
+    }
+
+    #grafica-2{
+        width: 150px;
+        margin-left: -70px;
+    }
+
+    #grafica-3{
+        width: 130px;
+        margin-left: -110px;
+    }
+
+    #categorias-inicio{
+        grid-template-columns: repeat(2,1fr);
+    }
+
+    .objetos{
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+        width: 74%;
+        height: 80%;
+    }
+
+    .objeto{
+        min-height: 520px; 
+    }
+
+    .objeto img{
+        width: 140px;
+        height: 140px;
+    }
+
+    #img-cat-internos img{
+        width: 180px;
+        max-width: 100%;
+        margin-right: 0;
+        padding: 0;
+    }
+
+    #img-cat-perifericos img{
+        width: 140px;
+        max-width: 100%;
+        margin-left: 0;
+        padding: 0;;
+    }
+
+    #redes{
+        width: 70%;
+        gap: 7px;
+    }
+
+    .red-social img{
+        width: 40px;
+        height: 40px;
+    }
+
+    .redes-con{
+        gap: 5px;
+        margin-left: 5px;
+    }
+
+    .redes-con h2{
+        font-size: 12px;
+    }
+
+    .redes-con p{
+        font-size: 10px;
+    }
+
+}
+
+/* ==========================
+   DISEÑO RESPONSIVE
+   Ajustes para celulares más pequeños
+   (pantallas de hasta 481 px)
+========================== */
+
+@media (max-width:481px) {
+
+    .header-logo {
+        width: 100px;
+    }
+
+    .btn-ingresar img{
+        width: 30px;
+    }
+
+    #carrito img{
+        width: 35px;
+    }
+
+    #texto-inicio h2{
+        font-size: clamp(15px, 2vw, 10px);
+        margin:auto;
+    }
+
+    #grafica-1{
+        width: 5px;
+        margin-left: 50px;
+    }
+
+    #grafica-2{
+        width: 90px;
+        margin-left: -70px;
+    }
+
+    #grafica-3{
+        width: 90px;
+        margin-left: -110px;
+    }
+
+    #cont-cat-internos{
+        font-size: 7px;
+    }
+
+    #cont-cat-perifericos{
+        font-size: 7px;
+    }
+
+    #cont-cat-larga{
+        font-size: 10px;
+    }
+
+    #cat-variadas button{
+        font-size: 7px;
+    }
+
+    #redes{
+        width: 60%;
+        gap: 6px;
+    }
+
+    .red-social img{
+        width: 30px;
+        height: 30px;
+    }
+
+    .redes-con{
+        gap: 3px;
+        margin-left: 3px;
+    }
+
+    .redes-con h2{
+        font-size: 10px;
+    }
+
+    .redes-con p{
+        font-size: 8px;
+    }
+
+    #promociones img{
+        width: 38%;
+        height: 100px;
+    }
+
+}
