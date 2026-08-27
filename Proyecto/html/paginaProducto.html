@@ -32,7 +32,7 @@
             <div class="header-nav" id="nav-superior">
 
                 <!-- LOGO A ENLACE -->
-                <a href="#body" class="header-logo">
+                <a href="paginaInicio.html" class="header-logo">
                 <img src="../img/logoTecnoParts.png" alt="Logo Tecno Parts">
                 </a>
 
@@ -54,9 +54,9 @@
 
                 <!-- BOTON / ENLACE QUE ABRE UNA VENTANA MODAL
                   (O DIRIGE A OTRA PARTE) DE LOS PRODUCTOS A COMPRAR -->
-                <button class="btn-carrito">
+                <a href="paginaCarrito.html" class="btn-carrito-header">
                     <svg><use href="../img/iconos.svg#icono-carrito"></use></svg>
-                </button>
+                </a>
 
             </div>
 
@@ -239,50 +239,48 @@
 
         </main>
 
+
+        <!-- ------ FOOTER - SECTION ------ -->
+
         <footer class="footer">
-            <!-- ==========================
-            REDES
-            Seccion de la pagina donde se muestra 
-            informacion importante sobre la empresa
-            "Techno Parts", siendo direccion, numero
-            de telefono, y garantizando compras verificadas
-            ========================== -->
-            <section id="redes">
+
+            <section class="redes">
 
                 <div class="red-social">
-                    <img src="../img/Ubicacion.png" alt="No se encontro la imagen">
-                    <div class="redes-con">
+                    <svg class="icono">
+                    <use href="../img/iconos.svg#icono-ubicacion"></use>
+                    </svg>
+                    <div class="redes-txt">
                         <h2>Nuestras Tiendas</h2>
-                        <p>Encuentra la más cercana de tu casa</p>
+                        <p>Encuentra una cercana de tu casa</p>
                     </div>
                 </div>
 
                 <div class="red-social">
-                    <img src="../img/LLamada.png" alt="No se encontro la imagen">
-                    <div class="redes-con">
-                        <h2>Llamanos al ### ### ###</h2>
+                    <svg class="icono">
+                    <use href="../img/iconos.svg#icono-telefono"></use>
+                    </svg>
+                    <div class="redes-txt">
+                        <h2>Llamanos al 095 756 103</h2>
                         <p>Atencion personal</p>
                     </div>
                 </div>
 
                 <div class="red-social">
-                    <img src="../img/Candado.png" alt="No se encontro la imagen">
-                    <div class="redes-con">
+                    <svg class="icono">
+                    <use href="../img/iconos.svg#icono-candado"></use>
+                    </svg>
+                    <div class="redes-txt">
                         <h2>Compra garantizada</h2>
                         <p>Te devolvemos tu dinero</p>
                     </div>
                 </div>
 
             </section>
-            <!-- ==========================
-            PROMOCIONES
-            Seccion de la pagina donde se muestran
-            imagenes sobre los patrocinadores de la pagina
-            haciendo publicidad.
-            ========================== -->
-            <section id="promociones">
-                <img src="../img/Teclado anuncio.png" alt="No se encontro la imagen">
-                <img src="../img/Switch anuncio.png" alt="No se encontro la imagen">
+            
+            <section class="promociones">
+                <div class="promociones-img" id="promociones-1"></div>
+                <div class="promociones-img" id="promociones-2"></div>
             </section>
 
         </footer>

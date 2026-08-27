@@ -1,131 +1,125 @@
-/* ==========================
-   INICIO
-   Ajuste de titulos e imagenes 
-   para el inicio de la pagina
-========================== */
+/* ----------- MAIN ----------- */
 
-#inicio{
-    background: linear-gradient(to right,#7112e8,#2d71bf);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 60px 40px;
-    overflow: hidden;
+main {
+    background-color: inherit;
+    padding-bottom: 2rem;
+    width: 100%;
 }
 
-#texto-inicio{
+
+/* HERO SECTION */
+
+.hero {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    width: 100%;
+    min-height: calc(100dvh - 200px);
+    padding: 0 8rem;
+
+    background: linear-gradient(to right,#6a09e0,#3480d7);
+    
+}
+
+.hero-txt {
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 1.2rem;
     align-items: center;
-    margin: 10px;
-}
 
-#texto-inicio h1{
-    font-size: clamp(70px,7vw,80px);
     text-transform: uppercase;
-    line-height: 0.9;
-    text-shadow: #3a2590 7px 2px;
 }
 
-#texto-inicio h2{
-    width: fit-content;
-    padding: 10px 35px;
+.hero-txt h2 {
+    font-size: clamp(70px, 7vw, 80px);
+    line-height: 0.8;
+    text-shadow: #3a2590 8px 2px;
+}
+
+.hero-txt a {
+    font-size: clamp(20px, 4vw, 30px);
+    padding: 0.75rem 2rem;
+    border-radius: 1rem;
+
     background-color: #5c12b8;
-    border-radius: 15px;
-    text-align: center;
-    color: white;
-    font-size: clamp(20px,4vw,30px);
-    text-transform: uppercase;
-    font-family:'Open Sans'
+    border: 1px solid #000;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
 }
 
-#inicio img{
-    display: block;
-    width: 100%;
-    max-width: 320px;
-    height: auto;
-    cursor: pointer;
-}
-
-#imagenes-inicio{
+.hero-imgs {
     flex: 1;
     display:flex;
     justify-content:center;
     align-items:flex-end;
 }
 
-#grafica-1{
+.hero img {
+    width: 100%;
+    max-width: 320px;
+    height: auto;
+    cursor: pointer;
+}
+
+#grafica-1 {
     width:300px;
     z-index:3;
 
 }
 
-#grafica-2{
+#grafica-2 {
     width:260px;
     margin-left:-100px;
     z-index:2;
 }
 
-#grafica-3{
+#grafica-3 {
     width:240px;
     margin-left:-150px;
     z-index:1;
 }
 
-/* ==========================
-   CATEGORIAS DE EL INICIO
-   Ajuste por columnas para las
-   distintas categorias de la pagina
-========================== */
+/* CATEGORÍAS INICIO */
 
-#categorias-inicio{
+.categorias {
     width: 100%;
     margin: 0 auto;
-    display: grid;
-    grid-template-columns: repeat(8,1fr);
-    gap: 40px;
+    padding: 1rem 3rem;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    
     background-color: #444444;
-    padding: 20px;
 }
 
-#categorias-inicio img{
-    display: block;
-    width:100px;
-    max-width: 180px;
-    height: 100px;
-    border-radius: 50%;
-    cursor: pointer;
+.categoria-link img {
+    transition: opacity 200ms ease, transform 200ms ease;
 }
 
-#categorias-inicio img:hover{
-    width:110px;
-    height: 110px;
+.categoria-link:hover img {
+    opacity: 0.75;
+    transform: scale(0.995);
 }
 
-.objeto-categoria-inicio{
-    text-align: center;
+.categorias-objeto {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    text-align: center;
 }
 
-.objeto-categoria-inicio a{
-    margin-top: 10px;
-    color: white;
-    text-decoration: none;
-    text-transform: uppercase;
-    width: 100px;
+.categorias-objeto img{
+    width:100px;
+    height: 100px;
+
+    border-radius: 50%;
+    border: 2px solid #000;
 }
 
-/* ==========================
-   MAIN
-   Ajuste de el fondo para el main
-========================== */
-
-main{
-    background-color: #292929;
+.categorias-objeto h2 {
+    padding: 0.25rem 0;
+    font-size: 1.5rem;
+    font-weight: 300;
 }
 
 /* ==========================
@@ -135,13 +129,12 @@ main{
    la seccion de productos nuevos
 ========================== */
 
-#lo-nuevo{
+.lo-nuevo{
     width: 100%;
     margin: 0 auto;
 }
 
-#lo-nuevo h2{
-    color: white;
+.lo-nuevo h2 {
     text-transform: uppercase;
     margin: 20px;
     margin-left: 40px;
@@ -150,14 +143,10 @@ main{
 
 /* ==========================
    OBJETOS
-   Esta parte del codigo se encarga
-   de el diseño para todos los objetos
-   que sean productos en el sistema, tanto
-   para productos nuevos y productos destacados
 ========================== */
 
-.objetos{
-    width: 94%;
+.contenedor-objetos {
+    padding: 0 2rem;
     margin: 0 auto;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -281,7 +270,7 @@ main{
 }
 
 #img-cat-internos img:hover{
-    width: 120%;
+    /* width: 120%; */
 }
 
 #img-cat-internos{
@@ -324,7 +313,7 @@ main{
 }
 
 #img-cat-perifericos img:hover{
-    width: 120%;
+    /* width: 120%; */
 }
 
 #img-cat-perifericos{
@@ -364,7 +353,7 @@ main{
 }
 
 #img-cat-larga img:hover{
-    width: 120%;
+    /* width: 120%; */
 }
 
 #cont-cat-larga{

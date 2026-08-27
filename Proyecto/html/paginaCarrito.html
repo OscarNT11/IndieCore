@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+
+    <!-- ----- HEAD: Configuración del Sistema ----- -->
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Playfair:ital,opsz,wght@0,5..1200,300..900;1,5..1200,300..900&display=swap" rel="stylesheet">
+
+        <link rel="stylesheet" href="../css/generales.css">
+        <link rel="stylesheet" href="../css/paginaCarrito.css">
+        <link rel="stylesheet" href="../css/responsiveDesign.css">
+    </head>
+
+    <body id="body">
+
+    <!-- HEADER SECTION -->
+
+        <header class="header">
+
+            <div class="header-nav" id="nav-superior">
+
+                <!-- LOGO A ENLACE -->
+                <a href="paginaInicio.html" class="header-logo">
+                <img src="../img/logoTecnoParts.png" alt="Logo Tecno Parts">
+                </a>
+
+                <!-- FORMULARIO PARA BUSCAR DETERMINADO PRODUCTO / SESION -->
+                <form class="header-busqueda">
+                    <input type="text" placeholder="Buscar...">
+                    <!-- BOTON SUBMIT QUE BUSQUE LO SOLICITADO -->
+                    <button type="submit" aria-label="lupa">
+                        <svg><use href="../img/iconos.svg#icono-lupa"></use></svg>
+                    </button>
+
+                </form>
+
+                <!-- BOTON / ENLACE QUE ABRA UNA VENTANA MODAL DE FORMULARIO  -->
+                <button class="btn-ingresar">
+                    <svg><use href="../img/iconos.svg#icono-persona"></use></svg>
+                    <p>Iniciar Sesion</p>
+                </button>
+
+                <!-- BOTON / ENLACE QUE ABRE UNA VENTANA MODAL
+                  (O DIRIGE A OTRA PARTE) DE LOS PRODUCTOS A COMPRAR -->
+                <a  href="#body"  class="btn-carrito-header">
+                    <svg><use href="../img/iconos.svg#icono-carrito"></use></svg>
+                </a>
+
+            </div>
+
+                <!-- AQUÍ VA EL VERDEDADERO NAV, ENLACES DE ANCLAS -->
+            <nav class="header-nav" id="nav-inferior">
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="">Menu</a></li>
+                    <li class="nav-item"><a href="">Ofertas</a></li>
+                    <li class="nav-item"><a href="">Nuevo</a></li>
+                    <li class="nav-item"><a href="">Marcas</a></li>
+                    <li class="nav-item"><a href="">Ultimas Unidades</a></li>
+                    <li class="nav-item"><a href="">Destacado</a></li>
+                    <li class="nav-item"><a href="">Reseña</a></li>
+                    <li class="nav-item"><a href="">Contactanos</a></li>
+                </ul>
+            </nav>
+
+
+        </header>
+
+        <!-- MAIN SECTION -->
+
+        <main class="main">
+            <section class="productos">
+
+                <section class="producto">
+                    <img src="../img/Celular.png" alt="">
+                    <form>
+                        <h2>Iphone 15 pro max</h2>
+                        <label for="">Cantidad: </label>
+                        <input type="number" value="1">
+                    </form>
+                    <h3 class="producto-precio">$1499.00</h3>
+                </section>
+
+                <section class="producto">
+                    <img src="../img/D_NQ_NP_860832-MLU78186417488_082024-O-Photoroom (1).png" alt="">
+                    <form>
+                        <h2>Tarjeta Gráfica</h2>
+                        <label for="">Cantidad: </label>
+                        <input type="number" value="1">
+                    </form>
+                    <h3 class="producto-precio">$1499.00</h3>
+                </section>
+
+                <section class="producto">
+                    <img src="../img/Auricualres redmi.png" alt="">
+                    <form>
+                        <h2>Auriculares Xiaomi</h2>
+                        <label for="">Cantidad: </label>
+                        <input type="number" value="1">
+                    </form>
+                        <h3 class="producto-precio">$1499.00</h3>
+                </section>
+            </section>
+
+
+            <div class="contenedor-comprar">
+                <section class="comprar">
+                    <p>Resumen de compras</p>
+                    <p>Cantidad de Productos (3)</p>
+                    <div class="comprar-precio">
+                        <h2>Total: </h2>
+                        <h2>$4997.00</h2>
+                    </div>
+                    <button>Finalizar Compra</button>
+                </section>
+            </div>
+        </main>
+
+        <!-- ------ FOOTER - SECTION ------ -->
+
+        <footer class="footer">
+
+            <section class="redes">
+
+                <div class="red-social">
+                    <svg class="icono">
+                    <use href="../img/iconos.svg#icono-ubicacion"></use>
+                    </svg>
+                    <div class="redes-txt">
+                        <h2>Nuestras Tiendas</h2>
+                        <p>Encuentra una cercana de tu casa</p>
+                    </div>
+                </div>
+
+                <div class="red-social">
+                    <svg class="icono">
+                    <use href="../img/iconos.svg#icono-telefono"></use>
+                    </svg>
+                    <div class="redes-txt">
+                        <h2>Llamanos al 095 756 103</h2>
+                        <p>Atencion personal</p>
+                    </div>
+                </div>
+
+                <div class="red-social">
+                    <svg class="icono">
+                    <use href="../img/iconos.svg#icono-candado"></use>
+                    </svg>
+                    <div class="redes-txt">
+                        <h2>Compra garantizada</h2>
+                        <p>Te devolvemos tu dinero</p>
+                    </div>
+                </div>
+
+            </section>
+            <!-- ==========================
+            PROMOCIONES
+            Seccion de la pagina donde se muestran
+            imagenes sobre los patrocinadores de la pagina
+            haciendo publicidad.
+            ========================== -->
+            <section class="promociones">
+                <div class="promociones-img" id="promociones-1"></div>
+                <div class="promociones-img" id="promociones-2"></div>
+            </section>
+
+        </footer>
+
+    </body>
+</html>

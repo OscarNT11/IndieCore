@@ -5,6 +5,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Playfair:ital,opsz,wght@0,5..1200,300..900;1,5..1200,300..900&display=swap" rel="stylesheet">
@@ -45,9 +46,9 @@
 
                 <!-- BOTON / ENLACE QUE ABRE UNA VENTANA MODAL
                   (O DIRIGE A OTRA PARTE) DE LOS PRODUCTOS A COMPRAR -->
-                <button class="btn-carrito">
+                <a href="paginaCarrito.html" class="btn-carrito-header">
                     <svg><use href="../img/iconos.svg#icono-carrito"></use></svg>
-                </button>
+                </a>
 
             </div>
 
@@ -70,70 +71,89 @@
 
         <!-- MAIN SECTION -->
 
-        <main>
+        <main class="main">
 
+            <!-- HERO - SECTION -->
             
-            <section id="inicio">
-                <div id="texto-inicio">
-                    <h1>Tarjetas<br>gráficas</h1>
-                    <h2>Ya disponibles!</h2>
+            <section class="hero">
+                <div class="hero-txt">
+                    <h2>Tarjetas<br>gráficas</h2>
+                    <a href="paginaListado.html">Ver más...</a>
                 </div>
-                <div id="imagenes-inicio">
+                <div class="hero-imgs">
                     <img src="../img/grafica rtx 5090.png" alt="No" id="grafica-1">
                     <img src="../img/GPU_ASRock_Radeon_RX7600_Challenger_OC_8Gb_1-600x600-Photoroom (1).png" alt="No" id="grafica-2">
                     <img src="../img/D_NQ_NP_860832-MLU78186417488_082024-O-Photoroom (1).png" alt="No" id="grafica-3">
                 </div>
             </section>
 
-            <!-- ==========================
-            CATEGORIAS
-            Configuración de las
-            categorias que se muestran
-            al inicio de la pagina
-            ========================== -->
+            <!-- CATEGORIAS -->
             
-            <section id="categorias-inicio">
-                <div class="objeto-categoria-inicio">
-                    <img src="../img/Teclado.png" alt="No se encontro la imagen">
-                    <a href="">Teclados</a>
-                </div>
-                <div class="objeto-categoria-inicio">
-                    <img src="../img/Monitor.png" alt="No se encontro la imagen">
-                    <a href="">Monitores</a>
-                </div>
-                <div class="objeto-categoria-inicio">
-                    <img src="../img/Celular.png" alt="No se encontro la imagen">
-                    <a href="">Celulares</a>
-                </div>
-                <div class="objeto-categoria-inicio">
-                    <img src="../img/Consola.png" alt="No se encontro la imagen">
-                    <a href="">Consolas</a>
-                </div>
-                <div class="objeto-categoria-inicio">
-                    <img src="../img/Auriculares.png" alt="No se encontro la imagen">
-                    <a href="">Auriculares</a>
-                </div>
-                <div class="objeto-categoria-inicio">
-                    <img src="../img/Notebook.png" alt="No se encontro la imagen">
-                    <a href="">Noebooks</a>
-                </div>
-                <div class="objeto-categoria-inicio">
-                    <img src="../img/Tarjetas graficas.png" alt="No se encontro la imagen">
-                    <a href="">Tarjetas graficas</a>
-                </div>
-                <div class="objeto-categoria-inicio">
-                    <img src="../img/Mause.png" alt="No se encontro la imagen">
-                    <a href="">Mouse</a>
-                </div>
+            <section class="categorias">
+
+                <a href="paginaListado.html" class="categoria-link">
+                    <div class="categorias-objeto">
+                    <img src="../img/Teclado.png" alt="Imagen de Teclado">
+                    <h2>Teclado</h2>
+                    </div>
+                </a>
+
+                <a href="paginaListado.html" class="categoria-link">
+                    <div class="categorias-objeto">
+                    <img src="../img/Monitor.png" alt="Imagen de Monitor">
+                    <h2>Monitores</h2>
+                    </div>
+                </a>
+
+                <a href="paginaListado.html" class="categoria-link">
+                    <div class="categorias-objeto">
+                    <img src="../img/Celular.png" alt="Imagen de Celular">
+                    <h2>Celulares</h2>
+                    </div>
+                </a>
+
+                <a href="paginaListado.html" class="categoria-link">
+                    <div class="categorias-objeto">
+                    <img src="../img/Consola.png" alt="Imagen de Consola">
+                    <h2>Consolas</h2>
+                    </div>
+                </a>
+
+                <a href="paginaListado.html" class="categoria-link">
+                    <div class="categorias-objeto">
+                    <img src="../img/Auriculares.png" alt="Imagen de Auriculares">
+                    <h2>Auriculares</h2>
+                    </div>
+                </a>
+
+                <a href="paginaListado.html" class="categoria-link">
+                    <div class="categorias-objeto">
+                    <img src="../img/Notebook.png" alt="Imagen de Notebook">
+                    <h2>Notebooks</h2>
+                    </div>
+                </a>
+
+                <a href="paginaListado.html" class="categoria-link">
+                    <div class="categorias-objeto">
+                    <img src="../img/Tarjetas graficas.png" alt="Imagen de Tarjeta Gráfica">
+                    <h2>Tarjetas G.</h2>
+                    </div>
+                </a>
+
+                <a href="paginaListado.html" class="categoria-link">
+                    <div class="categorias-objeto">
+                    <img src="../img/Mause.png" alt="Imagen de Mouse">
+                    <h2>Mouse</h2>
+                    </div>
+                </a>
+
+                
             </section>
-            <!-- ==========================
-            LO NUEVO
-            Seccion con produtos que se agregaron
-            recientemente al sistema de la pagina
-            ========================== -->
-            <section id="lo-nuevo">
+
+            <!-- LO NUEVO -->
+            <section class="lo-nuevo">
                 <h2>Lo nuevo</h2>
-                <div class="objetos">
+                <div class="contenedor-objetos">
                 <div class="objeto">
                     <div class="contenido">
                     <img src="../img/grafica rtx 5090.png" alt="No se encontro la imagen">
@@ -188,6 +208,7 @@
                     </div>
                 </div>
             </section>
+
             <!-- ==========================
             CATEGORIAS VARIADAS
             Seccion con 3 categorias principales
@@ -227,6 +248,7 @@
                     </div>
                 </div>
             </section>
+
             <!-- ==========================
             DESTACADOS
             Seccion de la pagina donde se muestran 
@@ -236,7 +258,7 @@
             ========================== -->
             <section id="destacados">
                 <h2>Destacados</h2>
-                <div class="objetos">
+                <div class="contenedor-objetos">
                     <div class="objeto">
                         <div class="contenido">
                             <img src="../img/iphone.png" alt="No se encontro la imagen" id="img-celular">
@@ -349,35 +371,37 @@
             </section>
         </main>
 
+        <!-- ------ FOOTER - SECTION ------ -->
+
         <footer class="footer">
-            <!-- ==========================
-            REDES
-            Seccion de la pagina donde se muestra 
-            informacion importante sobre la empresa
-            "Techno Parts", siendo direccion, numero
-            de telefono, y garantizando compras verificadas
-            ========================== -->
-            <section id="redes">
+
+            <section class="redes">
 
                 <div class="red-social">
-                    <img src="../img/Ubicacion.png" alt="No se encontro la imagen">
-                    <div class="redes-con">
+                    <svg class="icono">
+                    <use href="../img/iconos.svg#icono-ubicacion"></use>
+                    </svg>
+                    <div class="redes-txt">
                         <h2>Nuestras Tiendas</h2>
-                        <p>Encuentra la más cercana de tu casa</p>
+                        <p>Encuentra una cercana de tu casa</p>
                     </div>
                 </div>
 
                 <div class="red-social">
-                    <img src="../img/LLamada.png" alt="No se encontro la imagen">
-                    <div class="redes-con">
-                        <h2>Llamanos al ### ### ###</h2>
+                    <svg class="icono">
+                    <use href="../img/iconos.svg#icono-telefono"></use>
+                    </svg>
+                    <div class="redes-txt">
+                        <h2>Llamanos al 095 756 103</h2>
                         <p>Atencion personal</p>
                     </div>
                 </div>
 
                 <div class="red-social">
-                    <img src="../img/Candado.png" alt="No se encontro la imagen">
-                    <div class="redes-con">
+                    <svg class="icono">
+                    <use href="../img/iconos.svg#icono-candado"></use>
+                    </svg>
+                    <div class="redes-txt">
                         <h2>Compra garantizada</h2>
                         <p>Te devolvemos tu dinero</p>
                     </div>
@@ -390,9 +414,9 @@
             imagenes sobre los patrocinadores de la pagina
             haciendo publicidad.
             ========================== -->
-            <section id="promociones">
-                <img src="../img/Teclado anuncio.png" alt="No se encontro la imagen">
-                <img src="../img/Switch anuncio.png" alt="No se encontro la imagen">
+            <section class="promociones">
+                <div class="promociones-img" id="promociones-1"></div>
+                <div class="promociones-img" id="promociones-2"></div>
             </section>
 
         </footer>
