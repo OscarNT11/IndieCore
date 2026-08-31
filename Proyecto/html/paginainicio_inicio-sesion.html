@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html>
     <link rel="stylesheet" href="../css/paginainicio_inicio-sesion.css">
+    <link rel="stylesheet" href="../css/paginaInicio.css">
     <meta charset="UTF-8">
     <div id="inicio-sesion">
     <!-- ==========================
@@ -13,34 +14,38 @@
     para recordar la contraseña en el dispositivo
     y un boton para enviar el formulario
     ========================== -->
-    <form id="login">
-    <div id="nombre-usuario">
-        <label for="ingresar-nombre">Nombre de usuario</label>
-        <input type="text" placeholder="Buscar..." id="espacio-texto" required>
-    </div>
-    <div id="contraseña">
-        <label for="ingresar-contraseña">Contraseña</label>
-        <input type="password" placeholder="Buscar..." id="espacio-texto" required>
-    </div>
-    <div id="recordar">
-        <label for="recordar-cont" id="recordar">
-        <br>
-        <input type="checkbox" name="recordar-cont" id="recordar-cont">
-        <p>Recordar en el dispositivo</p>
-        </label>
-    </div>
-    <div id="boton">
-        <button type="submit" class="enviar"><a href="">Ingresar</a></button>
-    </div>
-    <!-- ==========================
-    CUENTA CREADA
-    Un link que te lleva a registrarte por si
-    no tienes una cuenta creada
-    ========================== -->
-    <div id="cuenta-creada">
-        <p>No tienes una cuenta creada?</p>
-        <a href="../html/paginainicio_registro.html">Crear cuenta</a>
-    </div>
-    </form>
+    <div id="pantalla-transparente">
+        <div id="ventana-login">
+            <form id="login">
+            <div id="nombre-usuario">
+                <label for="ingresar-nombre">Nombre de usuario</label>
+                <input type="text" placeholder="Buscar..." class="espacio-texto" required>
+            </div>
+            <div id="contraseña">
+                <label for="ingresar-contraseña">Contraseña</label>
+                <input type="password" placeholder="Buscar..." class="espacio-texto" required>
+            </div>
+            <div id="recordar">
+                <label for="recordar-cont" id="recordar">
+                <br>
+                <input type="checkbox" name="recordar-cont" id="recordar-cont">
+                <p>Recordar en el dispositivo</p>
+                </label>
+            </div>
+            <div id="boton">
+                <button type="submit" class="enviar">Ingresar</button>
+            </div>
+            <!-- ==========================
+            CUENTA CREADA
+            Un link que te lleva a registrarte por si
+            no tienes una cuenta creada
+            ========================== -->
+            <div id="cuenta-creada">
+                <p>No tienes una cuenta creada?</p>
+                <a href="../html/paginainicio_registro.html">Crear cuenta</a>
+            </div>
+            </form>
+            </div>
+        </div>
     </div>
 </html>

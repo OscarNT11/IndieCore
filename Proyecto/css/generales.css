@@ -189,6 +189,8 @@ input, input::placeholder {
     margin: 0 auto;
     
     transition: transform 100ms ease, opacity 100ms ease;
+
+
 }
 
 .btn-carrito-header svg {
@@ -198,6 +200,7 @@ input, input::placeholder {
     stroke: #ededed;
     stroke-width: 2px;
     flex-shrink: 0;
+    background-color: red;
 }
 
 .btn-carrito-header:hover {

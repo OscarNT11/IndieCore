@@ -47,7 +47,7 @@
                 <!-- BOTON / ENLACE QUE ABRE UNA VENTANA MODAL
                   (O DIRIGE A OTRA PARTE) DE LOS PRODUCTOS A COMPRAR -->
                 <a href="paginaCarrito.html" class="btn-carrito-header">
-                    <svg><use href="../img/iconos.svg#icono-carrito"></use></svg>
+                    <svg><use href="./img/iconos.svg#icono-carrito"></use></svg>
                 </a>
 
             </div>
@@ -420,6 +420,89 @@
             </section>
 
         </footer>
+
+        <!-- ==========================
+            Pagina modular de inicio de sesión
+            ========================== -->
+
+            <div id="pantalla-transparente">
+                <div id="ventana-login">
+                    <button id="cerrar-login">✕</button>
+                    <form id="login">
+                    <div id="nombre-usuario">
+                        <label for="ingresar-nombre">Nombre de usuario</label>
+                        <input type="text" placeholder="Ingrese usuario..." id="espacio-texto" required>
+                    </div>
+                    <div id="contraseña">
+                        <label for="ingresar-contraseña">Contraseña</label>
+                        <input type="password" placeholder="Ingrese su contraseña..." id="espacio-texto" required>
+                    </div>
+                    <div id="recordar">
+                        <label for="recordar-cont" id="recordar">
+                        <br>
+                        <input type="checkbox" name="recordar-cont" id="recordar-cont">
+                        <p>Recordar en el dispositivo</p>
+                        </label>
+                    </div>
+                    <div id="boton">
+                        <button type="submit" class="enviar">Ingresar</button>
+                    </div>
+                    <!-- ==========================
+                    CUENTA CREADA
+                    Un link que te lleva a registrarte por si
+                    no tienes una cuenta creada
+                    ========================== -->
+                    <div id="cuenta-creada">
+                        <p>No tienes una cuenta creada?</p>
+                        <a href="" id="crear-cuenta">Crear cuenta</a>
+                    </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- ==========================
+            Pagina modular de registro
+            ========================== -->
+
+            <div id="pantalla-transparente_registro">
+                <div id="ventana-registro">
+                    <button id="cerrar-registro">X</button>
+                    <form id="register">
+                        <div id="nombre-usuario">
+                            <label for="ingresar-nombre">Ingresar nombe de usuario</label>
+                            <input type="text" placeholder="Buscar..." id="espacio-texto" required>
+                        </div>
+                        <div id="correo-electronico">
+                            <label for="ingresar-correo">Ingresar correo electronico</label>
+                            <input type="email" placeholder="Buscar..." id="espacio-texto" required>
+                        </div>
+                        <div id="contraseña">
+                            <label for="ingresar-contraseña">Ingresar contraseña</label>
+                            <input type="password" placeholder="Buscar..." id="espacio-texto" required>
+                        </div>
+                        <div id="confirmar-contraseña">
+                            <label for="ingresar-confirmacion">Confirmar contraseña</label>
+                            <input type="password" placeholder="Buscar..." id="espacio-texto" required>
+                        </div>
+                        <div id="boton">
+                        <button type="submit" class="enviar"><a href="">Ingresar</a></button>
+                        </div>
+                        <!-- ==========================
+                        CUENTA CREADA
+                        Un link que te lleva a iniciar sesion por si
+                        ya tienes una cuenta creada en la pagina
+                        ========================== -->
+                        <div id="cuenta-creada">
+                            <p>Ya tienes una cuenta?</p>
+                            <a href="../html/paginainicio_inicio-sesion.html">Inicia sesión</a>
+                        </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <script src="../js/inicio.js"></script>
 
     </body>
 </html>
