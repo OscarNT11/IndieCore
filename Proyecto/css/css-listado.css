@@ -1,56 +1,11 @@
-/*-- ==========================
-    Luco Soza 12/7/2026
-    ========================== */
-/* ==========================
-pequeños cambios en nav bajo
-y se sustitulle "nav-bajo a"por barra
-y se agrego a y button
-========================== */
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    scroll-behavior: smooth;
-   
-
-}
-
-a{
-text-decoration: none;
-text-transform: uppercase;
-color: rgb(240, 238, 238);
-}
-
-button{
-    cursor: pointer;
-}
-
-
-img{
-  height: 100%;
-  width: 100%;
-}
-
-/* ==========================
-el main se mantiene similar al de la pagina de inicio
-========================== */
-main{
-    background-color: #292929;
-    width: 100%;
-    height: auto;
-    flex-wrap: wrap;
-    
-}
-
 /* =============================================================
-
-LISTA
-
+LIST
 ================================================================ */
-.sectionlist{
+.sectionlist {
 display: flex;
 height: auto;
-width: 100%;}
+width: 100%;
+}
 /* ==========================
 atributos o categoria para los producto
 ========================== */
@@ -59,18 +14,16 @@ overflow-y: auto;
 display: flex;
 height: 80vh;
 width: 12%;
-text-decoration: none;
-text-transform: uppercase;
-color: white;
 background-color: #111111;
-position: -webkit-sticky;
 position: sticky;
 top: 21%;
 left: 0%}
+
 .lista-atributos{
  margin-left: 5%;
 height: 100%;
 width: 100%; }
+
 .atributo{
 padding: 8px 0px 4px 4px;
 font-size: 0.85rem;
@@ -89,7 +42,8 @@ margin: 1%;
 flex-wrap: wrap;
 width: 86%;
 height: 100%;
-justify-content: center;}
+justify-content: center;
+}
 
 .producto{ 
 min-width: 180px;
@@ -114,7 +68,6 @@ color: rgb(0, 94, 255);}
 
 .carrito{
 margin-top: 10%;
-color: rgb(243, 244, 246);
 width: 77%;
 height: 9%;
 background-color: transparent;
@@ -126,6 +79,3 @@ cambio de pagina
 ========================== */
 .CambioDePagina{
 display: block; height: 30px; margin-left: 50%;}
-   /* ==========================
-*{ outline: 1px solid red !important;}
-========================== */

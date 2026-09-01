@@ -17,7 +17,9 @@
 
     <body id="body">
 
-    <!-- HEADER SECTION -->
+        <!-- ==================================
+        HEADER Y SUS NAVS DE TODAS LAS PAGINAS
+        =================================== --> 
 
         <header class="header">
 
@@ -46,7 +48,7 @@
 
                 <!-- BOTON / ENLACE QUE ABRE UNA VENTANA MODAL
                   (O DIRIGE A OTRA PARTE) DE LOS PRODUCTOS A COMPRAR -->
-                <a href="paginaCarrito.html" class="btn-carrito-header">
+                <a href="paginaCarrito.html" class="btn-carrito">
                     <svg><use href="../img/iconos.svg#icono-carrito"></use></svg>
                 </a>
 
@@ -69,7 +71,9 @@
 
         </header>
 
-        <!-- MAIN SECTION -->
+        <!-- ==================================
+        MAIN Y SUS SECTIONS
+        =================================== --> 
 
         <main class="main">
 
@@ -153,60 +157,47 @@
             <!-- LO NUEVO -->
             <section class="lo-nuevo">
                 <h2>Lo nuevo</h2>
+
                 <div class="contenedor-objetos">
-                <div class="objeto">
-                    <div class="contenido">
-                    <img src="../img/grafica rtx 5090.png" alt="No se encontro la imagen">
-                    <ul>
-                        <li>Trajeta Grafica - GeForce RTX 5900</li>
-                        <li>WINDFORCE 32Gar</li>
-                        <div class="precio">
-                            <li>US$6.969</li>
-                        </div>    
-                    </ul>
-                    </div>
-                    <button><a href="">Añadir al carrito</a></button>
-                </div>
-                <div class="objeto">
-                    <div class="contenido">
-                    <img src="../img/Monitor Gigabite.png" alt="No se encontro la imagen">
-                    <ul>
-                        <li>Monitor Gigabyte</li>
-                        <li>240hz Hdr10 0.0ms</li>
-                        <div class="precio">
-                            <li>US$900</li>
-                        </div>    
-                    </ul>
-                    </div>
-                    <button><a href="">Añadir al carrito</a></button>
-                </div>
-                <div class="objeto">
-                    <div class="contenido">
-                    <img src="../img/Auricualres redmi.png" alt="No se encontro la imagen">
-                    <ul>
-                        <li>Auriculares inalambricos</li>
-                        <li>Xiaomi Redmi Buds 6 Play</li>
-                        <div class="precio">
-                            <li>US$60</li>
-                        </div>
-                    </ul>
-                    </div>
-                    <button><a href="">Añadir al carrito</a></button>
-                </div>
-                <div class="objeto">
-                    <div class="contenido">
-                    <img src="../img/Teclado (lo nuevo).png" alt="No se encontro la imagen">
-                    <ul>
-                        <li>AULA F75 Pro Wireless</li>
-                        <li>Mechanical Keyboard, 75%</li>
-                        <div class="precio">
-                            <li>US$65,54</li>
-                        </div>
-                    </ul>
-                    </div>
-                    <button><a href="">Añadir al carrito</a></button>
-                    </div>
-                </div>
+
+                <article class="carta-producto">
+                    <a href="/Proyecto/html/paginaProducto.html" class="carta-producto-info">
+                        <img src="../img/Celulares.png" alt="Producto ...">
+                        <h3>Celular iphone 16 pro max</h3>
+                        <p>US$14.599</p>
+                    </a>
+                    <button>Agregar al Carrito<svg><use href="../img/iconos.svg#icono-carrito"></use></svg></button> 
+                </article>
+
+               <article class="carta-producto">
+                    <a href="/Proyecto/html/paginaProducto.html" class="carta-producto-info">
+                        <img src="../img/Celulares.png" alt="Producto ...">
+                        <h3>Celular iphone 16 pro max</h3>
+                        <p>US$14.599</p>
+                    </a>
+                    <button>Agregar al Carrito<svg><use href="../img/iconos.svg#icono-carrito"></use></svg></button> 
+                </article>
+
+                <article class="carta-producto">
+                    <a href="/Proyecto/html/paginaProducto.html" class="carta-producto-info">
+                        <img src="../img/Celulares.png" alt="Producto ...">
+                        <h3>Celular iphone 16 pro max</h3>
+                        <p>US$14.599</p>
+                    </a>
+                    <button>Agregar al Carrito<svg><use href="../img/iconos.svg#icono-carrito"></use></svg></button> 
+                </article>
+
+                <article class="carta-producto">
+                    <a href="/Proyecto/html/paginaProducto.html" class="carta-producto-info">
+                        <img src="../img/Celulares.png" alt="Producto ...">
+                        <h3>Celular iphone 16 pro max</h3>
+                        <p>US$14.599</p>
+                    </a>
+                    <button>Agregar al Carrito<svg><use href="../img/iconos.svg#icono-carrito"></use></svg></button> 
+                </article>
+
+            </div>
+
             </section>
 
             <!-- ==========================
@@ -257,121 +248,91 @@
             populares o con buenas reseñas
             ========================== -->
             <section id="destacados">
+
                 <h2>Destacados</h2>
+
                 <div class="contenedor-objetos">
-                    <div class="objeto">
-                        <div class="contenido">
-                            <img src="../img/iphone.png" alt="No se encontro la imagen" id="img-celular">
-                        <ul>
-                            <li>Appel Iphone 17 Pro Max</li>
-                            <li>(256 GB) - Azul Profundo</li>
-                            <div class="precio">
-                                <li>US$1.740</li>
-                            </div>
-                        </ul>
-                        </div>
-                        <button><a href="">Añadir al carrito</a></button>
-                    </div>
-                    <div class="objeto">
-                        <div class="contenido">
-                        <img src="../img/Tele.png" alt="No se encontro la imagen">
-                        <ul>
-                            <li>Smart Tv Haier 43 Led Fhd</li>
-                            <li>H43k85ffx Google Tv con control remoto</li>
-                            <div class="precio">
-                                <li>US$279</li>
-                            </div>
-                        </ul>
-                        </div>
-                        <button><a href="">Añadir al carrito</a></button>
-                    </div>
-                    <div class="objeto">
-                        <div class="contenido">
-                        <img src="../img/Tablet.png" alt="No se encontro la imagen">
-                        <ul>
-                            <li>Tablet Samsung Galaxy</li>
-                            <li>Tab S10 Fe 8gb Ram</li>
-                            <li>128gb 10.9 Pulgadas Gris</li>
-                            <div class="precio">
-                                <li>US$900</li>
-                            </div>
-                        </ul>
-                        </div>
-                        <button><a href="">Añadir al carrito</a></button>
-                    </div>
-                    <div class="objeto">
-                        <div class="contenido">
-                        <img src="../img/Mando.png" alt="No se encontro la imagen">
-                        <ul>
-                            <li>GameSir Kaleid Color Negro</li>
-                            <li>Controlador con Efecto Hall</li>
-                            <li>Xbox X|S Support Negro</li>
-                            <div class="precio">
-                                <li>US$1.740</li>
-                            </div>
-                        </ul>
-                        </div>
-                        <button><a href="">Añadir al carrito</a></button>
-                    </div>
-                    <div class="objeto">
-                        <div class="contenido">
-                            <img src="../img/iphone.png" alt="No se encontro la imagen" id="img-celular">
-                        <ul>
-                            <li>Appel Iphone 17 Pro Max</li>
-                            <li>(256 GB) - Azul Profundo</li>
-                            <div class="precio">
-                                <li>US$1.740</li>
-                            </div>
-                        </ul>
-                        </div>
-                        <button><a href="">Añadir al carrito</a></button>
-                    </div>
-                    <div class="objeto">
-                        <div class="contenido">
-                        <img src="../img/Tele.png" alt="No se encontro la imagen">
-                        <ul>
-                            <li>Smart Tv Haier 43 Led Fhd</li>
-                            <li>H43k85ffx Google Tv con control remoto</li>
-                            <div class="precio">
-                                <li>US$279</li>
-                            </div>
-                        </ul>
-                        </div>
-                        <button><a href="">Añadir al carrito</a></button>
-                    </div>
-                    <div class="objeto">
-                        <div class="contenido">
-                        <img src="../img/Tablet.png" alt="No se encontro la imagen">
-                        <ul>
-                            <li>Tablet Samsung Galaxy</li>
-                            <li>Tab S10 Fe 8gb Ram</li>
-                            <li>128gb 10.9 Pulgadas Gris</li>
-                            <div class="precio">
-                                <li>US$900</li>
-                            </div>
-                        </ul>
-                        </div>
-                        <button><a href="">Añadir al carrito</a></button>
-                    </div>
-                    <div class="objeto">
-                        <div class="contenido">
-                        <img src="../img/Mando.png" alt="No se encontro la imagen">
-                        <ul>
-                            <li>GameSir Kaleid Color Negro</li>
-                            <li>Controlador con Efecto Hall</li>
-                            <li>Xbox X|S Support Negro</li>
-                            <div class="precio">
-                                <li>US$1.740</li>
-                            </div>
-                        </ul>
-                        </div>
-                        <button><a href="">Añadir al carrito</a></button>
-                    </div>
+
+                <article class="carta-producto">
+                    <a href="/Proyecto/html/paginaProducto.html" class="carta-producto-info">
+                        <img src="../img/Celulares.png" alt="Producto ...">
+                        <h3>Celular iphone 16 pro max</h3>
+                        <p>US$14.599</p>
+                    </a>
+                    <button>Agregar al Carrito<svg><use href="../img/iconos.svg#icono-carrito"></use></svg></button> 
+                </article>
+
+                <article class="carta-producto">
+                    <a href="/Proyecto/html/paginaProducto.html" class="carta-producto-info">
+                        <img src="../img/Celulares.png" alt="Producto ...">
+                        <h3>Celular iphone 16 pro max</h3>
+                        <p>US$14.599</p>
+                    </a>
+                    <button>Agregar al Carrito<svg><use href="../img/iconos.svg#icono-carrito"></use></svg></button> 
+                </article>
+
+                <article class="carta-producto">
+                    <a href="/Proyecto/html/paginaProducto.html" class="carta-producto-info">
+                        <img src="../img/Celulares.png" alt="Producto ...">
+                        <h3>Celular iphone 16 pro max</h3>
+                        <p>US$14.599</p>
+                    </a>
+                    <button>Agregar al Carrito<svg><use href="../img/iconos.svg#icono-carrito"></use></svg></button> 
+                </article>
+
+                <article class="carta-producto">
+                    <a href="/Proyecto/html/paginaProducto.html" class="carta-producto-info">
+                        <img src="../img/Celulares.png" alt="Producto ...">
+                        <h3>Celular iphone 16 pro max</h3>
+                        <p>US$14.599</p>
+                    </a>
+                    <button>Agregar al Carrito<svg><use href="../img/iconos.svg#icono-carrito"></use></svg></button> 
+                </article>
+
+                <article class="carta-producto">
+                    <a href="/Proyecto/html/paginaProducto.html" class="carta-producto-info">
+                        <img src="../img/Celulares.png" alt="Producto ...">
+                        <h3>Celular iphone 16 pro max</h3>
+                        <p>US$14.599</p>
+                    </a>
+                    <button>Agregar al Carrito<svg><use href="../img/iconos.svg#icono-carrito"></use></svg></button> 
+                </article>
+
+                <article class="carta-producto">
+                    <a href="/Proyecto/html/paginaProducto.html" class="carta-producto-info">
+                        <img src="../img/Celulares.png" alt="Producto ...">
+                        <h3>Celular iphone 16 pro max</h3>
+                        <p>US$14.599</p>
+                    </a>
+                    <button>Agregar al Carrito<svg><use href="../img/iconos.svg#icono-carrito"></use></svg></button> 
+                </article>
+
+                <article class="carta-producto">
+                    <a href="/Proyecto/html/paginaProducto.html" class="carta-producto-info">
+                        <img src="../img/Celulares.png" alt="Producto ...">
+                        <h3>Celular iphone 16 pro max</h3>
+                        <p>US$14.599</p>
+                    </a>
+                    <button>Agregar al Carrito<svg><use href="../img/iconos.svg#icono-carrito"></use></svg></button> 
+                </article>
+
+                <article class="carta-producto">
+                    <a href="/Proyecto/html/paginaProducto.html" class="carta-producto-info">
+                        <img src="../img/Celulares.png" alt="Producto ...">
+                        <h3>Celular iphone 16 pro max</h3>
+                        <p>US$14.599</p>
+                        
+                    </a>
+                    <button>Agregar al Carrito<svg><use href="../img/iconos.svg#icono-carrito"></use></svg></button> 
+                </article>
+
                 </div>
             </section>
         </main>
 
-        <!-- ------ FOOTER - SECTION ------ -->
+        <!-- ===================================
+        HEADER Y SUS NAVS DE TODAS LAS PAGINAS
+        =================================== -->
 
         <footer class="footer">
 

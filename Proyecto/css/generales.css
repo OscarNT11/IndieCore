@@ -1,4 +1,6 @@
-/* ----- RESETEO DEL SISTEMA ----- */
+/* ===================================
+CONFIGURACION GENERAL DE SISTEMA
+=================================== */
 
 * {
     margin: 0;
@@ -18,7 +20,9 @@ body {
     background-color: #292929;
 }
 
-/* -- AJUSTE DE TAGS GENERALES  -- */
+/* ===================================
+AJUSTES DE ETIQUETAS GENERALES
+=================================== */
 
 img {
     display: block;
@@ -27,7 +31,7 @@ img {
 }
 
 a {
-    /* display: block; */
+    display: block;
     text-decoration: none;
     color: inherit;
     cursor: pointer;
@@ -43,17 +47,25 @@ button {
 
 input, input::placeholder {
     font-family: inherit;
+    font-size: inherit;
     color: inherit;
+    outline: none;
+    border: none;
 }
 
-/* ------ HEADER - SECTION ------ */
+/* ===================================
+HEADER Y SUS NAVS DE TODAS LAS PAGINAS
+=================================== */
 
 .header {
     display: flex;
     flex-direction: column;
     position: sticky;
+
     width: 100%;
     max-height: 120px;
+    padding: 0.25rem 0.5rem;
+
     top: 0;
     z-index: 100;
 
@@ -67,13 +79,11 @@ input, input::placeholder {
     flex-direction: row;
     justify-content: space-evenly;
     align-items: center;
-    align-content: center;
 }
 
 #nav-superior {
     max-height: 80px;
     gap: 12px;
-    padding-right: 12px;
 }
 
 .header-logo {
@@ -92,12 +102,9 @@ input, input::placeholder {
     flex: 1;
 
     display: flex;
-    align-items: stretch;
-
-    background-color: #616161;
-    border-radius: 1.5rem;
     overflow: hidden;
 
+    border-radius: 1.5rem;
     transition: transform 250ms ease;
 }
 
@@ -108,16 +115,10 @@ input, input::placeholder {
 
 .header-busqueda input {
     flex: 1;
+    padding: 0 1rem;
 
-    border: none;
-    outline: none;
-    padding: 0px 16px;
     font-size: 1.4rem;
-    background-color: transparent;
-}
-
-.header-busqueda input::placeholder{
-    font-size: inherit;
+    background-color: #616161;
 }
 
 .header-busqueda button {
@@ -133,8 +134,8 @@ input, input::placeholder {
 }
 
 .header-busqueda button svg {
-    width: 32px;
-    height: 32px;
+    width: 2rem;
+    height: 2rem;
     
     fill: none;
     stroke: #ededed;
@@ -147,16 +148,14 @@ input, input::placeholder {
 }
 
 .btn-ingresar {
-    max-width: 210px;
     flex: 1;
+    max-width: 210px;
     
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
     align-items: center;
-    
-    padding: 4px 0 4px 4px;
-    background-color: transparent;
+
     transition: transform 100ms ease, opacity 100ms ease;
 }
 
@@ -178,7 +177,7 @@ input, input::placeholder {
     font-size:  1.4rem;
 }
 
-.btn-carrito-header {
+.btn-carrito {
     flex: 1;
 
     display: flex;
@@ -191,7 +190,7 @@ input, input::placeholder {
     transition: transform 100ms ease, opacity 100ms ease;
 }
 
-.btn-carrito-header svg {
+.btn-carrito svg {
     width: 40px;
     height: 48px;
     fill: none;
@@ -200,7 +199,7 @@ input, input::placeholder {
     flex-shrink: 0;
 }
 
-.btn-carrito-header:hover {
+.btn-carrito:hover {
     transform: scale(0.995);
     opacity: 0.8;
 }
@@ -254,7 +253,9 @@ input, input::placeholder {
     background-color: rgba(237, 237, 237, 0.75);
 }
 
-/* ------ FOOTER - SECTION ------ */
+/* ===================================
+            FOOTER AREA
+=================================== */
 
 .footer {
     background-color: #212121;
@@ -326,4 +327,75 @@ input, input::placeholder {
 
 #promociones-2 {
     background-image: url("../img/anuncioSwitch.png");
+}
+
+/* ===================================
+        TARJETA DE PRODUCTOS
+=================================== */
+
+.carta-producto {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+
+    flex: 1;
+    max-width: 420px;
+    min-height: 420px; 
+
+    background-color: #373737;
+    border-radius: 1rem;
+    padding: 2rem 1.5rem 1.5rem 1.5rem; 
+}
+
+.carta-producto-info {
+    width: 100%;
+    flex: 1;
+    max-height: 360px;
+    transition: opacity 200ms ease-in;
+}
+
+.carta-producto-info:hover {
+    opacity: 0.75;
+}
+
+.carta-producto-info h3 {
+    padding: 0.75rem 0;
+    font-size: 1.5rem;
+    text-align: center;
+    font-weight: 300;
+}
+
+.carta-producto-info p {
+    color: #556ceb;
+    font-size: 1.75rem;
+    text-align: center;
+}
+
+.carta-producto button {
+    background: linear-gradient(to right,#6a09e0,#3480d7);
+
+    display: flex;
+    flex: row;
+    justify-content: center;
+    align-items: center;
+
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    width: 100%; 
+    font-size: 1.4rem; 
+    margin-top: 1rem;
+    transition: filter 200ms ease-out;
+}
+
+.carta-producto button svg {
+    width: 40px;
+    height: 24px;
+    fill: none;
+    stroke: #ededed;
+    stroke-width: 2px;
+}
+
+.carta-producto button:hover {
+    filter: brightness(150%);
 }
