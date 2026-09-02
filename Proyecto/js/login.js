@@ -1,3 +1,5 @@
+/*INICIO DE SESION Y REGISTRO */
+
 const botonIngresar = document.querySelector(".btn-ingresar");
 
 const botonIngreso = document.getElementById("volver-login");
