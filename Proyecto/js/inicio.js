@@ -16,6 +16,8 @@ const formularioLogin = document.getElementById("login");
 
 const limite = 20;
 
+const minimo = 8;
+
 formularioLogin.addEventListener("submit", (evento) => {
 
     evento.preventDefault();
@@ -49,6 +51,10 @@ formularioRegistro.addEventListener("submit", (evento) => {
 
     if (contraseña.length > limite) {
         alert("La contraseña no puede superar los 20 caracteres");
+    }
+
+    if (contraseña.length <= minimo) {
+        alert("La contraseña debe superar los 7 caracteres");
     }
 
     const nombre = document.getElementById('ingresar-usua-registro').value;
