@@ -188,9 +188,16 @@ HEADER Y SUS NAVS DE TODAS LAS PAGINAS
 
 .btn-carrito svg {
     width: 40px;
-    height: 40px; /* Mantén proporción 1:1 para evitar distorsión */
-    color: #ededed; /* Controla el 'currentColor' de stroke y fill */
+    height: 40px; 
+    color: #ededed;
     flex-shrink: 0;
+}
+
+.btn-carrito span {
+    background-color: #3480d7;
+    border-radius: 50%;
+    padding-left: 5px;
+    padding-right: 5px;
 }
 
 /* ----------------------------------------------------------------- */

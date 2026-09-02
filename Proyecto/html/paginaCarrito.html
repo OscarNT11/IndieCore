@@ -46,8 +46,9 @@
 
                 <!-- BOTON / ENLACE QUE ABRE UNA VENTANA MODAL
                   (O DIRIGE A OTRA PARTE) DE LOS PRODUCTOS A COMPRAR -->
-                <a  href="#body"  class="btn-carrito">
-                    <svg><use href="../img/iconos.svg#icono-carrito"></use></svg>
+                <a href="" class="btn-carrito">
+                    <svg><use href="/Proyecto/img/iconos.svg#icono-carrito"></use></svg>
+                    <span id="contador-carrito">0</span>
                 </a>
 
             </div>
@@ -72,44 +73,13 @@
         <!-- MAIN SECTION -->
 
         <main class="main">
-            <section class="productos">
 
-                <section class="producto">
-                    <img src="../img/Celular.png" alt="">
-                    <form>
-                        <h2>Iphone 15 pro max</h2>
-                        <label for="">Cantidad: </label>
-                        <input type="number" value="1">
-                    </form>
-                    <h3 class="producto-precio">$1499.00</h3>
-                </section>
-
-                <section class="producto">
-                    <img src="../img/D_NQ_NP_860832-MLU78186417488_082024-O-Photoroom (1).png" alt="">
-                    <form>
-                        <h2>Tarjeta Gráfica</h2>
-                        <label for="">Cantidad: </label>
-                        <input type="number" value="1">
-                    </form>
-                    <h3 class="producto-precio">$1499.00</h3>
-                </section>
-
-                <section class="producto">
-                    <img src="../img/Auricualres redmi.png" alt="">
-                    <form>
-                        <h2>Auriculares Xiaomi</h2>
-                        <label for="">Cantidad: </label>
-                        <input type="number" value="1">
-                    </form>
-                        <h3 class="producto-precio">$1499.00</h3>
-                </section>
-            </section>
-
+            <section class="productos" id="lista-carrito"></section>
 
             <div class="contenedor-comprar">
                 <section class="comprar">
                     <p>Resumen de compras</p>
-                    <p>Cantidad de Productos (3)</p>
+                    <p id="cantidad-productos">Cantidad de Productos (0)</p>
                     <div class="comprar-precio">
                         <h2>Total: </h2>
                         <h2>$4997.00</h2>
@@ -118,7 +88,6 @@
                 </section>
             </div>
         </main>
-
         <!-- ------ FOOTER - SECTION ------ -->
 
         <footer class="footer">
@@ -255,6 +224,10 @@
             </div>
         </div>
 
+        <script src="../js/storage.js"></script>
+        <script src="../js/carrito.js"></script>
+        <script src="../js/catalogo.js"></script>
+        
         <script src="../js/login.js"></script>
 
     </body>
