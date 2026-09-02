@@ -84,11 +84,14 @@ main {
 .categorias {
     width: 100%;
     margin: 0 auto;
-    padding: 1rem 3rem;
+    padding: 1rem 1rem;
 
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    gap: 1rem;
+
+    overflow-x: auto;
     
     background-color: #444444;
 }
@@ -109,7 +112,8 @@ main {
 }
 
 .categorias-objeto img{
-    width:100px;
+    width: 100px;
+    min-width: 100px;
     height: 100px;
 
     border-radius: 50%;
@@ -145,12 +149,21 @@ main {
    OBJETOS
 ========================== */
 
-.contenedor-objetos {
+.contenedor-lo-nuevo {
     padding: 0 2rem;
-    display: flex;
-    flex-direction: row;
+    
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
 
     width: 100%;
+    gap: 1.5rem;
+}
+
+.contenedor-destacado {
+    padding: 0 2rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    
     gap: 1.5rem;
 }
 
@@ -163,11 +176,10 @@ main {
 
 #cat-variadas{
     width: 100%;
-    margin: 0 auto;
+    padding: 0 1rem;
 }
 
 #cat-arriba{
-    width: 94%;
     margin: 0 auto;
     margin-bottom: 20px;
     margin-top: 20px;
@@ -201,10 +213,6 @@ main {
     cursor: pointer;
     padding: 0 40px;
     margin-right: -40px;
-}
-
-#img-cat-internos img:hover{
-    /* width: 120%; */
 }
 
 #img-cat-internos{
@@ -267,8 +275,6 @@ main {
 }
 
 #cate-larga{
-    width: 94%;
-    margin: 0 auto;
     background: linear-gradient(to right, #303030, #747474);
     border-radius: 25px;
     display: flex;
@@ -277,17 +283,6 @@ main {
     color: white;
     text-align: center;
     text-transform: uppercase;
-}
-
-#img-cat-larga img{
-    display: block;
-    width: 100%;
-    max-width: 2000px;
-    height: auto;
-}
-
-#img-cat-larga img:hover{
-    /* width: 120%; */
 }
 
 #cont-cat-larga{

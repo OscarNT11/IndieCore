@@ -1,28 +1,27 @@
 /* =============================================================
 LIST
 ================================================================ */
-.sectionlist {
-display: flex;
-height: auto;
-width: 100%;
+.main {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+
 }
 /* ==========================
 atributos o categoria para los producto
 ========================== */
 .atributos{
-overflow-y: auto;
-display: flex;
-height: 80vh;
-width: 12%;
-background-color: #111111;
-position: sticky;
-top: 21%;
-left: 0%}
+    flex: 1;
+    max-width: 200px;
+    height: 80dvh;
 
-.lista-atributos{
- margin-left: 5%;
-height: 100%;
-width: 100%; }
+
+    overflow-y: auto;
+    display: flex;
+    background-color: #171717;
+    position: sticky;
+    top: calc(120px + 0.5rem);
+}
 
 .atributo{
 padding: 8px 0px 4px 4px;
@@ -37,45 +36,10 @@ list-style-type: none;
 productos
 ========================== */
 .lista-productos{
-display: flex;
-margin: 1%;
-flex-wrap: wrap;
-width: 86%;
-height: 100%;
-justify-content: center;
+    flex: 1;
+
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem;
+    padding: 0.5rem 1rem;
 }
-
-.producto{ 
-min-width: 180px;
-width: 20%;
-height: 300px;
-background-color: #373737;
-padding: 1%;
-margin: 1%;
-display: inline-block;
-vertical-align: middle;
-justify-content: center;
-}
-
-.img-producto{
-margin-bottom: 5%;
- width: 100%;
-height: 40%;
-}
-
-.precio{
-color: rgb(0, 94, 255);}
-
-.carrito{
-margin-top: 10%;
-width: 77%;
-height: 9%;
-background-color: transparent;
-justify-content: center;
-margin-left: 10%;
-border-color: rgb(243, 244, 246);}
-/* ==========================
-cambio de pagina
-========================== */
-.CambioDePagina{
-display: block; height: 30px; margin-left: 50%;}

@@ -82,7 +82,7 @@ HEADER Y SUS NAVS DE TODAS LAS PAGINAS
 }
 
 #nav-superior {
-    max-height: 80px;
+    max-height: 75px;
     gap: 12px;
 }
 
@@ -137,9 +137,7 @@ HEADER Y SUS NAVS DE TODAS LAS PAGINAS
     width: 2rem;
     height: 2rem;
     
-    fill: none;
-    stroke: #ededed;
-    stroke-width: 2px;
+    color: #ededed;
     transition: opacity 200ms ease;
 }
 
@@ -165,11 +163,9 @@ HEADER Y SUS NAVS DE TODAS LAS PAGINAS
 }
 
 .btn-ingresar svg {
-    width: 36px;
-    height: 48px;
-    fill: none;
-    stroke: #ededed;
-    stroke-width: 2px;
+    width: 40px;
+    height: 40px;
+    color: #ededed;
     flex-shrink: 0;
 }
 
@@ -192,12 +188,12 @@ HEADER Y SUS NAVS DE TODAS LAS PAGINAS
 
 .btn-carrito svg {
     width: 40px;
-    height: 48px;
-    fill: none;
-    stroke: #ededed;
-    stroke-width: 2px;
+    height: 40px; /* Mantén proporción 1:1 para evitar distorsión */
+    color: #ededed; /* Controla el 'currentColor' de stroke y fill */
     flex-shrink: 0;
 }
+
+/* ----------------------------------------------------------------- */
 
 .btn-carrito:hover {
     transform: scale(0.995);
@@ -205,8 +201,9 @@ HEADER Y SUS NAVS DE TODAS LAS PAGINAS
 }
 
 #nav-inferior {
-    max-height: 40px;
-    padding-bottom: 1rem;
+    max-height: 45px;
+    padding: 0.2 0 0.3rem 0;
+    overflow: hidden;
 }
 
 .nav-list {
@@ -266,6 +263,7 @@ HEADER Y SUS NAVS DE TODAS LAS PAGINAS
     width: 100%;
 
     display: flex;
+    flex-wrap: wrap;
     flex-direction: row;
     justify-content: space-evenly;
 
@@ -284,6 +282,7 @@ HEADER Y SUS NAVS DE TODAS LAS PAGINAS
     flex-direction: row;
     justify-content: space-between;
 
+    padding: 0.75rem;
     align-items: center;
 }
 
@@ -340,6 +339,7 @@ HEADER Y SUS NAVS DE TODAS LAS PAGINAS
     align-items: center;
 
     flex: 1;
+    min-width: 240px;
     max-width: 420px;
     min-height: 420px; 
 
