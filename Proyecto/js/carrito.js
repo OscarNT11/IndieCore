@@ -18,6 +18,36 @@ function actualizarContador() {
 
 actualizarContador();
 
+function actualizarResumen() {
+
+    const carrito = obtenerCarrito();
+
+    const cantidadProductos = document.getElementById("cantidad-productos");
+    const totalCarrito = document.getElementById("total-carrito");
+
+    if (!cantidadProductos || !totalCarrito) return;
+
+    let cantidadTotal = 0;
+    let total = 0;
+
+    carrito.forEach((producto) => {
+
+        const cantidad = Number(producto.cantidad) || 1;
+
+        cantidadTotal += cantidad;
+
+        const precio = Number(
+            producto.precio.replace("US$", "").replace("$", "").replace(".", "").replace(",", ".")
+        );
+
+        total += precio * cantidad;
+    });
+
+    cantidadProductos.textContent = `Cantidad de Productos (${cantidadTotal})`;
+
+    totalCarrito.textContent = `$${total.toFixed(2)}`;
+}
+
 function mostrarCarrito() {
 
     const carrito = obtenerCarrito();
@@ -74,6 +104,8 @@ function mostrarCarrito() {
             actualizarContador();
 
             mostrarCarrito();
+
+            actualizarResumen();
         });
 
         lista.appendChild(tarjeta);
@@ -81,5 +113,7 @@ function mostrarCarrito() {
 }
 
 mostrarCarrito();
+
+actualizarResumen();
 
 
