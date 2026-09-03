@@ -133,12 +133,12 @@ main {
    la seccion de productos nuevos
 ========================== */
 
-.lo-nuevo{
+#lo-nuevo{
     width: 100%;
     margin: 0 auto;
 }
 
-.lo-nuevo h2 {
+#lo-nuevo h2 {
     text-transform: uppercase;
     margin: 20px;
     margin-left: 40px;
