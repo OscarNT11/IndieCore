@@ -36,11 +36,12 @@ function actualizarResumen() {
 
         cantidadTotal += cantidad;
 
-        const precio = Number(
-            producto.precio.replace("US$", "").replace("$", "").replace(".", "").replace(",", ".")
-        );
+        const precioLimpio = producto.precio.replace("US$", "").replace("$", "").trim();
+
+        const precio = Number(precioLimpio) || 0;
 
         total += precio * cantidad;
+    
     });
 
     cantidadProductos.textContent = `Cantidad de Productos (${cantidadTotal})`;
