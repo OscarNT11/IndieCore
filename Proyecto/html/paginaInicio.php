@@ -1,3 +1,6 @@
+<?php
+include ("tarjetas.php");
+?>
 <!DOCTYPE html>
 <html>
 
@@ -11,20 +14,22 @@
         <link href="https://fonts.googleapis.com/css2?family=Playfair:ital,opsz,wght@0,5..1200,300..900;1,5..1200,300..900&display=swap" rel="stylesheet">
 
         <link rel="stylesheet" href="../css/generales.css">
-        <link rel="stylesheet" href="../css/paginaCarrito.css">
+        <link rel="stylesheet" href="../css/paginaInicio.css">
         <link rel="stylesheet" href="../css/responsiveDesign.css">
     </head>
 
     <body id="body">
 
-    <!-- HEADER SECTION -->
+        <!-- ==================================
+        HEADER Y SUS NAVS DE TODAS LAS PAGINAS
+        =================================== --> 
 
         <header class="header">
 
             <div class="header-nav" id="nav-superior">
 
                 <!-- LOGO A ENLACE -->
-                <a href="paginainicio.php" class="header-logo">
+                <a href="#body" class="header-logo">
                 <img src="../img/logoTecnoParts.png" alt="Logo Tecno Parts">
                 </a>
 
@@ -33,20 +38,20 @@
                     <input type="text" placeholder="Buscar...">
                     <!-- BOTON SUBMIT QUE BUSQUE LO SOLICITADO -->
                     <button type="submit" aria-label="lupa">
-                        <svg><use href="../img/iconos.svg#icono-lupa"></use></svg>
+                        <svg><use href="/Proyecto/img/iconos.svg#icono-lupa"></use></svg>
                     </button>
 
                 </form>
 
                 <!-- BOTON / ENLACE QUE ABRA UNA VENTANA MODAL DE FORMULARIO  -->
                 <button class="btn-ingresar">
-                    <svg><use href="../img/iconos.svg#icono-persona"></use></svg>
+                    <svg><use href="/Proyecto/img/iconos.svg#icono-persona"></use></svg>
                     <p>Iniciar Sesion</p>
                 </button>
 
                 <!-- BOTON / ENLACE QUE ABRE UNA VENTANA MODAL
                   (O DIRIGE A OTRA PARTE) DE LOS PRODUCTOS A COMPRAR -->
-                <a href="" class="btn-carrito">
+                <a href="paginaCarrito.html" class="btn-carrito">
                     <svg><use href="/Proyecto/img/iconos.svg#icono-carrito"></use></svg>
                     <span id="contador-carrito">0</span>
                 </a>
@@ -57,34 +62,198 @@
             <nav class="header-nav" id="nav-inferior">
                 <ul class="nav-list">
                     <li class="nav-item"><a href="paginaListado.php">Catalogo</a></li>
-                    <li class="nav-item"><a href="paginainicio.php#lo-nuevo">Nuevo</a></li>
-                    <li class="nav-item"><a href="paginainicio.php#destacados">Destacado</a></li>
-                    <li class="nav-item"><a href="paginainicio.php#redes">Contactanos</a></li>
+                    <li class="nav-item"><a href="#lo-nuevo">Nuevo</a></li>
+                    <li class="nav-item"><a href="#destacados">Destacado</a></li>
+                    <li class="nav-item"><a href="#redes">Contactanos</a></li>
                 </ul>
             </nav>
 
 
         </header>
 
-        <!-- MAIN SECTION -->
+        <!-- ==================================
+        MAIN Y SUS SECTIONS
+        =================================== --> 
 
         <main class="main">
 
-            <section class="productos" id="lista-carrito"></section>
+            <!-- HERO - SECTION -->
+            
+            <section class="hero">
+                <div class="hero-txt">
+                    <h2>Tarjetas<br>gráficas</h2>
+                    <a href="paginaListado.php">Ver más...</a>
+                </div>
+                <div class="hero-imgs">
+                    <img src="../img/grafica rtx 5090.png" alt="No" id="grafica-1">
+                    <img src="../img/GPU_ASRock_Radeon_RX7600_Challenger_OC_8Gb_1-600x600-Photoroom (1).png" alt="No" id="grafica-2">
+                    <img src="../img/D_NQ_NP_860832-MLU78186417488_082024-O-Photoroom (1).png" alt="No" id="grafica-3">
+                </div>
+            </section>
 
-            <div class="contenedor-comprar">
-                <section class="comprar">
-                    <p>Resumen de compras</p>
-                    <p id="cantidad-productos">Cantidad de Productos (0)</p>
-                    <div class="comprar-precio">
-                        <h2>Total: </h2>
-                        <h2 id="total-carrito">$0.00</h2>
+            <!-- CATEGORIAS -->
+            
+            <section class="categorias">
+
+                <a href="paginaListado.php" class="categoria-link">
+                    <div class="categorias-objeto">
+                    <img src="../img/Teclado.png" alt="Imagen de Teclado">
+                    <h2>Teclados</h2>
                     </div>
-                    <button>Finalizar Compra</button>
-                </section>
+                </a>
+
+                <a href="paginaListado.php" class="categoria-link">
+                    <div class="categorias-objeto">
+                    <img src="../img/Monitor.png" alt="Imagen de Monitor">
+                    <h2>Monitores</h2>
+                    </div>
+                </a>
+
+                <a href="paginaListado.php" class="categoria-link">
+                    <div class="categorias-objeto">
+                    <img src="../img/Celular.png" alt="Imagen de Celular">
+                    <h2>Celulares</h2>
+                    </div>
+                </a>
+
+                <a href="paginaListado.php" class="categoria-link">
+                    <div class="categorias-objeto">
+                    <img src="../img/Consola.png" alt="Imagen de Consola">
+                    <h2>Consolas</h2>
+                    </div>
+                </a>
+
+                <a href="paginaListado.php" class="categoria-link">
+                    <div class="categorias-objeto">
+                    <img src="../img/Auriculares.png" alt="Imagen de Auriculares">
+                    <h2>Auriculares</h2>
+                    </div>
+                </a>
+
+                <a href="paginaListado.php" class="categoria-link">
+                    <div class="categorias-objeto">
+                    <img src="../img/Notebook.png" alt="Imagen de Notebook">
+                    <h2>Notebooks</h2>
+                    </div>
+                </a>
+
+                <a href="paginaListado.php" class="categoria-link">
+                    <div class="categorias-objeto">
+                    <img src="../img/Tarjetas graficas.png" alt="Imagen de Tarjeta Gráfica">
+                    <h2>Tarjetas G.</h2>
+                    </div>
+                </a>
+
+                <a href="paginaListado.php" class="categoria-link">
+                    <div class="categorias-objeto">
+                    <img src="../img/Mause.png" alt="Imagen de Mouse">
+                    <h2>Mouse</h2>
+                    </div>
+                </a>
+
+                
+            </section>
+
+            <!-- LO NUEVO -->
+            <section id="lo-nuevo">
+                <h2>Lo nuevo</h2>
+
+                <div class="contenedor-lo-nuevo">
+
+                <?php tarjetaid($conn, 1); ?>
+
+               <?php tarjetaid($conn, 2); ?>
+
+                <?php tarjetaid($conn, 3); ?>
+
+                <?php tarjetaid($conn, 4); ?>
+
             </div>
+
+            </section>
+
+            <!-- ==========================
+            CATEGORIAS VARIADAS
+            Seccion con 3 categorias principales
+            e importantes que estan destacadas
+            en la parte media de la pagina
+            ========================== -->
+            <section id="cat-variadas">
+
+                <div id="cat-arriba">
+
+                    <div id="cate-internos">
+                        <div id="img-cat-internos">
+                            <img src="../img/Grafica-edit.png" alt="No se encontro la imagen">
+                        </div>
+                        <div id="cont-cat-internos">
+                            <h2>Componentes
+                                <br> internos</h2>
+                            <button><a href="paginaListado.php">Entrar</a></button>
+                        </div>
+                    </div>
+
+                    <div id="cate-perifericos">
+                        <div id="cont-cat-perifericos">
+                            <h2>Perifericos</h2>
+                            <button><a href="paginaListado.php">Entrar</a></button>
+                        </div>
+                        <div id="img-cat-perifericos">
+                            <img src="../img/Mouse-edit.png" alt="No se encontro la imagen">
+                        </div>
+                    </div>
+
+                </div>
+
+                <div id="cate-larga">
+                    <div id="img-cat-larga">
+                        <img src="../img/Celulares-edit.png" alt="No se encontro la imagen">
+                    </div>
+                    <div id="cont-cat-larga">
+                        <h2>Otros 
+                            <br> dispositivos</h2>
+                        <button><a href="paginaListado.php">Entrar</a></button>
+                    </div>
+                </div>
+
+            </section>
+
+            <!-- ==========================
+            DESTACADOS
+            Seccion de la pagina donde se muestran 
+            productos como en "LO NUEVO" pero en este caso,
+            mostrando productos destacados, sean muy vendidos,
+            populares o con buenas reseñas
+            ========================== -->
+            <section id="destacados">
+
+                <h2>Destacados</h2>
+
+                <div class="contenedor-destacado">
+
+                <?php tarjetaid($conn, 5); ?>
+
+                <?php tarjetaid($conn, 6); ?>
+
+                <?php tarjetaid($conn, 7); ?>
+
+                <?php tarjetaid($conn, 8); ?>
+
+                <?php tarjetaid($conn, 9); ?>
+
+                <?php tarjetaid($conn, 10); ?>
+
+                <?php tarjetaid($conn, 11); ?>
+
+               <?php tarjetaid($conn, 12); ?>
+
+                </div>
+            </section>
         </main>
-        <!-- ------ FOOTER - SECTION ------ -->
+
+        <!-- ===================================
+        HEADER Y SUS NAVS DE TODAS LAS PAGINAS
+        =================================== -->
 
         <footer class="footer">
 
@@ -223,7 +392,7 @@
         <script src="../js/storage.js"></script>
         <script src="../js/carrito.js"></script>
         <script src="../js/catalogo.js"></script>
-        
+
         <script src="../js/login.js"></script>
 
     </body>

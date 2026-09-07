@@ -1,5 +1,8 @@
+<?php
+include ("tarjetas.php");
+?>
 <!-- ==========================
-    Oscar Nuñes 12/7/2026
+    Lucio Sosa 12/7/2026
     ========================== -->
 <!DOCTYPE html>
 <html>
@@ -7,26 +10,34 @@
     HEAD
     Configuración de la distribución de idioma,
     determinar el dispositivo viewport, los links a distintas
-    fuentes de texto y el link a el CSS
+    fuentes de texto y el link a el CSS igual que en el de paginainicio
     ========================== -->
     <head>
+        <title>lista</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        
+
         <link rel="stylesheet" href="../css/generales.css">
-        <link rel="stylesheet" href="../css/paginaProducto.css">
+        <link rel="stylesheet" href="../css/css-listado.css">
         <link rel="stylesheet" href="../css/responsiveDesign.css">
+
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Playfair:ital,opsz,wght@0,5..1200,300..900;1,5..1200,300..900&display=swap" rel="stylesheet">
+    <link rel="icon" href="../img/Tecno Parts logo.png">
     </head>
+ <!-- ==========================
+       body
+       aqui hay varios productos que seran reunidos por 
+       una categoria de eleccion
+            ========================== -->
     <body>
-        <!-- ==========================
-        NAV
-        Configuración de el nav de la pagina,
-        usando imagenes, links, y espacios de texto
-        ========================== -->
+         <!-- ==========================
+             header
+             hay pequeños cambios como clase para los link 
+             y que el link "menu" ya no esta en un div
+            ========================== -->
         <header class="header">
 
             <div class="header-nav" id="nav-superior">
@@ -64,7 +75,7 @@
                 <!-- AQUÍ VA EL VERDEDADERO NAV, ENLACES DE ANCLAS -->
             <nav class="header-nav" id="nav-inferior">
                 <ul class="nav-list">
-                    <li class="nav-item"><a href="paginaListado.php">Catalogo</a></li>
+                    <li class="nav-item"><a href="">Catalogo</a></li>
                     <li class="nav-item"><a href="paginainicio.php#lo-nuevo">Nuevo</a></li>
                     <li class="nav-item"><a href="paginainicio.php#destacados">Destacado</a></li>
                     <li class="nav-item"><a href="paginainicio.php#redes">Contactanos</a></li>
@@ -73,180 +84,70 @@
 
 
         </header>
+         <!-- ==========================
+             main
+             seccion principal
+            ========================== -->
+        <main class="main">
+         <!-- ==========================
+             estos son los pocibles atributos
+             a seleccionar
+            ========================== -->
+         <div class="atributos">
+            <ol class="lista-atributos">
+            <li class="atributo"><a href="./paginaListado.php">Sonido</a></li>
+            <li class="atributo"><a href="./paginaListado.php">Visual</a></li>
+            <li class="atributo"><a href="./paginaListado.php">memoria</a></li>
+            <li class="atributo"><a href="./paginaListado.php">procesamiento</a></li>
+            <li class="atributo"><a href="./paginaListado.php">aparato</a></li>
+            <li class="atributo"><a href="./paginaListado.php">electrodomestico</a></li>
+            <li class="atributo"><a href="./paginaListado.php">pantallas</a></li>
+            <li class="atributo"><a href="./paginaListado.php">reparacion</a></li>
+            <li class="atributo"><a href="./paginaListado.php">monitores</a></li>
+            <li class="atributo"><a href="./paginaListado.php">videjuegos</a></li>
+            <li class="atributo"><a href="./paginaListado.php">consolas</a></li>
+            <li class="atributo"><a href="./paginaListado.php">ropa</a></li>
+            <li class="atributo"><a href="./paginaListado.php">ejercicio</a></li>
+            <li class="atributo"><a href="./paginaListado.php">baterias</a></li>
+            <li class="atributo"><a href="./paginaListado.php">accesorios</a></li>
+            <li class="atributo"><a href="./paginaListado.php">cables</a></li>
+             
 
-        <main>
-            <!-- ==========================
-        DETALLES PRINCIPALES
-        ========================== -->
+           </ol>
+         </div>
 
-           <section class="venta-producto">
-
-            <div class="producto-principal">
-                <picture class="imagen-producto">
-                    <img src="../img/grafica rtx 5090.png" alt="Imagen de grafica rtx 5090">
-                </picture>
-
-                <article class="tarjeta-producto">
-                    <h2>GeForce RTX 5900 WINDFORCE 32Gar</h2>
-                    <p class="producto-precio"><strong>UYU 6 696</strong></p>
-                    <p>En 12 cuotas de: UYU ### <p>
-
-                    <ul class="producto-caracteristicas">
-                    <h3>Características del Producto</h3>
-                        <li class="caracteristica">Desarrollado con la arquitectura NVIDIA Blackwell</li>
-                        <li class="caracteristica">Desaraollado con GeForce RTXᵀᴹ 590</li>
-                        <li class="caracteristica">Integrado con interfaz de memoria GDD57 de 512 bits ed 32GB</li>
-                        <li class="caracteristica">Sistema de Refrigeración WINDFORCE</li>
-                        <li class="caracteristica">Ventilador HAWK</li>
-                        <li class="caracteristica">Gel conductor térmico de calidad de servidor</li>
-                        <li class="caracteristica">BIOS dual (Rendimiento / Silencioso)</li>
-                        <li class="caracteristica">Soporto VGA Versátil</li>
-                    </ul>
-
+             <!-- ==========================
+             son 12 productos cada uno con imagen,nombre y precio
+            ========================== -->
+        <div class="lista-productos">
         
-                    <form class="carrito-form">
+            <?php tarjetaid($conn, 1); ?>
 
-                        <div class="cantidad-contenedor">
-                            <label for="cantidad">Cantidad :</label>
-                            <input type="number" id="cantidad" name="quantity" value="1" min="1">
-                        </div>
+            <?php tarjetaid($conn, 2); ?>
 
-                        <button type="submit" class="producto-carrito">
-                            <span>Añadir al carrito</span>
-                              <img src="../img/Carrito.png" alt="Carrito" class="icono-carrito">                           </button>
-                        </form>
+            <?php tarjetaid($conn, 3); ?>
 
-                </article>
-            </div>
+            <?php tarjetaid($conn, 4); ?>
 
-            <div class="especificaciones-producto">
-                <details class="especificaciones-toggle">
-                <summary>Ver Especificaciones Técnicas</summary>
-  
-                <div class="contenido-especificaciones">
-                    <h3>Detalles del Producto</h3>
-                        <ul>
-                        <li><strong>Modelo:</strong> Gigabyte GeForce RTX 5090 GAMING OC 32G</li>
-                        <li><strong>Memoria:</strong> 32 GB GDDR7 SDRAM</li>
-                        <li><strong>Tipo de bus:</strong> PCI Express 5.0 (Ancho de 512 bits)</li>
-                        <li><strong>Motor gráfico:</strong> NVIDIA GeForce RTX 5090 (Arquitectura Blackwell)</li>
-                        <li><strong>Velocidad de memoria:</strong> 28 Gbps</li>
-                        <li><strong>Núcleos CUDA:</strong> 21760</li>
-                        <li><strong>Resolución máxima:</strong> 7680 x 4320</li>
-                        <li><strong>Interfaces:</strong> 3 x DisplayPort 2.1a / 1 x HDMI</li>
-                        <li><strong>Monitores soportados:</strong> Máximo 4</li>
-                        <li><strong>Dimensiones:</strong> 34.2 cm (Profundidad) x 15.2 cm (Altura) x 7 cm (Anchura)</li>
-                        <li><strong>Fuente recomendada:</strong> 1000 W</li>
-                        <li><strong>Conector de alimentación:</strong> 16 pines (Adaptador incluido: 4x8 pines a cable 12VHPWR)</li>
-                        <li><strong>Garantía:</strong> 3 años de garantía general</li>
-                        </ul>
-                    <div class="contenido-destacado">
-                    <h3>Características Destacadas</h3>
-                    <p>Refrigeración GIGABYTE WINDFORCE con diseño de ventilador triple, Vapor chamber, GIGABYTE RGB Halo, Dual Bios, NVIDIA DLSS 4, NVIDIA Reflex 2, Ray Tracing Cores de 4ª gen y Tensor Cores de 5ª gen.</p>
-                    </div>
-                </div>
-                </details>
-            </div>
+            <?php tarjetaid($conn, 5); ?>
 
-           </section>
-           
-           
-           <!-- ==========================
-           DUDAS CLIENTE
-        ========================== -->
+            <?php tarjetaid($conn, 6); ?>
 
-           <section class="dudas">
-                <div class="divisor-negro"></div>
-                <h2>Opiniones del Producto</h2>
-                <form action="">
-                    <input type="text" name="question" id="question" placeholder = "Escribe una pregunta...">
-                    <button type="submit">Enviar</button>
-                </form>
+            <?php tarjetaid($conn, 7); ?>
 
-                <details class="dudas-toggle">
-                    <summary>Reseñas y Preguntas de otros Usuarios: </summary>
-                    <div class="dudas-contenido">
-                        <p>Aquí irán todas las reseñas que se encuentren en la BD! </p>
-                    </div>
-                </details>
+            <?php tarjetaid($conn, 8); ?>
 
+            <?php tarjetaid($conn, 9); ?>
 
-            </section>
+            <?php tarjetaid($conn, 10); ?>  
 
-           <!-- ==========================
-           PRODUCTOS RELACIONADOS
-        ========================== -->
-           <section class="productos-relacionados">
-                <div class="divisor-negro"></div>
-                <h2>Productos Relacionados</h2>
+            <?php tarjetaid($conn, 11); ?>
 
-                <div class="productos-contenedor">
-
-                <article class="carta-producto">
-                    <a href="/Proyecto/html/paginaProducto.html" class="carta-producto-info">
-                        <img src="../img/Celulares.png" alt="Producto ...">
-                        <h3>Celular iphone 16 pro max</h3>
-                        <p>US$14.599</p>
-                    </a>
-                    <button class="btn-agregar-carrito">
-                        Agregar al Carrito
-                        <svg>
-                            <use href="../img/iconos.svg#icono-carrito"></use>
-                        </svg>
-                    </button>   
-            </article>
-
-                <article class="carta-producto">
-                    <a href="/Proyecto/html/paginaProducto.html" class="carta-producto-info">
-                        <img src="../img/Celulares.png" alt="Producto ...">
-                        <h3>Celular iphone 16 pro max</h3>
-                        <p>US$14.599</p>
-                    </a>
-                    <button class="btn-agregar-carrito">
-                        Agregar al Carrito
-                        <svg>
-                            <use href="../img/iconos.svg#icono-carrito"></use>
-                        </svg>
-                    </button>   
-            </article>
-
-                <article class="carta-producto">
-                    <a href="/Proyecto/html/paginaProducto.html" class="carta-producto-info">
-                        <img src="../img/Celulares.png" alt="Producto ...">
-                        <h3>Celular iphone 16 pro max</h3>
-                        <p>US$14.599</p>
-                    </a>
-                    <button class="btn-agregar-carrito">
-                        Agregar al Carrito
-                        <svg>
-                            <use href="../img/iconos.svg#icono-carrito"></use>
-                        </svg>
-                    </button>   
-            </article>
-
-                <article class="carta-producto">
-                    <a href="/Proyecto/html/paginaProducto.html" class="carta-producto-info">
-                        <img src="../img/Celulares.png" alt="Producto ...">
-                        <h3>Celular iphone 16 pro max</h3>
-                        <p>US$14.599</p>
-                    </a>
-                    <button class="btn-agregar-carrito">
-                        Agregar al Carrito
-                        <svg>
-                            <use href="../img/iconos.svg#icono-carrito"></use>
-                        </svg>
-                    </button>   
-            </article>
-                    
-
-                
-                </div>
-            
-           </section>
-
+            <?php tarjetaid($conn, 12); ?>
+        </div>
+        
         </main>
-
-
+ 
         <!-- ------ FOOTER - SECTION ------ -->
 
         <footer class="footer">
@@ -284,7 +185,7 @@
                 </div>
 
             </section>
-            
+
             <section id="promociones">
                 <div class="promociones-img" id="promociones-1"></div>
                 <div class="promociones-img" id="promociones-2"></div>
@@ -385,4 +286,3 @@
         <script src="../js/login.js"></script>
 
     </body>
-</html>
