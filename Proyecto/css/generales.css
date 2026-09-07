@@ -6,7 +6,7 @@ CONFIGURACION GENERAL DE SISTEMA
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    scroll-behavior: smooth;
+    scroll-behavior: smooth; /* Configurar el sistema para permitir efectos de animacion */
 }
 
 html {
