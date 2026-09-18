@@ -1,0 +1,384 @@
+<!-- ==========================
+    Oscar Nuñes 12/7/2026
+    ========================== -->
+<!DOCTYPE html>
+<html>
+    <!-- ==========================
+    HEAD
+    Configuración de la distribución de idioma,
+    determinar el dispositivo viewport, los links a distintas
+    fuentes de texto y el link a el CSS
+    ========================== -->
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="stylesheet" href="public/css/generales.css">
+        <link rel="stylesheet" href="public/css/paginaProducto.css">
+        <link rel="stylesheet" href="public/css/responsiveDesign.css">
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Playfair:ital,opsz,wght@0,5..1200,300..900;1,5..1200,300..900&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <!-- ==========================
+        NAV
+        Configuración de el nav de la pagina,
+        usando imagenes, links, y espacios de texto
+        ========================== -->
+        <header class="header">
+
+            <div class="header-nav" id="nav-superior">
+
+                <!-- LOGO A ENLACE -->
+                <a href="paginainicio.php" class="header-logo">
+                <img src="public/img/logoTecnoParts.png" alt="Logo Tecno Parts">
+                </a>
+
+                <!-- FORMULARIO PARA BUSCAR DETERMINADO PRODUCTO / SESION -->
+                <form class="header-busqueda">
+                    <input type="text" placeholder="Buscar...">
+                    <!-- BOTON SUBMIT QUE BUSQUE LO SOLICITADO -->
+                    <button type="submit" aria-label="lupa">
+                        <svg><use href="public/img/iconos.svg#icono-lupa"></use></svg>
+                    </button>
+
+                </form>
+
+                <!-- BOTON / ENLACE QUE ABRA UNA VENTANA MODAL DE FORMULARIO  -->
+                <button class="btn-ingresar">
+                    <svg><use href="public/img/iconos.svg#icono-persona"></use></svg>
+                    <p>Iniciar Sesion</p>
+                </button>
+
+                <!-- BOTON / ENLACE QUE ABRE UNA VENTANA MODAL
+                  (O DIRIGE A OTRA PARTE) DE LOS PRODUCTOS A COMPRAR -->
+                <a href="index.php?pagina=carrito" class="btn-carrito">
+                    <svg><use href="public/img/iconos.svg#icono-carrito"></use></svg>
+                    <span id="contador-carrito">0</span>
+                </a>
+
+            </div>
+
+                <!-- AQUÍ VA EL VERDEDADERO NAV, ENLACES DE ANCLAS -->
+            <nav class="header-nav" id="nav-inferior">
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="paginaListado.php">Catalogo</a></li>
+                    <li class="nav-item"><a href="paginainicio.php#lo-nuevo">Nuevo</a></li>
+                    <li class="nav-item"><a href="paginainicio.php#destacados">Destacado</a></li>
+                    <li class="nav-item"><a href="paginainicio.php#redes">Contactanos</a></li>
+                </ul>
+            </nav>
+
+        </header>
+
+        <main>
+            <!-- ==========================
+        DETALLES PRINCIPALES
+        ========================== -->
+
+           <section class="venta-producto">
+
+            <div class="producto-principal">
+                <picture class="imagen-producto">
+                    <img src="public/img/grafica rtx 5090.png" alt="Imagen de grafica rtx 5090">
+                </picture>
+
+                <article class="tarjeta-producto">
+                    <h2>GeForce RTX 5900 WINDFORCE 32Gar</h2>
+                    <p class="producto-precio"><strong>UYU 6 696</strong></p>
+                    <p>En 12 cuotas de: UYU ### <p>
+
+                    <ul class="producto-caracteristicas">
+                    <h3>Características del Producto</h3>
+                        <li class="caracteristica">Desarrollado con la arquitectura NVIDIA Blackwell</li>
+                        <li class="caracteristica">Desaraollado con GeForce RTXᵀᴹ 590</li>
+                        <li class="caracteristica">Integrado con interfaz de memoria GDD57 de 512 bits ed 32GB</li>
+                        <li class="caracteristica">Sistema de Refrigeración WINDFORCE</li>
+                        <li class="caracteristica">Ventilador HAWK</li>
+                        <li class="caracteristica">Gel conductor térmico de calidad de servidor</li>
+                        <li class="caracteristica">BIOS dual (Rendimiento / Silencioso)</li>
+                        <li class="caracteristica">Soporto VGA Versátil</li>
+                    </ul>
+
+
+                    <form class="carrito-form">
+
+                        <div class="cantidad-contenedor">
+                            <label for="cantidad">Cantidad :</label>
+                            <input type="number" id="cantidad" name="quantity" value="1" min="1">
+                        </div>
+
+                        <button type="submit" class="producto-carrito">
+                            <span>Añadir al carrito</span>
+                              <img src="public/img/Carrito.png" alt="Carrito" class="icono-carrito">                           </button>
+                        </form>
+
+                </article>
+            </div>
+
+            <div class="especificaciones-producto">
+                <details class="especificaciones-toggle">
+                <summary>Ver Especificaciones Técnicas</summary>
+
+                <div class="contenido-especificaciones">
+                    <h3>Detalles del Producto</h3>
+                        <ul>
+                        <li><strong>Modelo:</strong> Gigabyte GeForce RTX 5090 GAMING OC 32G</li>
+                        <li><strong>Memoria:</strong> 32 GB GDDR7 SDRAM</li>
+                        <li><strong>Tipo de bus:</strong> PCI Express 5.0 (Ancho de 512 bits)</li>
+                        <li><strong>Motor gráfico:</strong> NVIDIA GeForce RTX 5090 (Arquitectura Blackwell)</li>
+                        <li><strong>Velocidad de memoria:</strong> 28 Gbps</li>
+                        <li><strong>Núcleos CUDA:</strong> 21760</li>
+                        <li><strong>Resolución máxima:</strong> 7680 x 4320</li>
+                        <li><strong>Interfaces:</strong> 3 x DisplayPort 2.1a / 1 x HDMI</li>
+                        <li><strong>Monitores soportados:</strong> Máximo 4</li>
+                        <li><strong>Dimensiones:</strong> 34.2 cm (Profundidad) x 15.2 cm (Altura) x 7 cm (Anchura)</li>
+                        <li><strong>Fuente recomendada:</strong> 1000 W</li>
+                        <li><strong>Conector de alimentación:</strong> 16 pines (Adaptador incluido: 4x8 pines a cable 12VHPWR)</li>
+                        <li><strong>Garantía:</strong> 3 años de garantía general</li>
+                        </ul>
+                    <div class="contenido-destacado">
+                    <h3>Características Destacadas</h3>
+                    <p>Refrigeración GIGABYTE WINDFORCE con diseño de ventilador triple, Vapor chamber, GIGABYTE RGB Halo, Dual Bios, NVIDIA DLSS 4, NVIDIA Reflex 2, Ray Tracing Cores de 4ª gen y Tensor Cores de 5ª gen.</p>
+                    </div>
+                </div>
+                </details>
+            </div>
+
+           </section>
+
+
+           <!-- ==========================
+           DUDAS CLIENTE
+        ========================== -->
+
+           <section class="dudas">
+                <div class="divisor-negro"></div>
+                <h2>Opiniones del Producto</h2>
+                <form action="">
+                    <input type="text" name="question" id="question" placeholder = "Escribe una pregunta...">
+                    <button type="submit">Enviar</button>
+                </form>
+
+                <details class="dudas-toggle">
+                    <summary>Reseñas y Preguntas de otros Usuarios: </summary>
+                    <div class="dudas-contenido">
+                        <p>Aquí irán todas las reseñas que se encuentren en la BD! </p>
+                    </div>
+                </details>
+
+
+            </section>
+
+           <!-- ==========================
+           PRODUCTOS RELACIONADOS
+        ========================== -->
+           <section class="productos-relacionados">
+                <div class="divisor-negro"></div>
+                <h2>Productos Relacionados</h2>
+
+                <div class="productos-contenedor">
+
+                <article class="carta-producto">
+                    <a href="/Proyecto/html/paginaProducto.html" class="carta-producto-info">
+                        <img src="public/img/Celulares.png" alt="Producto ...">
+                        <h3>Celular iphone 16 pro max</h3>
+                        <p>US$1499.00</p>
+                    </a>
+                    <button class="btn-agregar-carrito">
+                        Agregar al Carrito
+                        <svg>
+                            <use href="public/img/iconos.svg#icono-carrito"></use>
+                        </svg>
+                    </button>
+            </article>
+
+                <article class="carta-producto">
+                    <a href="/Proyecto/html/paginaProducto.html" class="carta-producto-info">
+                        <img src="public/img/Celulares.png" alt="Producto ...">
+                        <h3>Celular iphone 16 pro max</h3>
+                        <p>US$1499.00</p>
+                    </a>
+                    <button class="btn-agregar-carrito">
+                        Agregar al Carrito
+                        <svg>
+                            <use href="public/img/iconos.svg#icono-carrito"></use>
+                        </svg>
+                    </button>
+            </article>
+
+                <article class="carta-producto">
+                    <a href="/Proyecto/html/paginaProducto.html" class="carta-producto-info">
+                        <img src="public/img/Celulares.png" alt="Producto ...">
+                        <h3>Celular iphone 16 pro max</h3>
+                        <p>US$1499.00</p>
+                    </a>
+                    <button class="btn-agregar-carrito">
+                        Agregar al Carrito
+                        <svg>
+                            <use href="public/img/iconos.svg#icono-carrito"></use>
+                        </svg>
+                    </button>
+            </article>
+
+                <article class="carta-producto">
+                    <a href="/Proyecto/html/paginaProducto.html" class="carta-producto-info">
+                        <img src="public/img/Celulares.png" alt="Producto ...">
+                        <h3>Celular iphone 16 pro max</h3>
+                        <p>US$1499.00</p>
+                    </a>
+                    <button class="btn-agregar-carrito">
+                        Agregar al Carrito
+                        <svg>
+                            <use href="public/img/iconos.svg#icono-carrito"></use>
+                        </svg>
+                    </button>
+            </article>
+
+
+
+                </div>
+
+           </section>
+
+        <!-- ------ FOOTER - SECTION ------ -->
+
+        <footer class="footer">
+
+            <section id="redes">
+
+                <div class="red-social">
+                    <svg class="icono">
+                    <use href="public/img/iconos.svg#icono-ubicacion"></use>
+                    </svg>
+                    <div class="redes-txt">
+                        <h2>Nuestras Tiendas</h2>
+                        <p>Encuentra una cercana de tu casa</p>
+                    </div>
+                </div>
+
+                <div class="red-social">
+                    <svg class="icono">
+                    <use href="public/img/iconos.svg#icono-telefono"></use>
+                    </svg>
+                    <div class="redes-txt">
+                        <h2>Llamanos al 095 756 103</h2>
+                        <p>Atencion personal</p>
+                    </div>
+                </div>
+
+                <div class="red-social">
+                    <svg class="icono">
+                    <use href="public/img/iconos.svg#icono-candado"></use>
+                    </svg>
+                    <div class="redes-txt">
+                        <h2>Compra garantizada</h2>
+                        <p>Te devolvemos tu dinero</p>
+                    </div>
+                </div>
+
+            </section>
+
+            <section id="promociones">
+                <div class="promociones-img" id="promociones-1"></div>
+                <div class="promociones-img" id="promociones-2"></div>
+            </section>
+
+        </footer>
+
+        <!-- ==========================
+            Pagina modular de inicio de sesión
+            ========================== -->
+
+            <div id="pantalla-transparente">
+                <div id="ventana-login">
+                    <button class="cerrar-ventana">✕</button>
+                    <form id="login">
+                    <div class="nombre-usuario">
+                        <label for="ingresar-nombre">Nombre de usuario</label>
+                        <input type="text" placeholder="Ingrese usuario..." class="espacio-texto" id="ingresar-usua-login" required>
+                    </div>
+                    <div class="contraseña">
+                        <label for="ingresar-contraseña">Contraseña</label>
+                        <input type="password" placeholder="Ingrese su contraseña..." class="espacio-texto" id="ingresar-cont-login" required>
+                    </div>
+                    <div id="recordar">
+                        <label for="recordar-cont" id="recordar">
+                        <br>
+                        <input type="checkbox" name="recordar-cont" id="recordar-cont">
+                        <p>Recordar en el dispositivo</p>
+                        </label>
+                    </div>
+                    <div class="boton">
+                        <button type="submit" class="enviar" id="boton-inicioSesion">
+                            Iniciar Sesion
+                        </button>
+                    </div>
+                    <!-- ==========================
+                    CUENTA CREADA
+                    Un link que te lleva a registrarte por si
+                    no tienes una cuenta creada
+                    ========================== -->
+                    <div class="cuenta-creada">
+                        <p>No tienes una cuenta creada?</p>
+                        <a href="" id="crear-cuenta">Crear cuenta</a>
+                    </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- ==========================
+            Pagina modular de registro
+            ========================== -->
+
+            <div id="pantalla-registro">
+                <div id="ventana-registro">
+                    <button class="cerrar-ventana">✕</button>
+                    <form id="register">
+                        <div class="nombre-usuario">
+                            <label for="ingresar-nombre">Ingresar nombe de usuario</label>
+                            <input type="text" placeholder="Ingrese usuario..." class="espacio-texto" id="ingresar-usua-registro"  required>
+                        </div>
+                        <div id="correo-electronico">
+                            <label for="ingresar-correo">Ingresar correo electronico</label>
+                            <input type="email" placeholder="Ingrese correo electronico..." class="espacio-texto" required>
+                        </div>
+                        <div class="contraseña">
+                            <label for="ingresar-contraseña">Ingresar contraseña</label>
+                            <input type="password" placeholder="Ingrese su contraseña..." class="espacio-texto" id="ingresar-cont-registro"  required>
+                        </div>
+                        <div id="confirmar-contraseña">
+                            <label for="ingresar-confirmacion">Confirmar contraseña</label>
+                            <input type="password" placeholder="Confirmar contraseña..." class="espacio-texto" id="ingresar-conf-registro"
+                             required>
+                        </div>
+                        <div class="boton">
+                        <button type="submit" class="enviar" id="boton-Registrarse">
+                            Registrarse
+                        </button>
+                        </div>
+                        <!-- ==========================
+                        CUENTA CREADA
+                        Un link que te lleva a iniciar sesion por si
+                        ya tienes una cuenta creada en la pagina
+                        ========================== -->
+                        <div class="cuenta-creada">
+                            <p>Ya tienes una cuenta?</p>
+                            <a href="../html/paginainicio_inicio-sesion.html" id="volver-login">Inicia sesión</a>
+                        </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <script src="public/js/storage.js"></script>
+        <script src="public/js/carrito.js"></script>
+        <script src="public/js/catalogo.js"></script>
+
+        <script src="public/js/login.js"></script>
+
+    </body>
+</html>
