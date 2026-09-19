@@ -29,14 +29,10 @@ switch ($paginaSolicitada) {
         break;
 
     case 'carrito':
-        // El carrito se arma con JavaScript y LocalStorage,
-        // así que tampoco necesita pasar por un controlador
-        require __DIR__ . '/views/carrito.php';
+        require __DIR__ . '/views/paginaCarrito.php';
         break;
 
     case 'confirmar-pedido':
-        // Acá sí necesitamos un controlador: hay que guardar el
-        // pedido en la base de datos antes de mostrar nada
         require __DIR__ . '/controllers/PedidoController.php';
         break;
 

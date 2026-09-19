@@ -19,7 +19,6 @@
 <?php
 // Esta vista necesita además carrito.js
 $scriptExtra = 'public/js/carrito.js';
-require __DIR__ . '/login.php';
 require __DIR__ . '/footer.php';
 ?>
 

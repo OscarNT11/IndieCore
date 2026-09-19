@@ -13,6 +13,7 @@
         <link rel="stylesheet" href="public/css/generales.css">
         <link rel="stylesheet" href="public/css/css-listado.css">
         <link rel="stylesheet" href="public/css/responsiveDesign.css">
+        <link rel="stylesheet" href="public/css/paginaCarrito.css?v=<?php echo filemtime(__DIR__ . '/../public/css/paginaCarrito.css'); ?>">
         <link rel="stylesheet" href="public/css/paginaInicio.css?v=<?php echo filemtime(__DIR__ . '/../public/css/paginaInicio.css'); ?>">
 
 </head>
@@ -55,10 +56,10 @@
                 <!-- AQUÍ VA EL VERDEDADERO NAV, ENLACES DE ANCLAS -->
             <nav class="header-nav" id="nav-inferior">
                 <ul class="nav-list">
-                    <li class="nav-item"><a href="">Catalogo</a></li>
-                    <li class="nav-item"><a href="paginainicio.php#lo-nuevo">Nuevo</a></li>
-                    <li class="nav-item"><a href="paginainicio.php#destacados">Destacado</a></li>
-                    <li class="nav-item"><a href="paginainicio.php#redes">Contactanos</a></li>
+                    <li class="nav-item"><a href="index.php?pagina=catalogo">Catalogo</a></li>
+                    <li class="nav-item"><a href="index.php?pagina=home#lo-nuevo">Nuevo</a></li>
+                    <li class="nav-item"><a href="index.php?pagina=home#destacados">Destacado</a></li>
+                    <li class="nav-item"><a href="index.php?pagina=home#redes">Contactanos</a></li>
                 </ul>
             </nav>
 

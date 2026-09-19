@@ -269,3 +269,125 @@ productos
 
     cursor: pointer;
 }
+
+/* =============================================================
+CATALOGO: LAYOUT DE DOS COLUMNAS
+Tabla de categorías a la izquierda + grilla de productos
+============================================================= */
+
+.catalogo {
+    width: 100%;
+    padding: 1rem 1.5rem 2rem;
+}
+
+.catalogo h2 {
+    margin-bottom: 1rem;
+    font-size: 2rem;
+    font-weight: 300;
+    letter-spacing: 1px;
+}
+
+.catalogo-layout {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 1.5rem;
+}
+
+/* ---------- Barra lateral de categorías ---------- */
+
+.catalogo-categorias {
+    align-self: start;
+
+    position: sticky;
+    top: calc(120px + 1rem);
+
+    max-height: 80vh;
+    overflow-y: auto;
+
+    background-color: #171717;
+    border: 1px solid #333;
+    border-radius: 0.75rem;
+}
+
+.tabla-categorias {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tabla-categorias caption {
+    padding: 0.85rem 1rem;
+
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-align: left;
+
+    color: #ededed;
+    background-color: #212121;
+    border-bottom: 1px solid #333;
+}
+
+.tabla-categorias td {
+    padding: 0;
+    border-bottom: 1px solid #2b2b2b;
+}
+
+.tabla-categorias tr:last-child td {
+    border-bottom: none;
+}
+
+.categoria-enlace {
+    display: block;
+    width: 100%;
+
+    padding: 0.7rem 1rem;
+
+    font-size: 1rem;
+    color: #ededed;
+
+    border-left: 3px solid transparent;
+    transition: background-color 150ms ease, border-color 150ms ease;
+}
+
+.categoria-enlace:hover {
+    background-color: #3f3f3f;
+}
+
+.categoria-enlace--activa {
+    background-color: #2a2a2a;
+    border-left-color: #6a09e0;
+    color: #ffffff;
+    font-weight: 700;
+}
+
+/* ---------- Contenedor de productos ---------- */
+
+.catalogo-productos {
+    min-width: 0;
+}
+
+.catalogo-productos .grilla-productos {
+    padding: 0;
+}
+
+.catalogo-productos .mensaje-vacio {
+    padding: 2rem;
+    text-align: center;
+    color: #9a9a9a;
+}
+
+/* =============================================================
+CATALOGO: RESPONSIVE
+En pantallas angostas la tabla pasa arriba de los productos
+============================================================= */
+
+@media (max-width: 800px) {
+    .catalogo-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .catalogo-categorias {
+        position: static;
+        max-height: none;
+    }
+}

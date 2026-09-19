@@ -3,23 +3,39 @@
 <section class="catalogo">
     <h2>Catalogos de Productos</h2>
 
-    <form action="index.php" method="GET" class="filtros">
-        <input type="hidden" name="pagina" value="catalogo">
+    <div class="catalogo-layout">
 
-        <label for="selectorCategoria">Filtrar por categoría:</label>
-        <select name="categoria" id="selectorCategoria">
-            <option value="">Todas las categorías</option>
-            <?php foreach ($listaDeCategorias as $categoria): ?>
-                <option
-                    value="<?php echo $categoria['id_categoria']; ?>"
-                    <?php echo ($idCategoriaSeleccionada == $categoria['id_categoria']) ? 'selected' : ''; ?>>
-                    <?php echo htmlspecialchars($categoria['nombre']); ?>
-                </option>
-            <?php endforeach; ?>
-        </select>
+        <!-- Tabla lateral con las categorías disponibles -->
+        <aside class="catalogo-categorias">
+            <table class="tabla-categorias">
+                <caption>Categorías</caption>
+                <tbody>
+                    <tr>
+                        <td>
+                            <a
+                                href="index.php?pagina=catalogo"
+                                class="categoria-enlace <?php echo empty($idCategoriaSeleccionada) ? 'categoria-enlace--activa' : ''; ?>">
+                                Todas las categorías
+                            </a>
+                        </td>
+                    </tr>
+                    <?php foreach ($listaDeCategorias as $categoria): ?>
+                        <tr>
+                            <td>
+                                <a
+                                    href="index.php?pagina=catalogo&categoria=<?php echo $categoria['id_categoria']; ?>"
+                                    class="categoria-enlace <?php echo ($idCategoriaSeleccionada == $categoria['id_categoria']) ? 'categoria-enlace--activa' : ''; ?>">
+                                    <?php echo htmlspecialchars($categoria['nombre']); ?>
+                                </a>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </aside>
 
-        <button type="submit" class="boton">Filtrar</button>
-    </form>
+        <!-- Grilla de productos -->
+        <div class="catalogo-productos">
 
     <?php if (empty($listaDeProductos)): ?>
         <p class="mensaje-vacio">No se encontraron productos en esta categoría.</p>
@@ -57,92 +73,16 @@
             <?php endforeach; ?>
         </div>
     <?php endif; ?>
+
+        </div><!-- /.catalogo-productos -->
+    </div><!-- /.catalogo-layout -->
 </section>
 
         <!-- ==========================
-            Pagina modular de inicio de sesión
+            Pagina modular de inicio de sesión y registro
             ========================== -->
 
-            <div id="pantalla-transparente">
-                <div id="ventana-login">
-                    <button class="cerrar-ventana">✕</button>
-                    <form id="login">
-                    <div class="nombre-usuario">
-                        <label for="ingresar-nombre">Nombre de usuario</label>
-                        <input type="text" placeholder="Ingrese usuario..." class="espacio-texto" id="ingresar-usua-login" required>
-                    </div>
-                    <div class="contraseña">
-                        <label for="ingresar-contraseña">Contraseña</label>
-                        <input type="password" placeholder="Ingrese su contraseña..." class="espacio-texto" id="ingresar-cont-login" required>
-                    </div>
-                    <div id="recordar">
-                        <label for="recordar-cont" id="recordar">
-                        <br>
-                        <input type="checkbox" name="recordar-cont" id="recordar-cont">
-                        <p>Recordar en el dispositivo</p>
-                        </label>
-                    </div>
-                    <div class="boton">
-                        <button type="submit" class="enviar" id="boton-inicioSesion">
-                            Iniciar Sesion
-                        </button>
-                    </div>
-                    <!-- ==========================
-                    CUENTA CREADA
-                    Un link que te lleva a registrarte por si
-                    no tienes una cuenta creada
-                    ========================== -->
-                    <div class="cuenta-creada">
-                        <p>No tienes una cuenta creada?</p>
-                        <a href="" id="crear-cuenta">Crear cuenta</a>
-                    </div>
-                    </form>
-                </div>
-            </div>
-
-            <!-- ==========================
-            Pagina modular de registro
-            ========================== -->
-
-            <div id="pantalla-registro">
-                <div id="ventana-registro">
-                    <button class="cerrar-ventana">✕</button>
-                    <form id="register">
-                        <div class="nombre-usuario">
-                            <label for="ingresar-nombre">Ingresar nombe de usuario</label>
-                            <input type="text" placeholder="Ingrese usuario..." class="espacio-texto" id="ingresar-usua-registro"  required>
-                        </div>
-                        <div id="correo-electronico">
-                            <label for="ingresar-correo">Ingresar correo electronico</label>
-                            <input type="email" placeholder="Ingrese correo electronico..." class="espacio-texto" required>
-                        </div>
-                        <div class="contraseña">
-                            <label for="ingresar-contraseña">Ingresar contraseña</label>
-                            <input type="password" placeholder="Ingrese su contraseña..." class="espacio-texto" id="ingresar-cont-registro"  required>
-                        </div>
-                        <div id="confirmar-contraseña">
-                            <label for="ingresar-confirmacion">Confirmar contraseña</label>
-                            <input type="password" placeholder="Confirmar contraseña..." class="espacio-texto" id="ingresar-conf-registro"
-                             required>
-                        </div>
-                        <div class="boton">
-                        <button type="submit" class="enviar" id="boton-Registrarse">
-                            Registrarse
-                        </button>
-                        </div>
-                        <!-- ==========================
-                        CUENTA CREADA
-                        Un link que te lleva a iniciar sesion por si
-                        ya tienes una cuenta creada en la pagina
-                        ========================== -->
-                        <div class="cuenta-creada">
-                            <p>Ya tienes una cuenta?</p>
-                            <a href="../html/paginainicio_inicio-sesion.html" id="volver-login">Inicia sesión</a>
-                        </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
+        <?php require __DIR__ . '/modalLogin.php'; ?>
 
         <?php
 // Esta vista necesita catalogo.js

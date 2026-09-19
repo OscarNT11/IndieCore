@@ -94,12 +94,12 @@ CREATE TABLE `resenias` (
 );
 
 INSERT INTO categorias (nombre, descripcion) VALUES
-('Celulares',  'Celulares y accesorios'),
-('Computadoras', 'Computadoras y accesorios'),
-('Audio',      'Micrófonos y equipos de sonido'),
-('Accesorios', 'Cables, fundas y repuestos');
+('Juegos',                  'Videojuegos para todas las plataformas'),
+('Consolas',                'Consolas y controles'),
+('Perifericos',              'Teclados, mouse y auriculares'),
+('Componentes',             'Placas, memorias y hardware interno'),
+('Otros dispositivos',      'Cables, fundas y repuestos varios');
 
-INSERT INTO productos (nombre, marca, informacion, foto, stock, precio, id_categoria) VALUES
-('Auriculares Redmi', 'Redmi', 'Auriculares inalámbricos con calidad de sonido premium', 'Auriculares.png', 50, 999.99, 1),
+
 
 
