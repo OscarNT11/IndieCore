@@ -10,11 +10,34 @@
         <link href="https://fonts.googleapis.com/css2?family=Playfair:ital,opsz,wght@0,5..1200,300..900;1,5..1200,300..900&display=swap" rel="stylesheet">
         <link rel="icon" href="public/img/logoTecnoParts.png">
     
-        <link rel="stylesheet" href="public/css/generales.css">
-        <link rel="stylesheet" href="public/css/css-listado.css">
-        <link rel="stylesheet" href="public/css/responsiveDesign.css">
-        <link rel="stylesheet" href="public/css/paginaCarrito.css?v=<?php echo filemtime(__DIR__ . '/../public/css/paginaCarrito.css'); ?>">
-        <link rel="stylesheet" href="public/css/paginaInicio.css?v=<?php echo filemtime(__DIR__ . '/../public/css/paginaInicio.css'); ?>">
+        <?php
+            // Igual que con los <script> del footer: se añade ?v=filemtime(...)
+            // para que el navegador no sirva una copia vieja desde la caché.
+            function etiquetaCss($rutaRelativa)
+            {
+                $rutaAbsoluta = __DIR__ . '/../' . $rutaRelativa;
+
+                $version = is_file($rutaAbsoluta) ? filemtime($rutaAbsoluta) : time();
+
+                echo '<link rel="stylesheet" href="' . htmlspecialchars($rutaRelativa)
+                    . '?v=' . $version . '">' . PHP_EOL;
+            }
+
+            // Hojas que usan TODAS las páginas
+            etiquetaCss('public/css/generales.css');
+            etiquetaCss('public/css/css-listado.css');
+            etiquetaCss('public/css/responsiveDesign.css');
+            etiquetaCss('public/css/paginaInicio.css');
+            etiquetaCss('public/css/paginaCarrito.css');
+
+            // Hojas propias de una vista (las define el controlador o la vista)
+            if (isset($cssExtra)) {
+
+                foreach ((array) $cssExtra as $hojaExtra) {
+                    etiquetaCss($hojaExtra);
+                }
+            }
+            ?>
 
 </head>
 

@@ -14,8 +14,6 @@
 .detalle-producto { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 3rem; margin-top: 1.5rem; }
 .detalle-producto img { width: 100%; max-height: 480px; object-fit: contain; }
 .precio-detalle { font-size: 2rem; font-weight: bold; }
-.lista-carrito .producto { display: grid; grid-template-columns: 100px 1fr auto; gap: 1rem; align-items: center; margin: 1rem 0; padding: 1rem; border: 1px solid #d9dfeb; border-radius: 10px; }
-.lista-carrito .producto img { width: 100px; height: 100px; object-fit: contain; }
-.resumen-carrito { max-width: 420px; margin: 2rem 0 0 auto; padding: 1.5rem; border-radius: 10px; background: #e9f0ff; }
+
 .volver { color: #274c77; }
 @media (max-width: 700px) { .hero-mvc, .detalle-producto { grid-template-columns: 1fr; } }

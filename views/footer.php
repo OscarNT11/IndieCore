@@ -44,12 +44,31 @@
 
         </footer>
 
-        <script src="public/js/storage.js"></script>
-        <script src="public/js/login.js"></script>
-
         <?php
-            if (isset($scriptExtra)) {
-                echo '<script src="' . htmlspecialchars($scriptExtra) . '"></script>';
+            // Se añade ?v=filemtime(...) a cada JS igual que se hace con los CSS
+            // del header: si no, el navegador sigue usando la copia vieja
+            // guardada en caché y los cambios no se ven al recargar.
+            function etiquetaScript($rutaRelativa)
+            {
+                $rutaAbsoluta = __DIR__ . '/../' . $rutaRelativa;
+
+                $version = is_file($rutaAbsoluta) ? filemtime($rutaAbsoluta) : time();
+
+                echo '<script src="' . htmlspecialchars($rutaRelativa)
+                    . '?v=' . $version . '"></script>' . PHP_EOL;
+            }
+
+            // Scripts que necesitan TODAS las páginas
+            etiquetaScript('public/js/storage.js');
+            etiquetaScript('public/js/login.js');
+
+            // $scriptsExtra acepta uno o varios archivos JS propios de la vista,
+            // siempre DESPUÉS de storage.js, que ya quedó cargado arriba.
+            if (isset($scriptsExtra)) {
+
+                foreach ((array) $scriptsExtra as $archivoScript) {
+                    etiquetaScript($archivoScript);
+                }
             }
 
             if (isset($scriptEnLinea)) {

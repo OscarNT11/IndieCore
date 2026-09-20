@@ -46,7 +46,6 @@
 
 .producto input {
     background-color: transparent;
-    overlay: none;
     border: 1px solid black;
     font-size: 1.5rem; 
     width: 4rem; 
@@ -331,4 +330,417 @@
     align-items: center;
 
     cursor: pointer;
+}
+/* =============================================================
+   PÁGINA DEL CARRITO (MVC)
+   Estilos de lo que dibuja public/js/carrito.js:
+   #contenedorCarrito -> .producto-carrito
+   #resumenCarrito    -> .carrito-resumen
+   ============================================================= */
+
+.carrito {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 3rem;
+}
+
+.carrito-titulo {
+    margin-bottom: 1.5rem;
+
+    font-size: 2.25rem;
+    font-weight: 300;
+    letter-spacing: 1px;
+}
+
+/* ---------- Layout de dos columnas ----------
+   Productos a la izquierda, caja de compra a la derecha.
+   En pantallas angostas cae a una sola columna (ver media queries). */
+
+.carrito-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 340px;
+    align-items: start;
+    gap: 2rem;
+}
+
+.carrito-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    min-width: 0;
+
+    /* Es el contenedor que consultan las @container de .producto-carrito:
+       así la fila se reordena según el ancho real de LA COLUMNA de productos
+       y no según el ancho de la ventana. */
+    container-type: inline-size;
+    container-name: lista-carrito;
+}
+
+/* ---------- Fila de producto ---------- */
+
+.producto-carrito {
+    display: grid;
+
+    /* 4 pistas explícitas: imagen | nombre/precio | cantidad | subtotal.
+       El botón "Quitar" NO lleva pista propia: se pega al subtotal
+       dentro de la última pista, así nunca desborda la tarjeta. */
+    grid-template-columns: 110px minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 1.25rem 1rem;
+
+    padding: 1rem 1.25rem;
+
+    background-color: #373737;
+    border: 1px solid #4a4a4a;
+    border-radius: 1rem;
+}
+
+.producto-carrito__enlace { grid-column: 1; }
+
+.producto-carrito__info { grid-column: 2; }
+
+.producto-carrito__cantidad { grid-column: 3; }
+
+.producto-carrito__enlace {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 0.5rem;
+    overflow: hidden;
+    transition: opacity 200ms ease;
+}
+
+.producto-carrito__enlace:hover {
+    opacity: 0.8;
+}
+
+.producto-carrito__imagen {
+    width: 110px;
+    height: 90px;
+
+    object-fit: contain;
+    background-color: #2b2b2b;
+    border-radius: 0.5rem;
+}
+
+.producto-carrito__info h2 {
+    font-size: 1.3rem;
+    font-weight: 300;
+    color: #ededed;
+}
+
+.producto-carrito__unitario {
+    margin-top: 0.25rem;
+
+    font-size: 0.95rem;
+    color: #9a9a9a;
+}
+
+/* ---------- Control de cantidad ---------- */
+
+.producto-carrito__cantidad {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.4rem;
+}
+
+.boton-cantidad {
+    width: 2rem;
+    height: 2rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 1.2rem;
+    line-height: 1;
+
+    background-color: #4a4a4a;
+    border-radius: 0.4rem;
+    transition: background-color 150ms ease;
+}
+
+.boton-cantidad:hover {
+    background-color: #5c5c5c;
+}
+
+.entrada-cantidad {
+    width: 3.5rem;
+    padding: 0.35rem 0.5rem;
+
+    text-align: center;
+    font-size: 1rem;
+
+    background-color: transparent;
+    border: 1px solid #4a4a4a;
+    border-radius: 0.4rem;
+}
+
+/* Se ocultan las flechitas del input numérico */
+.entrada-cantidad::-webkit-outer-spin-button,
+.entrada-cantidad::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.entrada-cantidad {
+    -moz-appearance: textfield;
+    appearance: textfield;
+}
+
+.producto-carrito__subtotal {
+    /* El subtotal y el botón comparten la última pista, uno debajo del otro */
+    grid-column: 4;
+    grid-row: 1;
+
+    min-width: 130px;
+
+    font-size: 1.3rem;
+    text-align: right;
+    color: #6fa8ff;
+}
+
+.boton-eliminar {
+    grid-column: 4;
+    grid-row: 2;
+
+    justify-self: stretch;
+
+    margin-top: 0.35rem;
+
+    padding: 0.45rem 0.9rem;
+
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+
+    color: #ededed;
+    border: 1px solid #6a6a6a;
+    border-radius: 0.5rem;
+    transition: background-color 150ms ease, border-color 150ms ease;
+}
+
+.boton-eliminar:hover {
+    background-color: #6d1a1a;
+    border-color: #a33;
+}
+
+/* ---------- Resumen de compra ---------- */
+
+.carrito-resumen {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+
+    /* Columna derecha, pegada arriba mientras se hace scroll */
+    position: sticky;
+    top: calc(120px + 1rem);
+
+    padding: 1.5rem;
+
+    background-color: #414141;
+    border-radius: 1rem;
+}
+
+.carrito-resumen h2 {
+    padding-bottom: 0.75rem;
+
+    font-size: 1.5rem;
+    font-weight: 300;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+
+    border-bottom: 1px solid #5a5a5a;
+}
+
+.carrito-resumen .carrito-cantidad {
+    font-size: 1rem;
+    font-weight: 300;
+    color: #b5b5b5;
+}
+
+.carrito-resumen .total {
+    font-size: 1.9rem;
+    color: #6fa8ff;
+}
+
+.carrito-acciones {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+}
+
+.carrito-acciones .boton {
+    flex: 1;
+    min-width: 160px;
+    padding: 0.75rem 1rem;
+
+    font-size: 1rem;
+    text-transform: uppercase;
+    border-radius: 0.5rem;
+    transition: filter 200ms ease;
+}
+
+.carrito-acciones .boton:hover {
+    filter: brightness(115%);
+}
+
+/* ---------- Carrito vacío ---------- */
+
+.carrito-vacio {
+    padding: 3rem 1rem;
+
+    font-size: 1.4rem;
+    text-align: center;
+    color: #9a9a9a;
+}
+
+.carrito-vacio a {
+    display: inline-block;
+    margin-top: 1rem;
+
+    padding: 0.6rem 1.5rem;
+
+    color: #ffffff;
+    background: linear-gradient(to right, #6a09e0, #3480d7);
+    border-radius: 0.5rem;
+}
+
+.carrito-vacio a:hover {
+    filter: brightness(115%);
+}
+
+/* [hidden] tiene que ganarle al display:flex de .carrito-resumen:
+   el atributo hidden aplica display:none con especificidad de navegador
+   muy baja, así que cualquier clase con display la pisa. */
+.carrito-resumen[hidden],
+.carrito-vacio[hidden] {
+    display: none !important;
+}
+
+/* ---------- Aviso al agregar un producto ---------- */
+
+#aviso-carrito {
+    position: fixed;
+    left: 50%;
+    bottom: 2rem;
+
+    z-index: 2000;
+
+    padding: 0.85rem 1.5rem;
+
+    color: #ffffff;
+    background-color: #274c77;
+    border-radius: 0.75rem;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
+
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(-50%, 1rem);
+    transition: opacity 250ms ease, transform 250ms ease;
+}
+
+#aviso-carrito.aviso-carrito--visible {
+    opacity: 1;
+    transform: translate(-50%, 0);
+}
+
+/* ---------- Responsive ---------- */
+
+/* La caja de compra pasa ARRIBA de los productos antes de que
+   la fila se apriete demasiado */
+@media (max-width: 900px) {
+
+    .carrito-layout {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 1.5rem;
+    }
+
+    .carrito-resumen {
+        position: static;
+        order: -1;
+    }
+}
+
+/* Fila estrecha: si no entran las cuatro piezas en un renglón,
+   se acomodan en dos filas dentro de la tarjeta */
+@container lista-carrito (max-width: 620px) {
+
+    .producto-carrito {
+        grid-template-columns: 90px minmax(0, 1fr) auto;
+        align-items: start;
+        gap: 0.75rem 1rem;
+    }
+
+    .producto-carrito__enlace {
+        grid-column: 1;
+        grid-row: 1 / 3;
+        align-self: center;
+    }
+
+    .producto-carrito__info { grid-column: 2; grid-row: 1; }
+
+    .producto-carrito__cantidad {
+        grid-column: 2;
+        grid-row: 2;
+        align-self: center;
+        justify-content: flex-start;
+    }
+
+    /* El subtotal y el botón quedan alineados a la derecha,
+       uno debajo del otro */
+    .producto-carrito__subtotal {
+        grid-column: 3;
+        grid-row: 1;
+        min-width: 0;
+        text-align: right;
+    }
+
+    .boton-eliminar {
+        grid-column: 3;
+        grid-row: 2;
+        justify-self: stretch;
+    }
+}
+
+/* Fila muy estrecha: una sola columna, cada dato en su renglón */
+@container lista-carrito (max-width: 440px) {
+
+    .producto-carrito {
+        grid-template-columns: 90px minmax(0, 1fr);
+        align-items: start;
+    }
+
+    .producto-carrito__enlace {
+        grid-column: 1;
+        grid-row: 1 / 4;
+        align-self: center;
+    }
+
+    .producto-carrito__info { grid-column: 2; grid-row: 1; }
+
+    .producto-carrito__cantidad {
+        grid-column: 2;
+        grid-row: 2;
+        justify-self: start;
+    }
+
+    .producto-carrito__subtotal {
+        grid-column: 2;
+        grid-row: 3;
+        min-width: 0;
+        text-align: left;
+    }
+
+    .boton-eliminar {
+        grid-column: 2;
+        grid-row: 4;
+        justify-self: stretch;
+        width: 100%;
+    }
 }

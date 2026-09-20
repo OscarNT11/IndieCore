@@ -202,7 +202,11 @@ main {
     flex-direction: row-reverse;
     align-items: center;
     overflow: hidden;
-    
+    transition: transform 0.3s ease;
+}
+
+#cate-internos:hover{
+    transform: scale(1.02);
 }
 
 #img-cat-internos img{
@@ -242,6 +246,11 @@ main {
     align-items: center;
     justify-content: space-between;
     overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+#cate-perifericos:hover{
+    transform: scale(1.02);
 }
 
 
@@ -283,6 +292,11 @@ main {
     color: white;
     text-align: center;
     text-transform: uppercase;
+    transition: transform 0.3s ease;
+}
+
+#cate-larga:hover{
+    transform: scale(1.02);
 }
 
 #cont-cat-larga{
@@ -296,19 +310,27 @@ main {
     padding: 0 40px;
 }
 
-#cat-variadas button{
-    background-color: #2d7af1;
-    border: none;
-    border-radius: 8px;
-    padding: 10px 18px;
-    font-size: 14px;
-    text-transform: uppercase;
-    cursor: pointer;
+/* Las tarjetas de categoría son <a>, así que el flex del contenedor
+   tiene que seguir funcionando en ellas (el <a> global es display:block). */
+#cate-internos,
+#cate-perifericos,
+#cate-larga {
+    color: white;
+    text-decoration: none;
 }
 
-#cat-variadas a{
-    color: #151515;
-    text-decoration: none;
+/* El título de cada tarjeta funciona como llamada a la acción:
+   la tarjeta entera es un <a>, así que se subraya al pasar el mouse. */
+#cate-internos h2,
+#cate-perifericos h2,
+#cate-larga h2 {
+    transition: text-shadow 200ms ease;
+}
+
+#cate-internos:hover h2,
+#cate-perifericos:hover h2,
+#cate-larga:hover h2 {
+    text-shadow: 0 0 12px rgba(255, 255, 255, 0.55);
 }
 
 /* ==========================

@@ -65,6 +65,7 @@
                             data-id-producto="<?php echo $producto['id_producto']; ?>"
                             data-nombre-producto="<?php echo htmlspecialchars($producto['nombre']); ?>"
                             data-precio-producto="<?php echo $producto['precio']; ?>"
+                            data-stock-producto="<?php echo (int) $producto['stock']; ?>"
                             <?php echo ($producto['stock'] <= 0) ? 'disabled' : ''; ?>>
                             Agregar al carrito
                         </button>
@@ -87,6 +88,6 @@
         <?php
 // Esta vista necesita catalogo.js
 // (footer.php ya carga storage.js y login.js)
-$scriptExtra = 'public/js/catalogo.js';
+$scriptsExtra = ['public/js/catalogo.js'];
 require __DIR__ . '/footer.php';
 ?>

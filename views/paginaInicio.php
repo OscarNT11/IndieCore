@@ -106,6 +106,7 @@
                                     data-id-producto="<?php echo $producto['id_producto']; ?>"
                                     data-nombre-producto="<?php echo htmlspecialchars($producto['nombre']); ?>"
                                     data-precio-producto="<?php echo $producto['precio']; ?>"
+                                    data-stock-producto="<?php echo (int) $producto['stock']; ?>"
                                     <?php echo ($producto['stock'] <= 0) ? 'disabled' : ''; ?>>
                                     Agregar al carrito
                                 </button>
@@ -126,39 +127,39 @@
 
                 <div id="cat-arriba">
 
-                    <div id="cate-internos">
+                    <!-- Cada tarjeta es un enlace a la categoría real de la BD
+                         (index.php?pagina=catalogo&categoria=ID) -->
+
+                    <a id="cate-internos" href="index.php?pagina=catalogo&categoria=4">
                         <div id="img-cat-internos">
-                            <img src="public/img/Grafica-edit.png" alt="No se encontro la imagen">
+                            <img src="public/img/Grafica-edit.png" alt="Tarjetas gráficas y componentes internos">
                         </div>
                         <div id="cont-cat-internos">
                             <h2>Componentes
                                 <br> internos</h2>
-                            <button><a href="paginaListado.php">Entrar</a></button>
                         </div>
-                    </div>
+                    </a>
 
-                    <div id="cate-perifericos">
+                    <a id="cate-perifericos" href="index.php?pagina=catalogo&categoria=3">
                         <div id="cont-cat-perifericos">
-                            <h2>Perifericos</h2>
-                            <button><a href="paginaListado.php">Entrar</a></button>
+                            <h2>Periféricos</h2>
                         </div>
                         <div id="img-cat-perifericos">
-                            <img src="public/img/Mouse-edit.png" alt="No se encontro la imagen">
+                            <img src="public/img/Mouse-edit.png" alt="Mouse, teclados y auriculares">
                         </div>
-                    </div>
+                    </a>
 
                 </div>
 
-                <div id="cate-larga">
+                <a id="cate-larga" href="index.php?pagina=catalogo&categoria=5">
                     <div id="img-cat-larga">
-                        <img src="public/img/Celulares-edit.png" alt="No se encontro la imagen">
+                        <img src="public/img/Celulares-edit.png" alt="Celulares y otros dispositivos">
                     </div>
                     <div id="cont-cat-larga">
                         <h2>Otros
                             <br> dispositivos</h2>
-                        <button><a href="paginaListado.php">Entrar</a></button>
                     </div>
-                </div>
+                </a>
 
             </section>
 
@@ -198,6 +199,7 @@
                                         data-id-producto="<?php echo $producto['id_producto']; ?>"
                                         data-nombre-producto="<?php echo htmlspecialchars($producto['nombre']); ?>"
                                         data-precio-producto="<?php echo $producto['precio']; ?>"
+                                        data-stock-producto="<?php echo (int) $producto['stock']; ?>"
                                         <?php echo ($producto['stock'] <= 0) ? 'disabled' : ''; ?>>
                                         Agregar al carrito
                                     </button>
@@ -219,8 +221,9 @@
         =================================== -->
 
         <?php
-// Esta vista necesita además carrito.js
+// Esta vista necesita catalogo.js para que los botones
+// "Agregar al carrito" de "Lo nuevo" y "Destacados" funcionen
 // (footer.php ya carga storage.js y login.js)
-$scriptExtra = 'public/js/carrito.js';
+$scriptsExtra = ['public/js/catalogo.js'];
 require __DIR__ . '/footer.php';
 ?>

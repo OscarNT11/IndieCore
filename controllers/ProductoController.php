@@ -45,6 +45,18 @@ class ProductoController {
             exit;
         }
 
+        // Productos de la misma categoría, para la sección de relacionados.
+        // Si la categoría no existe (producto sin categoría), se devuelve vacío.
+        $listaDeProductos = array();
+
+        if (!empty($producto['id_categoria'])) {
+
+            $listaDeProductos = $this->productoModel->listarProductosRelacionados(
+                $producto['id_categoria'],
+                $producto['id_producto']
+            );
+        }
+
         require __DIR__ . '/../views/paginaProducto.php';
     }
 }
