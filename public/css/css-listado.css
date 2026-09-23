@@ -376,11 +376,6 @@ Tabla de categorías a la izquierda + grilla de productos
     color: #9a9a9a;
 }
 
-/* =============================================================
-CATALOGO: RESPONSIVE
-En pantallas angostas la tabla pasa arriba de los productos
-============================================================= */
-
 @media (max-width: 800px) {
     .catalogo-layout {
         grid-template-columns: 1fr;

@@ -29,7 +29,9 @@ require __DIR__ . '/header.php';
                 <!-- ---------- DERECHA: cuadro con la informacion ---------- -->
                 <aside class="detalle-producto__ficha">
 
-                    <span class="categoria-badge"><?php echo htmlspecialchars($producto['nombre_categoria']); ?></span>
+                    <a href="index.php?pagina=catalogo&categoria=<?php echo $producto['id_categoria']; ?>">
+                        <span class="categoria-badge"><?php echo htmlspecialchars($producto['nombre_categoria']); ?></span>
+                    </a>
 
                     <h1 class="detalle-producto__titulo"><?php echo htmlspecialchars($producto['nombre']); ?></h1>
 
@@ -162,37 +164,37 @@ require __DIR__ . '/header.php';
                     <p class="mensaje-vacio">No hay otros productos de esta categoría por el momento.</p>
                 <?php else: ?>
                     <div class="grilla-productos">
-                        <?php foreach ($listaDeProductos as $producto): ?>
+                        <?php foreach ($listaDeProductos as $productoRelacionado): ?>
                             <article class="tarjeta-producto">
                                 <a
                                     class="tarjeta-producto__enlace"
-                                    href="index.php?pagina=producto&id=<?php echo $producto['id_producto']; ?>"
-                                    title="Ver detalle de <?php echo htmlspecialchars($producto['nombre']); ?>">
+                                    href="index.php?pagina=producto&id=<?php echo $productoRelacionado['id_producto']; ?>"
+                                    title="Ver detalle de <?php echo htmlspecialchars($productoRelacionado['nombre']); ?>">
                                     <img
                                         class="tarjeta-producto__imagen"
-                                        src="public/img/ImagenesProductos/<?php echo htmlspecialchars($producto['imagen']); ?>"
-                                        alt="<?php echo htmlspecialchars($producto['nombre']); ?>">
+                                        src="public/img/ImagenesProductos/<?php echo htmlspecialchars($productoRelacionado['imagen']); ?>"
+                                        alt="<?php echo htmlspecialchars($productoRelacionado['nombre']); ?>">
                                 </a>
 
-                                <span class="categoria-badge"><?php echo htmlspecialchars($producto['nombre_categoria']); ?></span>
-                                <h3><?php echo htmlspecialchars($producto['nombre']); ?></h3>
-                                <p class="precio">$<?php echo number_format($producto['precio'], 2, ',', '.'); ?></p>
-                                <p class="stock">Stock: <?php echo (int) $producto['stock']; ?></p>
+                                <span class="categoria-badge"><?php echo htmlspecialchars($productoRelacionado['nombre_categoria']); ?></span>
+                                <h3><?php echo htmlspecialchars($productoRelacionado['nombre']); ?></h3>
+                                <p class="precio">$<?php echo number_format($productoRelacionado['precio'], 2, ',', '.'); ?></p>
+                                <p class="stock">Stock: <?php echo (int) $productoRelacionado['stock']; ?></p>
 
                                 <div class="tarjeta-producto__acciones">
                                     <a
-                                        href="index.php?pagina=producto&id=<?php echo $producto['id_producto']; ?>"
+                                        href="index.php?pagina=producto&id=<?php echo $productoRelacionado['id_producto']; ?>"
                                         class="boton boton--secundario">
                                         Ver detalle
                                     </a>
 
                                     <button
                                         class="boton boton--principal boton-agregar-carrito"
-                                        data-id-producto="<?php echo $producto['id_producto']; ?>"
-                                        data-nombre-producto="<?php echo htmlspecialchars($producto['nombre']); ?>"
-                                        data-precio-producto="<?php echo $producto['precio']; ?>"
-                                        data-stock-producto="<?php echo (int) $producto['stock']; ?>"
-                                        <?php echo ($producto['stock'] <= 0) ? 'disabled' : ''; ?>>
+                                        data-id-producto="<?php echo $productoRelacionado['id_producto']; ?>"
+                                        data-nombre-producto="<?php echo htmlspecialchars($productoRelacionado['nombre']); ?>"
+                                        data-precio-producto="<?php echo $productoRelacionado['precio']; ?>"
+                                        data-stock-producto="<?php echo (int) $productoRelacionado['stock']; ?>"
+                                        <?php echo ($productoRelacionado['stock'] <= 0) ? 'disabled' : ''; ?>>
                                         Agregar al carrito
                                     </button>
                                 </div>
@@ -212,7 +214,9 @@ require __DIR__ . '/header.php';
 
         <?php
 // catalogo.js conecta el botón "Agregar al carrito" y el contador.
+// carrusel.js pone las flechas en "Más de <categoría>" cuando hay
+// más de 4 productos relacionados.
 // (footer.php ya carga storage.js y login.js)
-$scriptsExtra = ['public/js/catalogo.js'];
+$scriptsExtra = ['public/js/catalogo.js', 'public/js/carrusel.js'];
 require __DIR__ . '/footer.php';
 ?>

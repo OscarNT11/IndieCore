@@ -19,10 +19,10 @@ botonesAgregar.forEach((boton) => {
         const precio = normalizarPrecio(boton.dataset.precioProducto);
 
         // Stock real del producto (lo manda la vista desde la BD).
-        // Sin atributo => sin límite conocido.
-        const stock = boton.dataset.stockProducto !== undefined
-            ? Number(boton.dataset.stockProducto)
-            : Infinity;
+        // Sin atributo o sin número => sin límite conocido.
+        const stockDeclarado = Number(boton.dataset.stockProducto);
+
+        const stock = Number.isFinite(stockDeclarado) ? stockDeclarado : Infinity;
 
         // Cantidad a agregar: en el detalle la elige el usuario con el
         // contador; en las tarjetas del catálogo es siempre 1.
@@ -62,6 +62,9 @@ botonesAgregar.forEach((boton) => {
 
             productoExistente.cantidad = cantidadFinal;
 
+            // Se refresca el stock: pudo cambiar desde la última visita
+            productoExistente.stock = stock;
+
         } else {
 
             carrito.push({
@@ -69,7 +72,10 @@ botonesAgregar.forEach((boton) => {
                 nombre: nombre,
                 precio: precio,
                 imagen: imagen ? imagen.getAttribute("src") : "",
-                cantidad: cantidadFinal
+                cantidad: cantidadFinal,
+                // Se guarda para que carrito.js pueda aplicar el mismo
+                // tope al editar la cantidad desde la página del carrito.
+                stock: stock
             });
         }
 

@@ -46,6 +46,16 @@ function escaparHtml(texto) {
     return contenedor.innerHTML;
 }
 
+/* Stock máximo que se puede pedir de un producto del carrito.
+   Lo guarda catalogo.js en cada línea; si el carrito se llenó antes de
+   este cambio (o el producto no tenía stock declarado), no hay tope. */
+function stockDeProducto(producto) {
+
+    const stock = Number(producto ? producto.stock : NaN);
+
+    return Number.isFinite(stock) && stock > 0 ? stock : Infinity;
+}
+
 /* Dibuja en pantalla la lista de productos guardados en el carrito. */
 function mostrarCarrito() {
 
@@ -81,6 +91,13 @@ function mostrarCarrito() {
 
         const precio = normalizarPrecio(producto.precio);
 
+        const stockMaximo = stockDeProducto(producto);
+
+        // El input del carrito también respeta el stock de la BD
+        const atributoMax = Number.isFinite(stockMaximo)
+            ? ` max="${stockMaximo}"`
+            : "";
+
         const tarjeta = document.createElement("article");
 
         tarjeta.classList.add("producto-carrito");
@@ -109,7 +126,7 @@ function mostrarCarrito() {
                     type="number"
                     class="entrada-cantidad"
                     value="${cantidad}"
-                    min="1"
+                    min="1"${atributoMax}
                     aria-label="Cantidad de ${escaparHtml(producto.nombre)}">
 
                 <button type="button" class="boton-cantidad" data-accion="sumar" aria-label="Agregar una unidad">+</button>
@@ -133,6 +150,11 @@ function mostrarCarrito() {
             });
         });
 
+        // El botón "+" se bloquea al llegar al stock disponible
+        const botonSumar = tarjeta.querySelector('[data-accion="sumar"]');
+
+        if (botonSumar) botonSumar.disabled = cantidad >= stockMaximo;
+
         // --- Cambiar la cantidad escribiendo en el input ---
         const entradaCantidad = tarjeta.querySelector(".entrada-cantidad");
 
@@ -151,7 +173,8 @@ function mostrarCarrito() {
     });
 }
 
-/* Cambia la cantidad de un producto; si queda en 0 o menos, lo elimina. */
+/* Cambia la cantidad de un producto; si queda en 0 o menos, lo elimina.
+   La cantidad nunca supera el stock que el producto traía de la BD. */
 function actualizarCantidad(indice, nuevaCantidad) {
 
     const carrito = obtenerCarrito();
@@ -165,11 +188,48 @@ function actualizarCantidad(indice, nuevaCantidad) {
         return;
     }
 
-    carrito[indice].cantidad = Math.floor(nuevaCantidad);
+    const stockMaximo = stockDeProducto(carrito[indice]);
+
+    // Se pedían más unidades de las que hay: se avisa al usuario
+    // y se deja la cantidad en el máximo disponible.
+    if (nuevaCantidad > stockMaximo) {
+
+        mostrarAviso(`Solo quedan ${stockMaximo} unidades de ${carrito[indice].nombre}`);
+    }
+
+    carrito[indice].cantidad = Math.min(Math.floor(nuevaCantidad), stockMaximo);
 
     guardarCarrito(carrito);
 
     refrescarCarrito();
+}
+
+/* Aviso flotante (misma mecánica que en catalogo.js, pero catalogo.js
+   solo se carga en el catálogo, el inicio y el detalle). */
+function mostrarAviso(mensaje) {
+
+    let aviso = document.getElementById("aviso-carrito");
+
+    if (!aviso) {
+
+        aviso = document.createElement("div");
+
+        aviso.id = "aviso-carrito";
+
+        document.body.appendChild(aviso);
+    }
+
+    aviso.textContent = mensaje;
+
+    aviso.classList.add("aviso-carrito--visible");
+
+    clearTimeout(aviso.temporizador);
+
+    aviso.temporizador = setTimeout(() => {
+
+        aviso.classList.remove("aviso-carrito--visible");
+
+    }, 2000);
 }
 
 /* Elimina un producto puntual de la lista. */
@@ -223,15 +283,52 @@ if (botonFinalizar) {
             return;
         }
 
-        // El alta del pedido en la base de datos todavía no está
-        // implementada (controllers/PedidoController.php está vacío).
-        alert("¡Gracias por tu compra! Pronto nos comunicaremos contigo.");
+        // Se envía el carrito al servidor (index.php?pagina=confirmar-pedido)
+        // mediante un formulario oculto, y PedidoController lo guarda en la BD.
+        const carrito = obtenerCarrito();
 
-        guardarCarrito([]);
+        const formulario = document.createElement("form");
 
-        refrescarCarrito();
+        formulario.method = "POST";
+
+        formulario.action = "index.php?pagina=confirmar-pedido";
+
+        const campoCarrito = document.createElement("input");
+
+        campoCarrito.type = "hidden";
+
+        campoCarrito.name = "carritoJson";
+
+        campoCarrito.value = JSON.stringify(carrito);
+
+        formulario.appendChild(campoCarrito);
+
+        document.body.appendChild(formulario);
+
+        formulario.submit();
     });
 }
 
 /* Al entrar a la página dibujamos lo que ya había guardado. */
 refrescarCarrito();
+
+/* --- Resultado del pedido ---
+   Solo se llega acá con ?pedido=error: el caso correcto ya no pasa por el
+   carrito, se muestra views/pedido.php, que vacía el carrito por su cuenta. */
+function avisarResultadoDelPedido() {
+
+    const resultado = new URLSearchParams(window.location.search).get("pedido");
+
+    if (resultado !== "error") return;
+
+    alert("No se pudo registrar el pedido. Intenta nuevamente.");
+
+    // Se quita el parámetro de la URL para que un refresco no repita el aviso.
+    const urlLimpia = window.location.pathname + window.location.search
+        .replace(/([?&])pedido=error&?/, "$1")
+        .replace(/[?&]$/, "");
+
+    window.history.replaceState({}, "", urlLimpia);
+}
+
+avisarResultadoDelPedido();

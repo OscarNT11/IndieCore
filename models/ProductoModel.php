@@ -76,8 +76,13 @@ class ProductoModel {
     }
 
     /* Productos de la MISMA categoría que el producto que se está viendo,
-       excluyendo ese mismo producto. $limite acota cuántas tarjetas se muestran. */
-    public function listarProductosRelacionados($idCategoria, $idProductoExcluido, $limite = 4) {
+       excluyendo ese mismo producto. $limite acota cuántas tarjetas se muestran.
+
+       El límite tiene que ser MAYOR que productos-por-vista (4) o el carrusel
+       nunca se activa: carrusel.js solo pone flechas si la grilla trae más de
+       4 tarjetas, y con un LIMIT 4 eso no pasa nunca. Se piden 12 para que
+       las 6 de "Juegos" entren con margen y el carrusel tenga qué recorrer. */
+    public function listarProductosRelacionados($idCategoria, $idProductoExcluido, $limite = 12) {
 
         $consulta = "
             SELECT

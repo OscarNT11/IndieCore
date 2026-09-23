@@ -33,7 +33,14 @@ switch ($paginaSolicitada) {
         break;
 
     case 'confirmar-pedido':
-        require __DIR__ . '/controllers/PedidoController.php';
+        $controlador = new PedidoController($conn);
+        $controlador->confirmarPedido();
+        break;
+
+    case 'pedido':
+        // Confirmación renderizada tras guardar el pedido.
+        $controlador = new PedidoController($conn);
+        $controlador->mostrarConfirmacion();
         break;
 
     case 'registro':

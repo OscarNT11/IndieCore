@@ -877,26 +877,40 @@ main{
 
 .cerrar-ventana{
     position: absolute;
-
     top: 15px;
     right: 15px;
-
     width: 40px;
     height: 40px;
-
     padding: 2;
     margin: 2;
-
     background: none;
     border: none;
-
     color: white;
     font-size: 20px;
-
     display: flex;
     justify-content: center;
     align-items: center;
-
     cursor: pointer;
+}
+
+/* ==========================
+   CARRUSEL DE PRODUCTOS RELACIONADOS
+   El bloque .carrusel lo crea public/js/carrusel.js solo si
+   la grilla tiene más de 4 tarjetas. Aquí solo se ajusta al
+   fondo gris de la sección "Más de <categoría>".
+========================== */
+
+.productos-relacionados .carrusel {
+    padding: 0;
+}
+
+.productos-relacionados .carrusel__flecha {
+    color: #ededed;
+    background-color: #2f2f2f;
+    border-color: #4a4a4a;
+}
+
+.productos-relacionados .carrusel__flecha:hover:not(:disabled) {
+    background-color: #6a09e0;
 }
 

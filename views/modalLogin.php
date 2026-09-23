@@ -6,14 +6,16 @@
 <div id="pantalla-transparente">
     <div id="ventana-login">
         <button class="cerrar-ventana">✕</button>
-        <form id="login">
-            <div class="nombre-usuario">
-                <label for="ingresar-nombre">Nombre de usuario</label>
+        <form id="login" novalidate>
+            <div class="campo nombre-usuario">
+                <label for="ingresar-usua-login">Nombre de usuario</label>
                 <input type="text" placeholder="Ingrese usuario..." class="espacio-texto" id="ingresar-usua-login" required>
+                <span class="mensaje-error" data-error-de="ingresar-usua-login" aria-live="polite"></span>
             </div>
-            <div class="contraseña">
-                <label for="ingresar-contraseña">Contraseña</label>
+            <div class="campo contraseña">
+                <label for="ingresar-cont-login">Contraseña</label>
                 <input type="password" placeholder="Ingrese su contraseña..." class="espacio-texto" id="ingresar-cont-login" required>
+                <span class="mensaje-error" data-error-de="ingresar-cont-login" aria-live="polite"></span>
             </div>
             <div id="recordar">
                 <label for="recordar-cont" id="recordar">
@@ -47,22 +49,26 @@
 <div id="pantalla-registro">
     <div id="ventana-registro">
         <button class="cerrar-ventana">✕</button>
-        <form id="register">
-            <div class="nombre-usuario">
-                <label for="ingresar-nombre">Ingresar nombe de usuario</label>
+        <form id="register" novalidate>
+            <div class="campo nombre-usuario">
+                <label for="ingresar-usua-registro">Ingresar nombre de usuario</label>
                 <input type="text" placeholder="Ingrese usuario..." class="espacio-texto" id="ingresar-usua-registro" required>
+                <span class="mensaje-error" data-error-de="ingresar-usua-registro" aria-live="polite"></span>
             </div>
-            <div id="correo-electronico">
-                <label for="ingresar-correo">Ingresar correo electronico</label>
-                <input type="email" placeholder="Ingrese correo electronico..." class="espacio-texto" required>
+            <div class="campo" id="correo-electronico">
+                <label for="ingresar-correo-registro">Ingresar correo electronico</label>
+                <input type="email" placeholder="Ingrese correo electronico..." class="espacio-texto" id="ingresar-correo-registro" required>
+                <span class="mensaje-error" data-error-de="ingresar-correo-registro" aria-live="polite"></span>
             </div>
-            <div class="contraseña">
-                <label for="ingresar-contraseña">Ingresar contraseña</label>
+            <div class="campo contraseña">
+                <label for="ingresar-cont-registro">Ingresar contraseña</label>
                 <input type="password" placeholder="Ingrese su contraseña..." class="espacio-texto" id="ingresar-cont-registro" required>
+                <span class="mensaje-error" data-error-de="ingresar-cont-registro" aria-live="polite"></span>
             </div>
-            <div id="confirmar-contraseña">
-                <label for="ingresar-confirmacion">Confirmar contraseña</label>
+            <div class="campo" id="confirmar-contraseña">
+                <label for="ingresar-conf-registro">Confirmar contraseña</label>
                 <input type="password" placeholder="Confirmar contraseña..." class="espacio-texto" id="ingresar-conf-registro" required>
+                <span class="mensaje-error" data-error-de="ingresar-conf-registro" aria-live="polite"></span>
             </div>
             <div class="boton">
                 <button type="submit" class="enviar" id="boton-Registrarse">

@@ -5,7 +5,7 @@
             <section class="hero">
                 <div class="hero-txt">
                     <h2>Tarjetas<br>gráficas</h2>
-                    <a href="paginaListado.php">Ver más...</a>
+                    <a href="index.php?pagina=catalogo&categoria=4">Ver más...</a>
                 </div>
                 <div class="hero-imgs">
                     <img src="public/img/grafica rtx 5090.png" alt="No" id="grafica-1">
@@ -18,56 +18,56 @@
             
             <section class="categorias">
 
-                <a href="paginaListado.php" class="categoria-link">
+                <a href="index.php?pagina=catalogo" class="categoria-link">
                     <div class="categorias-objeto">
                     <img src="public/img/Teclado.png" alt="Imagen de Teclado">
                     <h2>Teclados</h2>
                     </div>
                 </a>
 
-                <a href="paginaListado.php" class="categoria-link">
+                <a href="index.php?pagina=catalogo" class="categoria-link">
                     <div class="categorias-objeto">
                     <img src="public/img/Monitor.png" alt="Imagen de Monitor">
                     <h2>Monitores</h2>
                     </div>
                 </a>
 
-                <a href="paginaListado.php" class="categoria-link">
+                <a href="index.php?pagina=catalogo" class="categoria-link">
                     <div class="categorias-objeto">
                     <img src="public/img/Celular.png" alt="Imagen de Celular">
                     <h2>Celulares</h2>
                     </div>
                 </a>
 
-                <a href="paginaListado.php" class="categoria-link">
+                <a href="index.php?pagina=catalogo" class="categoria-link">
                     <div class="categorias-objeto">
                     <img src="public/img/Consola.png" alt="Imagen de Consola">
                     <h2>Consolas</h2>
                     </div>
                 </a>
 
-                <a href="paginaListado.php" class="categoria-link">
+                <a href="index.php?pagina=catalogo" class="categoria-link">
                     <div class="categorias-objeto">
                     <img src="public/img/Auriculares.png" alt="Imagen de Auriculares">
                     <h2>Auriculares</h2>
                     </div>
                 </a>
 
-                <a href="paginaListado.php" class="categoria-link">
+                <a href="index.php?pagina=catalogo" class="categoria-link">
                     <div class="categorias-objeto">
                     <img src="public/img/Notebook.png" alt="Imagen de Notebook">
                     <h2>Notebooks</h2>
                     </div>
                 </a>
 
-                <a href="paginaListado.php" class="categoria-link">
+                <a href="index.php?pagina=catalogo" class="categoria-link">
                     <div class="categorias-objeto">
                     <img src="public/img/Tarjetas graficas.png" alt="Imagen de Tarjeta Gráfica">
                     <h2>Tarjetas G.</h2>
                     </div>
                 </a>
 
-                <a href="paginaListado.php" class="categoria-link">
+                <a href="index.php?pagina=catalogo class="categoria-link">
                     <div class="categorias-objeto">
                     <img src="public/img/Mause.png" alt="Imagen de Mouse">
                     <h2>Mouse</h2>
@@ -222,8 +222,9 @@
 
         <?php
 // Esta vista necesita catalogo.js para que los botones
-// "Agregar al carrito" de "Lo nuevo" y "Destacados" funcionen
+// "Agregar al carrito" de "Lo nuevo" y "Destacados" funcionen,
+// y carrusel.js para poner las flechas cuando hay más de 4 productos.
 // (footer.php ya carga storage.js y login.js)
-$scriptsExtra = ['public/js/catalogo.js'];
+$scriptsExtra = ['public/js/catalogo.js', 'public/js/carrusel.js'];
 require __DIR__ . '/footer.php';
 ?>

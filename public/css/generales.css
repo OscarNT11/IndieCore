@@ -448,6 +448,69 @@ HEADER Y SUS NAVS DE TODAS LAS PAGINAS
     border: none;
 }
 
+/* ==========================================================
+   MENSAJES DE ERROR DE LOS FORMULARIOS (login y registro)
+   Cada .campo es un div que envuelve label + input + mensaje.
+   El <span class="mensaje-error"> lo rellena public/js/login.js
+   (antes esto era un alert(), ahora es texto bajo el campo).
+   ========================================================== */
+
+.campo {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Reserva la altura del mensaje para que el formulario no salte
+   cuando el texto aparece o desaparece. */
+.mensaje-error {
+    display: block;
+
+    min-height: 1rem;
+    margin-top: 4px;
+
+    font-size: 0.8rem;
+    line-height: 1.2;
+
+    color: #ff5c5c;
+}
+
+/* El atributo :empty no basta porque el texto se pone y se quita
+   desde JS: cuando está vacío, el span no ocupa nada visible. */
+.mensaje-error:empty {
+    margin-top: 0;
+}
+
+/* ---------- Campo en estado de error ---------- */
+
+.campo-con-error {
+    /* El borde rojo va sobre el input, no sobre el contenedor,
+       porque .espacio-texto tiene border: none y se vería cortado. */
+    outline: 2px solid #ff5c5c;
+    outline-offset: 0;
+
+    /* Pequeño sacudida para llamar la atención sin exagerar */
+    animation: sacudida-error 200ms ease;
+}
+
+.campo-con-error::placeholder {
+    color: #ffd7d7;
+}
+
+@keyframes sacudida-error {
+    0%   { transform: translateX(0); }
+    25%  { transform: translateX(-4px); }
+    50%  { transform: translateX(4px); }
+    75%  { transform: translateX(-2px); }
+    100% { transform: translateX(0); }
+}
+
+/* Accesibilidad: quien prefiera menos movimiento no ve la sacudida */
+@media (prefers-reduced-motion: reduce) {
+    .campo-con-error {
+        animation: none;
+    }
+}
+
 #login [type="checkbox"]{
     width: 18px;
     height: 18px;
