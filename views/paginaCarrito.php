@@ -33,6 +33,12 @@
     </div>
 </section>
 
+<!-- ==========================
+    Pagina modular de inicio de sesión y registro
+    ========================== -->
+
+<?php require __DIR__ . '/modalLogin.php'; ?>
+
 <?php
 // Esta vista necesita carrito.js
 // (footer.php ya carga storage.js y login.js)
