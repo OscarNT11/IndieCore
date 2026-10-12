@@ -289,23 +289,32 @@ HEADER Y SUS NAVS DE TODAS LAS PAGINAS
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
 
     padding: 0.75rem;
-    align-items: center;
+
+    /* Los rotulos largos ("Llamanos al...", "Compra garantizada")
+       no deben desbordar el footer. */
+    min-width: 0;
+    max-width: 100%;
+    flex-wrap: wrap;
 }
 
-#redes-txt {
+/* Clase (varias veces en el footer), no id: el HTML usa
+   class="redes-txt" y los ids duplicados no son validos. */
+.redes-txt {
     margin-left: 1rem;
     display: flex;
     flex-direction: column;
     text-wrap: nowrap;
+    min-width: 0;
 }
 
-#redes-txt h2 {
+.redes-txt h2 {
     font-size: 1.75rem;
 }
 
-#redes-txt p {
+.redes-txt p {
     font-size: 1.2rem;
 }
 
@@ -695,4 +704,132 @@ HEADER Y SUS NAVS DE TODAS LAS PAGINAS
     align-items: center;
 
     cursor: pointer;
+}
+/* ==========================================================
+   SESIÓN: usuario logueado en el header
+   Cuando hay sesión iniciada, el header ya no muestra el botón
+   "Iniciar Sesion" sino el nombre del usuario y "Cerrar sesión".
+   ========================================================== */
+
+.usuario-logueado {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap: 4px;
+
+    color: #ededed;
+    text-align: center;
+}
+
+.usuario-logueado svg {
+    width: 28px;
+    height: 28px;
+    fill: none;
+    stroke: #ededed;
+    stroke-width: 2px;
+}
+
+/* Foto de perfil del usuario en el header (antes era siempre el icono). */
+.usuario-logueado__foto {
+    width: 38px;
+    height: 38px;
+
+    border-radius: 50%;
+    object-fit: cover;
+
+    border: 2px solid #6a09e0;
+}
+
+.usuario-logueado__icono {
+    width: 38px;
+    height: 38px;
+    color: #ededed;
+}
+
+.usuario-logueado p {
+    font-size: 0.95rem;
+    max-width: 160px;
+
+    /* Un nombre largo no debe romper el header */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* El nombre es un enlace a "Mi cuenta" (antes era un <p>). */
+.usuario-logueado .usuario-logueado__nombre {
+    font-size: 0.95rem;
+    max-width: 160px;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    color: #ededed;
+    transition: color 150ms ease;
+}
+
+.usuario-logueado .usuario-logueado__nombre:hover {
+    color: #9db4ff;
+}
+
+/* El enlace "Cerrar sesión" se movió a la página de cuenta
+   (botón .cuenta__acciones .boton--salir), así que el header ya
+   no lo muestra ni necesita sus estilos. */
+
+/* ==========================================================
+   ERRORES DEL SERVIDOR EN LOS MODALES
+   Los pinta modalLogin.php a partir del array $errores que
+   devuelve UsuarioController (login o registro).
+   ========================================================== */
+
+.lista-errores {
+    list-style: none;
+
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    margin-top: 4px;
+    padding: 10px 14px;
+
+    background-color: rgba(255, 92, 92, 0.12);
+    border-left: 3px solid #ff5c5c;
+    border-radius: 6px;
+
+    color: #ff8a8a;
+    font-size: 0.85rem;
+    line-height: 1.3;
+}
+
+/* ==========================================================
+   AVISO DE ÉXITO TRAS INICIAR SESIÓN O REGISTRARSE
+   Lo crea public/js/login.js al volver con ?login=ok / ?registro=ok
+   ========================================================== */
+
+.aviso-sesion {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+
+    padding: 14px 20px;
+
+    background-color: #1f7a3d;
+    color: #ffffff;
+    font-size: 0.95rem;
+
+    border-radius: 10px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+
+    z-index: 2000;
+
+    opacity: 1;
+    transition: opacity 500ms ease, transform 500ms ease;
+}
+
+.aviso-sesion--oculto {
+    opacity: 0;
+    transform: translateY(10px);
 }

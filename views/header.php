@@ -61,11 +61,38 @@
 
                 </form>
 
-                <!-- BOTON / ENLACE QUE ABRA UNA VENTANA MODAL DE FORMULARIO  -->
-                <button class="btn-ingresar">
-                    <svg><use href="public/img/iconos.svg#icono-persona"></use></svg>
-                    <p>Iniciar Sesion</p>
-                </button>
+                <!-- BOTON / ENLACE QUE ABRE UNA VENTANA MODAL DE FORMULARIO
+                     o muestra el usuario logueado -->
+                <?php if (usuarioLogueado()): ?>
+
+                    <?php $usuarioEnHeader = usuarioActual(); ?>
+
+                    <div class="usuario-logueado">
+                        <?php if (!empty($usuarioEnHeader['foto'])): ?>
+                            <img
+                                class="usuario-logueado__foto"
+                                src="<?php echo escapar($usuarioEnHeader['foto']); ?>"
+                                alt="Foto de perfil">
+                        <?php else: ?>
+                            <svg class="usuario-logueado__icono"><use href="public/img/iconos.svg#icono-persona"></use></svg>
+                        <?php endif; ?>
+                        <a
+                            class="usuario-logueado__nombre"
+                            href="index.php?pagina=cuenta"
+                            title="Ver mi cuenta">
+                            <?php echo escapar($usuarioEnHeader['nombre']); ?>
+                        </a>
+                    </div>
+
+                <?php else: ?>
+
+                    <button class="btn-ingresar">
+                        <svg><use href="public/img/iconos.svg#icono-persona"></use></svg>
+                        <p>Iniciar Sesion</p>
+                    </button>
+
+                <?php endif; ?>
+
 
                 <!-- BOTON / ENLACE QUE ABRE UNA VENTANA MODAL
                   (O DIRIGE A OTRA PARTE) DE LOS PRODUCTOS A COMPRAR -->

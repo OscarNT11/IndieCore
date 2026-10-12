@@ -1,7 +1,6 @@
-
 </main>
 
-<footer class="footer">
+        <footer class="footer">
 
             <section id="redes">
 

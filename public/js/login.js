@@ -2,13 +2,9 @@
 
 const botonIngresar = document.querySelector(".btn-ingresar");
 
-const botonIngreso = document.getElementById("volver-login");
-
 const pantallaTransparente = document.getElementById("pantalla-transparente");
 
 const cerrarVentana = document.querySelectorAll(".cerrar-ventana");
-
-const botonRegistro = document.getElementById("crear-cuenta");
 
 const pantallaRegistro = document.getElementById("pantalla-registro");
 
@@ -17,6 +13,11 @@ const formularioRegistro = document.getElementById("register");
 const formularioLogin = document.getElementById("login");
 
 const limite = 20;
+
+/* El campo de login acepta usuario O correo, y un correo casi siempre
+   supera los 20 caracteres. Con el limite de nombre de usuario, el
+   formulario no se enviaba nunca al escribir un email. */
+const limiteCorreo = 255;
 
 const minimo = 8;
 
@@ -69,9 +70,10 @@ function estaVacio(campo) {
     return campo.value.trim() === "";
 }
 
+/* Valida el formulario y, si todo está bien, LO ENVÍA al servidor
+   (index.php?pagina=login) para que UsuarioController compruebe
+   las credenciales contra la base de datos. */
 formularioLogin.addEventListener("submit", (evento) => {
-
-    evento.preventDefault();
 
     limpiarErrores(formularioLogin);
 
@@ -82,13 +84,13 @@ formularioLogin.addEventListener("submit", (evento) => {
 
     if (estaVacio(campoNombre)) {
 
-        mostrarError(campoNombre, "Ingresa tu nombre de usuario");
+        mostrarError(campoNombre, "Ingresa tu nombre de usuario o correo");
 
         hayError = true;
 
-    } else if (campoNombre.value.length > limite) {
+    } else if (campoNombre.value.length > limiteCorreo) {
 
-        mostrarError(campoNombre, "El nombre de usuario no puede superar los 20 caracteres");
+        mostrarError(campoNombre, "El usuario o correo es demasiado largo");
 
         hayError = true;
     }
@@ -99,20 +101,20 @@ formularioLogin.addEventListener("submit", (evento) => {
 
         hayError = true;
 
-    } else if (campoContrasena.value.length > limite) {
+    } else if (campoContrasena.value.length > limiteCorreo) {
 
-        mostrarError(campoContrasena, "La contraseña no puede superar los 20 caracteres");
+        mostrarError(campoContrasena, "La contraseña es demasiado larga");
 
         hayError = true;
     }
 
-    // Con cualquier error, el formulario no se envía.
-    if (hayError) return;
+    // Con cualquier error, el formulario no se envía al servidor.
+    if (hayError) evento.preventDefault();
 });
 
+/* Igual que el login: valida y, si no hay errores, deja que el navegador
+   envíe el formulario a index.php?pagina=registro, donde se crea la cuenta. */
 formularioRegistro.addEventListener("submit", (evento) => {
-
-    evento.preventDefault();
 
     limpiarErrores(formularioRegistro);
 
@@ -124,6 +126,10 @@ formularioRegistro.addEventListener("submit", (evento) => {
     let hayError = false;
 
     // --- Nombre de usuario ---
+    // Se rechazan los caracteres típicos de código/inyección (<, >, ", ', ;, &, etc.).
+    // Solo se permiten letras (con tildes/ñ), números, espacios y _ - .
+    const nombreValido = /^[\p{L}\p{N} _.-]+$/u.test(campoNombre.value.trim());
+
     if (estaVacio(campoNombre)) {
 
         mostrarError(campoNombre, "Ingresa un nombre de usuario");
@@ -133,6 +139,12 @@ formularioRegistro.addEventListener("submit", (evento) => {
     } else if (campoNombre.value.length > limite) {
 
         mostrarError(campoNombre, "El nombre de usuario no puede superar los 20 caracteres");
+
+        hayError = true;
+
+    } else if (!nombreValido) {
+
+        mostrarError(campoNombre, "El nombre solo puede tener letras, números, espacios y _ - .");
 
         hayError = true;
     }
@@ -189,40 +201,149 @@ formularioRegistro.addEventListener("submit", (evento) => {
     }
 
     // Con cualquier error, no se crea la cuenta.
-    if (hayError) return;
+    if (hayError) evento.preventDefault();
 });
 
-botonRegistro.addEventListener("click", (evento) => {
+/* ==========================================================
+   ABRIR EL MODAL SEGÚN LA URL
+   El botón "Iniciar Sesion" del header lleva a index.php?pagina=login,
+   así que al cargar esa página (o la de registro) se abre solo el modal
+   correspondiente.
+   ========================================================== */
 
-    evento.preventDefault();
+const parametros = new URLSearchParams(window.location.search);
 
-    pantallaRegistro.style.display = "flex";
+const paginaActual = parametros.get("pagina");
 
-});
+/* Cuando se acaba de iniciar sesión o registrarse, el controlador vuelve
+   con ?login=ok / ?registro=ok. En ese caso NO se debe abrir el modal:
+   hay que cerrarlo para devolver al usuario a la página en la que estaba. */
+const acabaDeEntrar = parametros.get("login") === "ok"
+    || parametros.get("registro") === "ok";
 
-botonIngreso.addEventListener("click", (evento) => {
+function abrirVentana(elemento) {
 
-    evento.preventDefault();
+    if (elemento) elemento.style.display = "flex";
+}
 
-    pantallaRegistro.style.display = "none";
+if (acabaDeEntrar) {
 
-    pantallaTransparente.style.display = "flex";
+    cerrarVentanas();
 
-});
+} else if (paginaActual === "login") {
 
-botonIngresar.addEventListener("click", () => {
+    abrirVentana(pantallaTransparente);
 
-    pantallaTransparente.style.display = "flex";
+} else if (paginaActual === "registro") {
 
-});
+    abrirVentana(pantallaRegistro);
+}
+
+/* ==========================================================
+   AVISO DE ÉXITO
+   Tras registrarse o iniciar sesión, el controlador vuelve a esta
+   página con ?registro=ok o ?login=ok: aquí se muestra un aviso.
+   ========================================================== */
+
+function mostrarAvisoSesion() {
+
+    let texto = "";
+
+    if (parametros.get("registro") === "ok") {
+
+        texto = "¡Cuenta creada! Ya iniciaste sesión.";
+
+    } else if (parametros.get("login") === "ok") {
+
+        texto = "Sesión iniciada correctamente.";
+    }
+
+    if (texto === "") return;
+
+    const aviso = document.createElement("div");
+
+    aviso.className = "aviso-sesion";
+
+    aviso.setAttribute("role", "status");
+
+    aviso.textContent = texto;
+
+    document.body.appendChild(aviso);
+
+    setTimeout(() => aviso.classList.add("aviso-sesion--oculto"), 2500);
+
+    setTimeout(() => aviso.remove(), 3000);
+}
+
+mostrarAvisoSesion();
+
+if (botonIngresar) {
+
+    botonIngresar.addEventListener("click", () => {
+
+        // Si hay un usuario con la sesión iniciada, el header ya no muestra
+        // este botón (muestra su nombre y "Cerrar sesión").
+        abrirVentana(pantallaTransparente);
+    });
+}
+
+/* ==========================================================
+   CAMBIAR ENTRE LOGIN Y REGISTRO SIN SALIR DE LA PÁGINA
+   Los enlaces "Crear cuenta" (#crear-cuenta) y "Inicia sesión"
+   (#volver-login) llevaban a index.php?pagina=registro / login, lo
+   que NAVEGABA a otra URL. Aquí se intercepta el clic y solo se
+   cambia de ventana dentro de la misma página.
+   ========================================================== */
+
+function abrirLogin() {
+
+    cerrarVentanas();
+
+    abrirVentana(pantallaTransparente);
+}
+
+function abrirRegistro() {
+
+    cerrarVentanas();
+
+    abrirVentana(pantallaRegistro);
+}
+
+function cerrarVentanas() {
+
+    if (pantallaTransparente) pantallaTransparente.style.display = "none";
+
+    if (pantallaRegistro) pantallaRegistro.style.display = "none";
+}
+
+// Enlace "Crear cuenta" (dentro de la ventana de login) → abre el registro
+// sin recargar la página.
+const enlaceCrearCuenta = document.getElementById("crear-cuenta");
+
+if (enlaceCrearCuenta) {
+
+    enlaceCrearCuenta.addEventListener("click", (evento) => {
+
+        evento.preventDefault();
+
+        abrirRegistro();
+    });
+}
+
+const enlaceVolverLogin = document.getElementById("volver-login");
+
+if (enlaceVolverLogin) {
+
+    enlaceVolverLogin.addEventListener("click", (evento) => {
+
+        evento.preventDefault();
+
+        abrirLogin();
+    });
+}
 
 cerrarVentana.forEach((boton) => {
 
-    boton.addEventListener("click", () => {
-
-        pantallaTransparente.style.display = "none";
-        pantallaRegistro.style.display = "none";
-
-    });
+    boton.addEventListener("click", cerrarVentanas);
 
 });

@@ -12,40 +12,13 @@ CREATE TABLE `categorias` (
 );
 
 CREATE TABLE `usuarios` (
-  `id_usuario` INT AUTO_INCREMENT,
+  `id_usuario` INT AUTO_INCREMENT PRIMARY KEY,
   `nombre` VARCHAR(255) NOT NULL UNIQUE,
-  `telefono` VARCHAR(50) UNIQUE,
   `email` VARCHAR(255) NOT NULL UNIQUE,
   `contrasenia` VARCHAR(255) NOT NULL,
-  PRIMARY KEY (`id_usuario`)
-);
-
-CREATE TABLE `clientes` (
-  `id_usuario` VARCHAR(50) NOT NULL,
-  `nombre` VARCHAR(255) NOT NULL,
-  `direccion` VARCHAR(255) NOT NULL,
-  `telefono` VARCHAR(50),
-  `email` VARCHAR(255) NOT NULL UNIQUE,
-  `contrasenia` VARCHAR(255) NOT NULL,
-  PRIMARY KEY (`id_usuario`)
-);
-
-CREATE TABLE `administradores` (
-  `id_usuario` VARCHAR(50) NOT NULL,
-  `nombre` VARCHAR(255) NOT NULL,
-  `telefono` VARCHAR(50),
-  `email` VARCHAR(255) NOT NULL UNIQUE,
-  `contrasenia` VARCHAR(255) NOT NULL,
-  PRIMARY KEY (`id_usuario`)
-);
-
-CREATE TABLE `operadores` (
-  `id_usuario` VARCHAR(50) NOT NULL,
-  `nombre` VARCHAR(255) NOT NULL,
-  `telefono` VARCHAR(50),
-  `email` VARCHAR(255) NOT NULL UNIQUE,
-  `contrasenia` VARCHAR(255) NOT NULL,
-  PRIMARY KEY (`id_usuario`)
+  `foto` VARCHAR(255),
+  `rol` ENUM('cliente', 'administrador', 'operador') NOT NULL DEFAULT 'cliente',
+  `fecha_registro` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
 -- 2. Productos
@@ -66,7 +39,9 @@ CREATE TABLE `pedidos` (
   `id_pedido` INT AUTO_INCREMENT PRIMARY KEY,
   `fecha` DATETIME NOT NULL,
   `estado` VARCHAR(50),
-  `precio_total` DECIMAL(10, 2) NOT NULL
+  `precio_total` DECIMAL(10, 2) NOT NULL,
+  `id_usuario` INT NOT NULL,
+  FOREIGN KEY (`id_usuario`) REFERENCES `usuarios`(`id_usuario`)
 );
 
 -- 4. Detalle de Pedidos

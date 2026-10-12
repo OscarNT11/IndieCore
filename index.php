@@ -1,11 +1,19 @@
 <?php
 
+// La sesión debe abrirse ANTES de imprimir cualquier HTML. Si se llama
+// dentro de una vista (al final del render, cuando ya se envió la página)
+// PHP avisa: "Session cannot be started after headers have already been sent".
+session_start();
+
 require_once __DIR__ . "/config/conexion.php";
+require_once __DIR__ . "/config/auth.php";
 
 require_once __DIR__ . "/models/ProductoModel.php";
 require_once __DIR__ . "/models/PedidoModel.php";
+require_once __DIR__ . "/models/UsuarioModel.php";
 require_once __DIR__ . "/controllers/ProductoController.php";
 require_once __DIR__ . "/controllers/PedidoController.php";
+require_once __DIR__ . "/controllers/UsuarioController.php";
 
 $paginaSolicitada = isset($_GET['pagina']) ? $_GET['pagina'] : 'home';
 
@@ -32,6 +40,12 @@ switch ($paginaSolicitada) {
         require __DIR__ . '/views/paginaCarrito.php';
         break;
 
+    case 'cuenta':
+        // Datos del usuario logueado y foto de perfil.
+        $controlador = new UsuarioController($conn);
+        $controlador->cuenta();
+        break;
+
     case 'confirmar-pedido':
         $controlador = new PedidoController($conn);
         $controlador->confirmarPedido();
@@ -44,11 +58,20 @@ switch ($paginaSolicitada) {
         break;
 
     case 'registro':
-        require __DIR__ . '/views/registro.php';
+        // Muestra el formulario y, si llega por POST, crea la cuenta.
+        $controlador = new UsuarioController($conn);
+        $controlador->registro();
         break;
 
     case 'login':
-        require __DIR__ . '/views/login.php';
+        // Muestra el formulario y, si llega por POST, abre la sesión.
+        $controlador = new UsuarioController($conn);
+        $controlador->login();
+        break;
+
+    case 'logout':
+        $controlador = new UsuarioController($conn);
+        $controlador->logout();
         break;
 
     default:

@@ -86,8 +86,9 @@
         <?php require __DIR__ . '/modalLogin.php'; ?>
 
         <?php
-// Esta vista necesita catalogo.js
+// Esta vista necesita catalogo.js para los botones "Agregar al carrito"
+// y carrusel.js para las flechas cuando hay más de 4 productos.
 // (footer.php ya carga storage.js y login.js)
-$scriptsExtra = ['public/js/catalogo.js'];
+$scriptsExtra = ['public/js/catalogo.js', 'public/js/carrusel.js'];
 require __DIR__ . '/footer.php';
 ?>

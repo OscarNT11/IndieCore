@@ -1,0 +1,303 @@
+/* ==========================================================
+   PÁGINA DE CUENTA (datos del usuario + foto de perfil)
+   Diseño: panel centrado con dos columnas. A la izquierda la
+   foto de perfil con el botón "Subir foto"; a la derecha los
+   campos Nombre / Correo / Teléfono y el botón Guardar.
+   ========================================================== */
+
+.cuenta {
+    width: 100%;
+    padding: 2.5rem 1.5rem 3rem;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    gap: 1.5rem;
+}
+
+.cuenta__titulo {
+    font-size: 2rem;
+    font-weight: 300;
+    letter-spacing: 1px;
+    text-align: center;
+}
+
+/* ---------- Panel principal ---------- */
+
+.cuenta__panel {
+    width: 100%;
+    max-width: 900px;
+
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 2.5rem;
+
+    padding: 2.5rem;
+
+    background-color: #373737;
+    border-radius: 1rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+/* ---------- Columna izquierda: foto ---------- */
+
+.cuenta__foto-columna {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.25rem;
+}
+
+.cuenta__foto-marco {
+    width: 220px;
+    height: 220px;
+
+    border-radius: 50%;
+    overflow: hidden;
+
+    background-color: #2a2a2a;
+    border: 3px solid #4a4a4a;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cuenta__foto {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Icono de persona cuando el usuario no tiene foto subida */
+.cuenta__foto-icono {
+    width: 45%;
+    height: 45%;
+    color: #6f6f6f;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.5;
+}
+
+/* El input de archivo es invisible: se dispara desde el botón/label */
+.cuenta__archivo {
+    display: none;
+}
+
+.cuenta__subir {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+
+    padding: 0.65rem 1.5rem;
+
+    font-size: 1rem;
+    color: #ededed;
+
+    background-color: #2f2f2f;
+    border: 1px solid #4a4a4a;
+    border-radius: 0.5rem;
+
+    cursor: pointer;
+    transition: background-color 150ms ease, border-color 150ms ease;
+}
+
+.cuenta__subir:hover {
+    background-color: #3f3f3f;
+    border-color: #6a09e0;
+}
+
+.cuenta__subir-ayuda {
+    font-size: 0.8rem;
+    color: #9a9a9a;
+    text-align: center;
+}
+
+/* Texto de ayuda bajo el campo de confirmación del correo. */
+.cuenta__ayuda {
+    font-size: 0.8rem;
+    color: #9a9a9a;
+}
+
+/* El campo de confirmación se destaca un poco: es el que habilita
+   los cambios de nombre y contraseña. */
+.cuenta__campo--confirmar input {
+    border-color: #6a09e0;
+}
+
+.cuenta__subir svg {
+    width: 22px;
+    height: 22px;
+}
+
+/* ---------- Columna derecha: campos ---------- */
+
+.cuenta__form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.cuenta__campo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.cuenta__campo label {
+    font-size: 0.95rem;
+    color: #c9c9c9;
+    letter-spacing: 0.5px;
+}
+
+.cuenta__campo input {
+    width: 100%;
+
+    padding: 0.75rem 1rem;
+
+    font-size: 1.05rem;
+    color: #ededed;
+
+    background-color: #2a2a2a;
+    border: 1px solid #4a4a4a;
+    border-radius: 0.5rem;
+
+    transition: border-color 150ms ease;
+}
+
+.cuenta__campo input:focus {
+    border-color: #6a09e0;
+}
+
+.cuenta__campo input:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* ---------- Acciones ---------- */
+
+.cuenta__acciones {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.6rem;
+
+    margin-top: 0.5rem;
+}
+
+/* Botones redondos (tipo píldora) y compactos: así los tres
+   caben en una sola línea dentro del panel. */
+.cuenta__acciones .boton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0.5rem 1rem;
+
+    font-size: 0.8rem;
+    font-weight: 500;
+    white-space: nowrap;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    text-decoration: none;
+
+    border: none;
+    border-radius: 999px;
+
+    cursor: pointer;
+    transition: filter 200ms ease, transform 150ms ease, box-shadow 200ms ease;
+}
+
+.cuenta__acciones .boton:hover {
+    filter: brightness(115%);
+    transform: translateY(-2px);
+}
+
+.cuenta__acciones .boton:active {
+    transform: translateY(0);
+}
+
+/* Cerrar sesión: mismo formato redondo, en tono rojo suave para
+distinguirlo de las acciones principales. */
+.cuenta__acciones .boton--salir {
+    background-color: #4a1f1f;
+    color: #ff8a8a;
+    border: 1px solid #7a2f2f;
+}
+
+.cuenta__acciones .boton--salir:hover {
+    background-color: #5c2626;
+    border-color: #ff5c5c;
+    color: #ffb3b3;
+}
+
+/* ---------- Avisos (éxito / error) ---------- */
+
+.cuenta__aviso {
+    width: 100%;
+    max-width: 900px;
+
+    padding: 0.9rem 1.2rem;
+
+    border-radius: 0.5rem;
+    font-size: 0.95rem;
+}
+
+.cuenta__aviso--ok {
+    background-color: rgba(31, 122, 61, 0.18);
+    border-left: 3px solid #1f7a3d;
+    color: #7fe0a3;
+}
+
+.cuenta__aviso--error {
+    background-color: rgba(255, 92, 92, 0.12);
+    border-left: 3px solid #ff5c5c;
+    color: #ff8a8a;
+}
+
+.cuenta__aviso ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 800px) {
+    .cuenta__panel {
+        grid-template-columns: 1fr;
+        padding: 1.75rem;
+        gap: 1.75rem;
+    }
+
+    .cuenta__foto-marco {
+        width: 170px;
+        height: 170px;
+    }
+}
+
+@media (max-width: 520px) {
+    .cuenta {
+        padding: 1.5rem 1rem 2rem;
+    }
+
+    .cuenta__panel {
+        padding: 1.25rem;
+    }
+
+    .cuenta__foto-marco {
+        width: 140px;
+        height: 140px;
+    }
+
+    .cuenta__acciones {
+        flex-direction: column;
+    }
+
+    .cuenta__acciones .boton {
+        width: 100%;
+    }
+}
