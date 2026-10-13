@@ -35,6 +35,7 @@ function paginaActual() {
    arrancar; aquí NO se llama a session_start() porque estas funciones
    se usan desde las vistas, cuando el HTML ya se está enviando, y PHP
    no puede mandar la cookie de sesión a esas alturas. */
+
 function usuarioLogueado() {
     return !empty($_SESSION['id_usuario']);
 }
@@ -52,4 +53,63 @@ function usuarioActual() {
         'foto'       => $_SESSION['foto_usuario'] ?? '',
     );
 }
+
+/* Rol del usuario logueado (o null). Los valores posibles son los del
+   ENUM de la tabla `usuarios`: 'cliente', 'administrador' u 'operador'. */
+function usuarioActualRol() {
+    return $_SESSION['rol'] ?? null;
+}
+
+/** ¿El usuario logueado es administrador? */
+function esAdmin() {
+    return usuarioActualRol() === 'administrador';
+}
+
+/** ¿El usuario logueado es operador? */
+function esOper() {
+    return usuarioActualRol() === 'operador';
+}
+
+/** ¿El usuario logueado puede entrar al panel de gestión? (admin u operador) */
+function esGestor() {
+    return esAdmin() || esOper();
+}
+
+/* Guarda en la sesión los datos del usuario que acaba de loguearse.
+   Recibe la fila de la tabla `usuarios` (arreglo). */
+function iniciarSesionUsuario($usuario) {
+    session_regenerate_id(true); // cambia el ticket (evita fijación de sesión)
+
+    $_SESSION['id_usuario']     = $usuario['id_usuario'];
+    $_SESSION['nombre_usuario'] = $usuario['nombre'];
+    $_SESSION['email_usuario']  = $usuario['email'] ?? '';
+    $_SESSION['foto_usuario']   = $usuario['foto'] ?? '';
+    $_SESSION['rol']            = $usuario['rol'] ?? 'cliente';
+}
+
+/** Cierra la sesión completamente. */
+function cerrarSesion() {
+    $_SESSION = [];
+    session_destroy();
+}
+
+/** Si no está logueado, manda al login. */
+function requerirLogin() {
+    if (!usuarioLogueado()) {
+        redirigir('login');
+    }
+}
+
+/** Exige estar logueado y tener un rol determinado. */
+function requerirRol($rol) {
+    requerirLogin();
+
+    if (usuarioActualRol() !== $rol) {
+        http_response_code(403); // 403 = Prohibido
+        require __DIR__ . '/../views/sin_permiso.php';
+        exit;
+    }
+}
+
+
 

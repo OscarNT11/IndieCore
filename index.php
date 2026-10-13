@@ -46,6 +46,19 @@ switch ($paginaSolicitada) {
         $controlador->cuenta();
         break;
 
+    case 'panel':
+        // Panel de gestión: solo administradores y operadores.
+        // requerirRol() corta con 403 y views/sin_permiso.php si el rol
+        // no es el adecuado (o redirige al login si no hay sesión).
+        if (!esGestor()) {
+            http_response_code(403);
+            require __DIR__ . '/views/sin_permiso.php';
+            break;
+        }
+
+        require __DIR__ . '/views/paginaPanel.php';
+        break;
+
     case 'confirmar-pedido':
         $controlador = new PedidoController($conn);
         $controlador->confirmarPedido();

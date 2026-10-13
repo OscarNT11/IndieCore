@@ -110,6 +110,15 @@
                     <li class="nav-item"><a href="index.php?pagina=home#lo-nuevo">Nuevo</a></li>
                     <li class="nav-item"><a href="index.php?pagina=home#destacados">Destacado</a></li>
                     <li class="nav-item"><a href="index.php?pagina=home#redes">Contactanos</a></li>
+
+                    <?php // Enlace al panel de gestión, solo para admin y operador. ?>
+                    <?php if (esGestor()): ?>
+                        <li class="nav-item nav-item--panel">
+                            <a href="index.php?pagina=panel">
+                                <?php echo esAdmin() ? 'Administrador' : 'Operador'; ?>
+                            </a>
+                        </li>
+                    <?php endif; ?>
                 </ul>
             </nav>
 

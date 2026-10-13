@@ -66,6 +66,11 @@ class UsuarioController {
                     $_SESSION['nombre_usuario'] = $nombre;
                     $_SESSION['email_usuario'] = $email;
 
+                    // Toda cuenta nueva nace con rol 'cliente' (el DEFAULT de
+                    // la tabla). El rol se cambia después desde phpMyAdmin y,
+                    // al volver a iniciar sesión, se carga en $_SESSION['rol'].
+                    $_SESSION['rol'] = 'cliente';
+
                     // Vuelve a la MISMA página donde estaba el usuario
                     // (la manda el campo oculto "volver" del modal).
                     header("Location: index.php?pagina=" . $this->paginaVolver() . "&registro=ok");
@@ -113,6 +118,11 @@ class UsuarioController {
                     $_SESSION['nombre_usuario'] = $usuario['nombre'];
                     $_SESSION['email_usuario'] = $usuario['email'];
                     $_SESSION['foto_usuario'] = $usuario['foto'] ?? '';
+
+                    // El rol (cliente / administrador / operador) se guarda en
+                    // la sesión para que el header y las páginas protegidas
+                    // sepan qué puede hacer este usuario.
+                    $_SESSION['rol'] = $usuario['rol'] ?? 'cliente';
 
                     // Vuelve a la MISMA página donde estaba el usuario
                     // (la manda el campo oculto "volver" del modal).

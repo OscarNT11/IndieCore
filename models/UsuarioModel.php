@@ -36,7 +36,7 @@ class UsuarioModel {
            Devuelve la fila del usuario o null si no existe. */
         public function buscarPorEmail($email) {
             $stmt = $this->conexion->prepare(
-                "SELECT id_usuario, nombre, email, contrasenia, foto FROM usuarios
+                "SELECT id_usuario, nombre, email, contrasenia, foto, rol FROM usuarios
                  WHERE email = ? OR nombre = ? LIMIT 1"
             );
 
@@ -52,7 +52,7 @@ class UsuarioModel {
            Incluye la foto; devuelve null si no existe. */
         public function obtenerPorId($idUsuario) {
             $stmt = $this->conexion->prepare(
-                "SELECT id_usuario, nombre, email, telefono, contrasenia, foto
+                "SELECT id_usuario, nombre, email, contrasenia, foto, rol
                  FROM usuarios WHERE id_usuario = ? LIMIT 1"
             );
 
