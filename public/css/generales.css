@@ -918,4 +918,15 @@ HEADER Y SUS NAVS DE TODAS LAS PAGINAS
 
 .sin-permiso h1 {
     margin-bottom: 12px;
+}/* ==========================================================
+   RESULTADOS DE BÚSQUEDA EN EL CATÁLOGO
+   La búsqueda del header reutiliza la página de catálogo
+   (views/paginaListado.php); solo se marca la marca del producto.
+   ========================================================== */
+
+/* La marca del producto, debajo del nombre en las tarjetas. */
+.tarjeta-producto .marca {
+    font-size: 0.85rem;
+    color: #9db4ff;
+    margin-bottom: 4px;
 }

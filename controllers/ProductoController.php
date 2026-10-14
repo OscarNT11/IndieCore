@@ -21,7 +21,17 @@ class ProductoController {
     public function mostrarCatalogo() {
         $idCategoriaSeleccionada = isset($_GET['categoria']) ? $_GET['categoria'] : null;
 
-        $listaDeProductos  = $this->productoModel->listarProductos($idCategoriaSeleccionada);
+        // La barra de búsqueda del header envía el texto en ?q=.
+        // Si hay término, se muestran los resultados de búsqueda en esta
+        // misma página de catálogo; si no, el listado normal por categoría.
+        $terminoBusqueda = isset($_GET['q']) ? trim((string) $_GET['q']) : '';
+
+        if ($terminoBusqueda !== '') {
+            $listaDeProductos = $this->productoModel->buscarProductos($terminoBusqueda);
+        } else {
+            $listaDeProductos = $this->productoModel->listarProductos($idCategoriaSeleccionada);
+        }
+
         $listaDeCategorias = $this->productoModel->listarCategorias();
 
         require __DIR__ . '/../views/paginaListado.php';

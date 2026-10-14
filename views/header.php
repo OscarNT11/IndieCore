@@ -52,8 +52,14 @@
                 </a>
 
                 <!-- FORMULARIO PARA BUSCAR DETERMINADO PRODUCTO / SESION -->
-                <form class="header-busqueda">
-                    <input type="text" placeholder="Buscar...">
+                <!-- Envía el término por GET al catálogo: index.php?pagina=catalogo&q=... -->
+                <form class="header-busqueda" action="index.php" method="GET">
+                    <input type="hidden" name="pagina" value="catalogo">
+                    <input
+                        type="text"
+                        name="q"
+                        placeholder="Buscar..."
+                        value="<?php echo escapar(isset($_GET['q']) ? $_GET['q'] : ''); ?>">
                     <!-- BOTON SUBMIT QUE BUSQUE LO SOLICITADO -->
                     <button type="submit" aria-label="lupa">
                         <svg><use href="public/img/iconos.svg#icono-lupa"></use></svg>

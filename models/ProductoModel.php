@@ -48,6 +48,47 @@ class ProductoModel {
         return $listaProductos;
     }
 
+    /* Busca productos por texto libre. Compara el término contra el nombre,
+       la marca, la descripción (informacion) y el nombre de la categoría.
+       Devuelve las filas con los mismos alias que usa la vista del listado. */
+    public function buscarProductos($termino) {
+
+        $consulta = "
+            SELECT
+                p.id_producto,
+                p.nombre,
+                p.marca,
+                p.informacion,
+                p.precio,
+                p.stock,
+                p.foto AS imagen,
+                c.nombre AS nombre_categoria
+            FROM productos p
+            INNER JOIN categorias c ON p.id_categoria = c.id_categoria
+            WHERE p.nombre       LIKE ?
+               OR p.marca        LIKE ?
+               OR p.informacion  LIKE ?
+               OR c.nombre       LIKE ?
+            ORDER BY p.nombre ASC";
+
+        $consultaPreparada = mysqli_prepare($this->conn, $consulta);
+
+        // El % va alrededor del término para que encuentre coincidencias
+        // en cualquier parte del texto (no solo al principio).
+        $patron = '%' . $termino . '%';
+
+        mysqli_stmt_bind_param($consultaPreparada, "ssss", $patron, $patron, $patron, $patron);
+
+        mysqli_stmt_execute($consultaPreparada);
+        $resultado = mysqli_stmt_get_result($consultaPreparada);
+
+        $listaProductos = array();
+        while ($row = mysqli_fetch_assoc($resultado)) {
+            $listaProductos[] = $row;
+        }
+        return $listaProductos;
+    }
+
     public function obtenerProductoPorId($idProducto) {
         $consulta = "
             SELECT

@@ -39,7 +39,9 @@ productos
     flex: 1;
 
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    /* auto-fill en vez de auto-fit: evita que una sola tarjeta se estire
+       a todo el ancho. */
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
     gap: 1rem;
     padding: 0.5rem 1rem;
 }

@@ -1,7 +1,19 @@
 <?php require __DIR__ . '/header.php'; ?>
 
+<?php
+// Si la búsqueda del header mandó un término (?q=), el controlador rellenó
+// $listaDeProductos con los resultados y aquí se avisa de ello.
+$terminoBusqueda = isset($_GET['q']) ? trim((string) $_GET['q']) : '';
+?>
+
 <section class="catalogo">
-    <h2>Catalogos de Productos</h2>
+    <h2>
+        <?php if ($terminoBusqueda !== ''): ?>
+            Resultados para "<?php echo htmlspecialchars($terminoBusqueda); ?>"
+        <?php else: ?>
+            Catalogos de Productos
+        <?php endif; ?>
+    </h2>
 
     <div class="catalogo-layout">
 
@@ -38,7 +50,14 @@
         <div class="catalogo-productos">
 
     <?php if (empty($listaDeProductos)): ?>
-        <p class="mensaje-vacio">No se encontraron productos en esta categoría.</p>
+        <?php if ($terminoBusqueda !== ''): ?>
+            <p class="mensaje-vacio">
+                No se encontraron productos para "<?php echo htmlspecialchars($terminoBusqueda); ?>".
+                <a href="index.php?pagina=catalogo">Ver todo el catálogo</a>
+            </p>
+        <?php else: ?>
+            <p class="mensaje-vacio">No se encontraron productos en esta categoría.</p>
+        <?php endif; ?>
     <?php else: ?>
         <div class="grilla-productos">
             <?php foreach ($listaDeProductos as $producto): ?>

@@ -585,7 +585,9 @@ main {
 
 .grilla-productos {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    /* auto-fill (no auto-fit): mantiene las pistas vacías, así una sola
+       tarjeta NO se estira a todo el ancho; conserva su tamaño de 220px. */
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
     gap: 1.5rem;
 
     width: 100%;
