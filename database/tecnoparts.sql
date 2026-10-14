@@ -43,9 +43,14 @@ CREATE TABLE `productos` (
 CREATE TABLE `pedidos` (
   `id_pedido` INT AUTO_INCREMENT PRIMARY KEY,
   `fecha` DATETIME NOT NULL,
-  `estado` VARCHAR(50),
+  `estado` ENUM('pendiente', 'pagado', 'rechazado') NOT NULL DEFAULT 'pendiente',
   `precio_total` DECIMAL(10, 2) NOT NULL,
   `id_usuario` INT NOT NULL,
+  `envio_nombre` VARCHAR(255) NOT NULL,
+  `envio_direccion` VARCHAR(255) NOT NULL,
+  `envio_ciudad` VARCHAR(100) NOT NULL,
+  `envio_departamento` VARCHAR(100) NOT NULL,
+  `envio_telefono` VARCHAR(20) NOT NULL,
   FOREIGN KEY (`id_usuario`) REFERENCES `usuarios`(`id_usuario`)
 );
 
@@ -60,7 +65,19 @@ CREATE TABLE `detalles_pedido` (
   FOREIGN KEY (`id_producto`) REFERENCES `productos`(`id_producto`) 
 );
 
--- 5. Reseñas
+-- 5. Pagos
+CREATE TABLE `pagos` (
+  `id_pago` INT AUTO_INCREMENT PRIMARY KEY,
+  `id_pedido` INT NOT NULL,
+  `fecha_pago` DATETIME NOT NULL,
+  `monto` DECIMAL(10, 2) NOT NULL,
+  `ultimos4` CHAR(4) NOT NULL,
+  `resultado` ENUM('aprobado', 'rechazado') NOT NULL, 
+  CONSTRAINT `fk_pago_pedido`
+    FOREIGN KEY (`id_pedido`) REFERENCES `pedidos`(`id_pedido`)
+);
+
+-- 6. Reseñas
 CREATE TABLE `resenias` (
   `id_resenia` INT AUTO_INCREMENT,
   `comentario` TEXT,
@@ -80,13 +97,7 @@ INSERT INTO categorias (nombre, descripcion) VALUES
 ('Componentes',             'Placas, memorias y hardware interno'),
 ('Otros dispositivos',      'Cables, fundas y repuestos varios');
 
--- 6. Productos de ejemplo, varios por cada categoría.
---    - La columna `foto` guarda SOLO el nombre del archivo: las vistas ya
---      anteponen la carpeta 'public/img/ImagenesProductos/'. Por eso aquí
---      va 'elden_ring_juego.png' y no la ruta completa.
---    - Los archivos existen de verdad en public/img/ImagenesProductos/.
---    - La categoría se busca por su nombre para no depender del id que
---      le asigne el AUTO_INCREMENT.
+
 INSERT INTO productos (nombre, marca, informacion, foto, stock, precio, id_categoria) VALUES
 
 -- ---- Juegos ----
