@@ -1,0 +1,352 @@
+/* =============================================================
+   PÁGINA DE CHECKOUT (views/checkout.php)
+   Datos de envío + método de pago a la izquierda, resumen a la derecha.
+   Mismos tonos y radios que el carrito para que se vean como una sola página.
+   ============================================================= */
+
+.checkout {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 3rem;
+}
+
+.checkout__titulo {
+    margin-bottom: 1.5rem;
+
+    font-size: 2.25rem;
+    font-weight: 300;
+    letter-spacing: 1px;
+}
+
+/* ---------- Layout de dos columnas ---------- */
+
+.checkout__layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 340px;
+    align-items: start;
+    gap: 2rem;
+}
+
+/* ---------- Errores del servidor ---------- */
+
+.checkout__errores {
+    list-style: none;
+
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    margin-bottom: 1.5rem;
+    padding: 1rem 1.25rem;
+
+    background-color: rgba(255, 92, 92, 0.12);
+    border-left: 3px solid #ff5c5c;
+    border-radius: 0.5rem;
+
+    color: #ff8a8a;
+    font-size: 0.95rem;
+}
+
+/* ---------- Formulario ---------- */
+
+.checkout__form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    min-width: 0;
+}
+
+.checkout__bloque {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    padding: 1.5rem;
+
+    background-color: #373737;
+    border: 1px solid #4a4a4a;
+    border-radius: 1rem;
+}
+
+.checkout__bloque legend {
+    padding: 0 0.5rem;
+    margin-left: -0.5rem;
+
+    font-size: 1.25rem;
+    font-weight: 300;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #b5b5b5;
+}
+
+.checkout__fila {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1rem;
+}
+
+.checkout__campo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    min-width: 0;
+}
+
+.checkout__campo label {
+    font-size: 0.95rem;
+    color: #c9c9c9;
+    letter-spacing: 0.5px;
+}
+
+.checkout__campo input,
+.checkout__campo select {
+    width: 100%;
+
+    padding: 0.7rem 1rem;
+
+    font-family: inherit;
+    font-size: 1rem;
+    color: #ededed;
+
+    background-color: #2a2a2a;
+    border: 1px solid #4a4a4a;
+    border-radius: 0.5rem;
+
+    transition: border-color 150ms ease;
+}
+
+.checkout__campo input::placeholder {
+    color: #8a8a8a;
+}
+
+.checkout__campo input:focus,
+.checkout__campo select:focus {
+    border-color: #6a09e0;
+}
+
+.checkout__campo input:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Mensaje de error bajo un campo (lo escribe public/js/checkout.js) */
+.checkout__error {
+    display: block;
+
+    min-height: 1rem;
+    margin-top: 2px;
+
+    font-size: 0.8rem;
+    line-height: 1.2;
+    color: #ff5c5c;
+}
+
+.checkout__error:empty {
+    margin-top: 0;
+}
+
+/* ---------- Métodos de pago ---------- */
+
+.checkout__metodos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 0.75rem;
+}
+
+/* La tarjeta entera es el <label>, así se puede pulsar en cualquier parte */
+.checkout__metodo {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+
+    padding: 0.85rem 1rem;
+
+    background-color: #2a2a2a;
+    border: 1px solid #4a4a4a;
+    border-radius: 0.75rem;
+
+    cursor: pointer;
+    transition: border-color 150ms ease, background-color 150ms ease;
+}
+
+.checkout__metodo:hover {
+    background-color: #313131;
+    border-color: #6a09e0;
+}
+
+.checkout__metodo input[type="radio"] {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    accent-color: #6a00ff;
+}
+
+.checkout__metodo span {
+    font-size: 0.95rem;
+}
+
+/* ---------- Datos de tarjeta ---------- */
+
+.checkout__tarjeta {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    padding-top: 1rem;
+    border-top: 1px dashed #4a4a4a;
+}
+
+/* [hidden] tiene que ganarle al display:flex de arriba */
+.checkout__tarjeta[hidden] {
+    display: none !important;
+}
+
+.checkout__nota {
+    font-size: 0.8rem;
+    line-height: 1.35;
+    color: #9a9a9a;
+}
+
+/* ---------- Acciones ---------- */
+
+.checkout__acciones {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.checkout__acciones .boton {
+    flex: 1;
+    min-width: 180px;
+
+    padding: 0.85rem 1.5rem;
+
+    font-size: 1rem;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-radius: 0.5rem;
+    transition: filter 200ms ease;
+}
+
+.checkout__acciones .boton:hover {
+    filter: brightness(115%);
+}
+
+/* ---------- Resumen ---------- */
+
+.checkout__resumen {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+
+    position: sticky;
+    top: calc(120px + 1rem);
+
+    padding: 1.5rem;
+
+    background-color: #414141;
+    border-radius: 1rem;
+}
+
+.checkout__resumen h2 {
+    padding-bottom: 0.75rem;
+
+    font-size: 1.4rem;
+    font-weight: 300;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+
+    border-bottom: 1px solid #5a5a5a;
+}
+
+.checkout__lista {
+    list-style: none;
+
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+
+    max-height: 320px;
+    overflow-y: auto;
+}
+
+.checkout__item {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.75rem;
+
+    font-size: 0.95rem;
+}
+
+.checkout__item-nombre {
+    min-width: 0;
+    color: #d5d5d5;
+}
+
+.checkout__item-nombre small {
+    margin-left: 0.35rem;
+    color: #9a9a9a;
+}
+
+.checkout__item-precio {
+    white-space: nowrap;
+    color: #b5b5b5;
+}
+
+.checkout__total {
+    padding-top: 0.9rem;
+
+    font-size: 1.15rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #b5b5b5;
+
+    border-top: 1px solid #5a5a5a;
+}
+
+.checkout__total strong {
+    font-size: 1.7rem;
+    color: #6fa8ff;
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 900px) {
+
+    .checkout__layout {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 1.5rem;
+    }
+
+    /* El resumen pasa arriba de los formularios */
+    .checkout__resumen {
+        position: static;
+        order: -1;
+    }
+
+    .checkout__lista {
+        max-height: none;
+    }
+}
+
+@media (max-width: 560px) {
+
+    .checkout {
+        padding: 1.5rem 1rem 2.5rem;
+    }
+
+    .checkout__titulo {
+        font-size: 1.75rem;
+    }
+
+    .checkout__bloque {
+        padding: 1.15rem;
+    }
+
+    .checkout__acciones .boton {
+        min-width: 100%;
+    }
+}

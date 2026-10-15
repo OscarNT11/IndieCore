@@ -92,6 +92,79 @@
     border-radius: 0.75rem;
 }
 
+/* ---------- Estado del pedido y método de pago ---------- */
+
+.pedido-confirmado__estado {
+    align-self: center;
+    padding: 0.5rem 1.25rem;
+
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+
+    border-radius: 999px;
+    border: 1px solid #4a4a4a;
+    background-color: #373737;
+    color: #b5b5b5;
+}
+
+.pedido-confirmado__estado--pagado,
+.pedido-confirmado__estado--enviado,
+.pedido-confirmado__estado--entregado {
+    background-color: rgba(31, 122, 61, 0.18);
+    border-color: #1f7a3d;
+    color: #7fe0a3;
+}
+
+.pedido-confirmado__estado--rechazado,
+.pedido-confirmado__estado--cancelado {
+    background-color: rgba(255, 92, 92, 0.12);
+    border-color: #ff5c5c;
+    color: #ff8a8a;
+}
+
+.pedido-confirmado__estado--pendiente {
+    background-color: rgba(111, 168, 255, 0.12);
+    border-color: #6fa8ff;
+    color: #6fa8ff;
+}
+
+.pedido-confirmado__pago {
+    text-align: center;
+    font-size: 1.05rem;
+    color: #b5b5b5;
+}
+
+.pedido-confirmado__pago strong {
+    color: #ededed;
+}
+
+/* ---------- Datos de envío ---------- */
+
+.pedido-confirmado__envio {
+    padding: 1.25rem 1.5rem;
+
+    background-color: #373737;
+    border: 1px solid #4a4a4a;
+    border-radius: 1rem;
+}
+
+.pedido-confirmado__envio h2 {
+    margin-bottom: 0.75rem;
+
+    font-size: 1.1rem;
+    font-weight: 300;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #b5b5b5;
+}
+
+.pedido-confirmado__envio p {
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #d5d5d5;
+}
+
 /* ---------- Botón "Seguir comprando" ---------- */
 
 .pedido-confirmado .boton--principal {
