@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
         <title>Tecno Parts - Tecnología para todos</title>
         <meta charset="UTF-8">
@@ -25,10 +26,11 @@
 
             // Hojas que usan TODAS las páginas
             etiquetaCss('public/css/generales.css');
-            etiquetaCss('public/css/css-listado.css');
-            etiquetaCss('public/css/responsiveDesign.css');
+            etiquetaCss('public/css/Catalogo.css');
             etiquetaCss('public/css/paginaInicio.css');
-            etiquetaCss('public/css/paginaCarrito.css');
+            etiquetaCss('public/css/Carrito.css');
+            etiquetaCss('public/css/header.css');
+            etiquetaCss('public/css/footer.css');
 
             // Hojas propias de una vista (las define el controlador o la vista)
             if (isset($cssExtra)) {
@@ -37,99 +39,101 @@
                     etiquetaCss($hojaExtra);
                 }
             }
-            ?>
+        ?>
 
 </head>
 
-    <body>
-        <header class="header">
 
-            <div class="header-nav" id="nav-superior">
+<body>
 
-                <!-- LOGO A ENLACE -->
-                <a href="index.php" class="header-logo">
-                <img src="public/img/logoTecnoParts.png" alt="Logo Tecno Parts">
-                </a>
+    <header class="header">
 
-                <!-- FORMULARIO PARA BUSCAR DETERMINADO PRODUCTO / SESION -->
-                <!-- Envía el término por GET al catálogo: index.php?pagina=catalogo&q=... -->
-                <form class="header-busqueda" action="index.php" method="GET">
-                    <input type="hidden" name="pagina" value="catalogo">
-                    <input
-                        type="text"
-                        name="q"
-                        placeholder="Buscar..."
-                        value="<?php echo escapar(isset($_GET['q']) ? $_GET['q'] : ''); ?>">
-                    <!-- BOTON SUBMIT QUE BUSQUE LO SOLICITADO -->
-                    <button type="submit" aria-label="lupa">
-                        <svg><use href="public/img/iconos.svg#icono-lupa"></use></svg>
-                    </button>
+        <div class="header-nav" id="nav-superior">
 
-                </form>
+            <!-- LOGO A ENLACE -->
+            <a href="index.php" class="header-logo">
+            <img src="public/img/logoTecnoParts.png" alt="Logo Tecno Parts">
+            </a>
+        
+            <!-- FORMULARIO PARA BUSCAR DETERMINADO PRODUCTO / SESION -->
+            <!-- Envía el término por GET al catálogo: index.php?pagina=catalogo&q=... -->
+            <form class="header-busqueda" action="index.php" method="GET">
+                <input type="hidden" name="pagina" value="catalogo">
+                <input
+                    type="text"
+                    name="q"
+                    placeholder="Buscar..."
+                    value="<?php echo escapar(isset($_GET['q']) ? $_GET['q'] : ''); ?>">
+                <!-- BOTON SUBMIT QUE BUSQUE LO SOLICITADO -->
+                <button type="submit" aria-label="lupa">
+                    <svg><use href="public/img/iconos.svg#icono-lupa"></use></svg>
+                </button>
 
-                <!-- BOTON / ENLACE QUE ABRE UNA VENTANA MODAL DE FORMULARIO
-                     o muestra el usuario logueado -->
-                <?php if (usuarioLogueado()): ?>
+            </form>
 
-                    <?php $usuarioEnHeader = usuarioActual(); ?>
+            <!-- BOTON / ENLACE QUE ABRE UNA VENTANA MODAL DE FORMULARIO
+                    o muestra el usuario logueado -->
+            <?php if (usuarioLogueado()): ?>
 
-                    <div class="usuario-logueado">
-                        <?php if (!empty($usuarioEnHeader['foto'])): ?>
-                            <img
-                                class="usuario-logueado__foto"
-                                src="<?php echo escapar($usuarioEnHeader['foto']); ?>"
-                                alt="Foto de perfil">
-                        <?php else: ?>
-                            <svg class="usuario-logueado__icono"><use href="public/img/iconos.svg#icono-persona"></use></svg>
-                        <?php endif; ?>
-                        <a
-                            class="usuario-logueado__nombre"
-                            href="index.php?pagina=cuenta"
-                            title="Ver mi cuenta">
-                            <?php echo escapar($usuarioEnHeader['nombre']); ?>
-                        </a>
-                    </div>
+                <?php $usuarioEnHeader = usuarioActual(); ?>
 
-                <?php else: ?>
-
-                    <button class="btn-ingresar">
-                        <svg><use href="public/img/iconos.svg#icono-persona"></use></svg>
-                        <p>Iniciar Sesion</p>
-                    </button>
-
-                <?php endif; ?>
-
-
-                <!-- BOTON / ENLACE QUE ABRE UNA VENTANA MODAL
-                  (O DIRIGE A OTRA PARTE) DE LOS PRODUCTOS A COMPRAR -->
-                <a href="index.php?pagina=carrito" class="btn-carrito">
-                    <svg><use href="public/img/iconos.svg#icono-carrito"></use></svg>
-                    <span id="contador-carrito">0</span>
-                </a>
-
-            </div>
-
-                <!-- AQUÍ VA EL VERDEDADERO NAV, ENLACES DE ANCLAS -->
-            <nav class="header-nav" id="nav-inferior">
-                <ul class="nav-list">
-                    <li class="nav-item"><a href="index.php?pagina=catalogo">Catalogo</a></li>
-                    <li class="nav-item"><a href="index.php?pagina=home#lo-nuevo">Nuevo</a></li>
-                    <li class="nav-item"><a href="index.php?pagina=home#destacados">Destacado</a></li>
-                    <li class="nav-item"><a href="index.php?pagina=home#redes">Contactanos</a></li>
-
-                    <?php // Enlace al panel de gestión, solo para admin y operador. ?>
-                    <?php if (esGestor()): ?>
-                        <li class="nav-item nav-item--panel">
-                            <a href="index.php?pagina=panel">
-                                <?php echo esAdmin() ? 'Administrador' : 'Operador'; ?>
-                            </a>
-                        </li>
+                <div class="usuario-logueado">
+                    <?php if (!empty($usuarioEnHeader['foto'])): ?>
+                        <img
+                            class="usuario-logueado__foto"
+                            src="<?php echo escapar($usuarioEnHeader['foto']); ?>"
+                            alt="Foto de perfil">
+                    <?php else: ?>
+                        <svg class="usuario-logueado__icono"><use href="public/img/iconos.svg#icono-persona"></use></svg>
                     <?php endif; ?>
-                </ul>
-            </nav>
+                    <a
+                        class="usuario-logueado__nombre"
+                        href="index.php?pagina=cuenta"
+                        title="Ver mi cuenta">
+                        <?php echo escapar($usuarioEnHeader['nombre']); ?>
+                    </a>
+                </div>
+
+            <?php else: ?>
+
+                <button class="btn-ingresar">
+                    <svg><use href="public/img/iconos.svg#icono-persona"></use></svg>
+                    <p>Iniciar Sesion</p>
+                </button>
+
+            <?php endif; ?>
 
 
-        </header>
+            <!-- BOTON / ENLACE QUE ABRE UNA VENTANA MODAL
+                (O DIRIGE A OTRA PARTE) DE LOS PRODUCTOS A COMPRAR -->
+            <a href="index.php?pagina=carrito" class="btn-carrito">
+                <svg><use href="public/img/iconos.svg#icono-carrito"></use></svg>
+                <span id="contador-carrito">0</span>
+            </a>
 
-        <main class="contenido-principal">
+        </div>
+
+            <!-- AQUÍ VA EL VERDEDADERO NAV, ENLACES DE ANCLAS -->
+        <nav class="header-nav" id="nav-inferior">
+            <ul class="nav-list">
+                <li class="nav-item"><a href="index.php?pagina=catalogo">Catalogo</a></li>
+                <li class="nav-item"><a href="index.php?pagina=home#lo-nuevo">Nuevo</a></li>
+                <li class="nav-item"><a href="index.php?pagina=home#destacados">Destacado</a></li>
+                <li class="nav-item"><a href="index.php?pagina=home#redes">Contactanos</a></li>
+
+                <?php // Enlace al panel de gestión, solo para admin y operador. ?>
+                <?php if (esGestor()): ?>
+                    <li class="nav-item nav-item--panel">
+                        <a href="index.php?pagina=panel">
+                            <?php echo esAdmin() ? 'Administrador' : 'Operador'; ?>
+                        </a>
+                    </li>
+                <?php endif; ?>
+            </ul>
+        </nav>
+
+
+    </header>
+
+    <main class="contenido-principal">
 

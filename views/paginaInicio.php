@@ -174,7 +174,6 @@
 
                 <h2>Destacados</h2>
 
-                <div class="contenedor-destacado">
                     <?php if (empty($listaDeProductos)): ?>
                         <p class="mensaje-vacio">No se encontraron productos.</p>
                     <?php else: ?>
@@ -205,7 +204,6 @@
                                     </button>
                                 </article>
                             <?php endforeach; ?>
-                        </div>
                     <?php endif; ?>
                 </div>
             </section>

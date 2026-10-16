@@ -197,7 +197,7 @@ require __DIR__ . '/header.php';
                                         <?php echo ($productoRelacionado['stock'] <= 0) ? 'disabled' : ''; ?>>
                                         Agregar al carrito
                                     </button>
-                                </div>
+                                <!-- </div> -->
                             </article>
                         <?php endforeach; ?>
                     </div>

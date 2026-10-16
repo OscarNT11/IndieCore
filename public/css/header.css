@@ -1,0 +1,279 @@
+/* ===================================
+HEADER Y SUS NAVS DE TODAS LAS PAGINAS
+=================================== */
+
+.header {
+    display: flex;
+    flex-direction: column;
+    position: sticky;
+
+    align-items: center;
+
+    width: 100%;
+    max-height: 120px;
+    padding: 0.25rem 0.5rem;
+
+    top: 0;
+    z-index: 100;
+
+    background-color:#171717;
+}
+
+.header-nav {
+    width: 100%;
+    max-width: 1400px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+#nav-superior {
+    max-height: 75px;
+    gap: 12px;
+}
+
+.header-logo {
+    width: 180px;
+}
+
+.header-logo img {
+    transition: filter 250ms ease;
+}
+
+.header-logo:hover img {
+    filter: brightness(150%);
+}
+
+.header-busqueda {
+    flex: 1;
+
+    display: flex;
+    overflow: hidden;
+
+    border-radius: 1.5rem;
+    transition: transform 250ms ease;
+}
+
+.header-busqueda:has(input:focus) {
+    transform: scale(1.005);
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+}
+
+.header-busqueda input {
+    flex: 1;
+    padding: 0 1rem;
+
+    font-size: 1.4rem;
+    background-color: #616161;
+}
+
+.header-busqueda button {
+    background: #292929;
+    border-radius: 0 1rem 1rem 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+
+    padding: 4px 10px;
+    
+}
+
+.header-busqueda button svg {
+    width: 2rem;
+    height: 2rem;
+    
+    color: #ededed;
+    transition: opacity 200ms ease;
+}
+
+.header-busqueda button:hover svg {
+    opacity: 0.5;
+}
+
+.btn-ingresar {
+    flex: 1;
+    max-width: 210px;
+    
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+
+    transition: transform 100ms ease, opacity 100ms ease;
+}
+
+.btn-ingresar:hover {
+    transform: scale(0.995);
+    opacity: 0.8;
+}
+
+.btn-ingresar svg {
+    width: 40px;
+    height: 40px;
+    color: #ededed;
+    flex-shrink: 0;
+}
+
+.btn-ingresar p {
+    font-size:  1.4rem;
+}
+
+.btn-carrito {
+    flex: 1;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    max-width: 64px;
+    margin: 0 auto;
+    
+    transition: transform 100ms ease, opacity 100ms ease;
+}
+
+.btn-carrito svg {
+    width: 40px;
+    height: 40px; 
+    color: #ededed;
+    flex-shrink: 0;
+}
+
+.btn-carrito span {
+    background-color: #3480d7;
+    border-radius: 50%;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+/* ----------------------------------------------------------------- */
+
+.btn-carrito:hover {
+    transform: scale(0.995);
+    opacity: 0.8;
+}
+
+#nav-inferior {
+    max-height: 45px;
+    padding: 0 0 0.3rem 0;
+}
+
+.nav-list {
+    width: 100%;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+
+    list-style: none;
+}
+
+.nav-item {
+    border-radius: 16px;
+    padding: 0px 4px;
+    transition: background-color 150ms ease,
+    transform 150ms ease;
+}
+
+.nav-item a {
+    text-transform: uppercase;
+    white-space: nowrap;
+    letter-spacing: 1px;
+
+    padding: 4px 12px;
+    font-size: 1.3rem;
+}
+
+.nav-item:hover {
+    background-color: rgba(0, 0, 0, 0.50);
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.50);
+    transform: scale(0.99);
+}
+
+.nav-item:first-child {
+    padding: 0 1.2rem;
+    text-align: center;
+    background-color: #ededed;
+    color: #151515;
+}
+
+.nav-item:first-child:hover {
+    background-color: rgba(237, 237, 237, 0.75);
+}
+
+@media (max-width: 1023px) {
+
+    .header-logo{
+        width: 116px;
+    }
+
+    #lupa img{
+        width: 75%;
+    }
+
+    .btn-ingresar img{
+        width: 45px;
+    }
+
+}
+
+@media(max-width: 767px) {
+    .header-nav{
+        justify-items: center;
+        gap: 0.75rem;
+    }
+
+    #barra-busqueda{
+        width: 95%;
+    }
+
+    .btn-ingresar{
+        justify-content: center;
+        max-width: 40px;
+    }
+
+    .btn-ingresar p {
+        display: none;
+    }
+
+    .btn-ingresar img{
+        width: 40px;
+    }
+
+    #carrito{
+        justify-content: center;
+        display: flex;
+        width: 100%;
+    }
+
+    #carrito img{
+        width: 50px;
+        margin: 0 auto;
+    }
+
+    #nav-inferior a{
+        /* width:100%; */
+        font-size:0.8rem;
+        display: none;
+    }
+}
+
+@media (max-width: 481px) {
+    .header-logo {
+        width: 80px;
+    }
+
+    .btn-ingresar p {
+        display: none;
+    }
+
+    .btn-ingresar img{
+        width: 30px;
+    }
+
+    #carrito img{
+        width: 35px;
+    }
+}

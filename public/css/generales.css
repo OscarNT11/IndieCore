@@ -6,7 +6,7 @@ CONFIGURACION GENERAL DE SISTEMA
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    scroll-behavior: smooth; /* Configurar el sistema para permitir efectos de animacion */
+    scroll-behavior: smooth;
 }
 
 html {
@@ -19,6 +19,10 @@ body {
     display: flex;
     flex-direction: column;
     background-color: #292929;
+}
+
+main {
+    width: 100%;
 }
 
 /* ===================================
@@ -52,369 +56,6 @@ input, input::placeholder {
     color: inherit;
     outline: none;
     border: none;
-}
-
-/* ===================================
-HEADER Y SUS NAVS DE TODAS LAS PAGINAS
-=================================== */
-
-.header {
-    display: flex;
-    flex-direction: column;
-    position: sticky;
-
-    width: 100%;
-    max-height: 120px;
-    padding: 0.25rem 0.5rem;
-
-    top: 0;
-    z-index: 100;
-
-    background-color:#171717;
-}
-
-.header-nav {
-    width: 100%;
-    
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    align-items: center;
-}
-
-#nav-superior {
-    max-height: 75px;
-    gap: 12px;
-}
-
-.header-logo {
-    width: 180px;
-}
-
-.header-logo img {
-    transition: filter 250ms ease;
-}
-
-.header-logo:hover img {
-    filter: brightness(150%);
-}
-
-.header-busqueda {
-    flex: 1;
-
-    display: flex;
-    overflow: hidden;
-
-    border-radius: 1.5rem;
-    transition: transform 250ms ease;
-}
-
-.header-busqueda:has(input:focus) {
-    transform: scale(1.005);
-    box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
-}
-
-.header-busqueda input {
-    flex: 1;
-    padding: 0 1rem;
-
-    font-size: 1.4rem;
-    background-color: #616161;
-}
-
-.header-busqueda button {
-    background: #292929;
-    border-radius: 0 1rem 1rem 0;
-
-    display: flex;
-    align-items: center;
-    justify-content: center; 
-
-    padding: 4px 10px;
-    
-}
-
-.header-busqueda button svg {
-    width: 2rem;
-    height: 2rem;
-    
-    color: #ededed;
-    transition: opacity 200ms ease;
-}
-
-.header-busqueda button:hover svg {
-    opacity: 0.5;
-}
-
-.btn-ingresar {
-    flex: 1;
-    max-width: 210px;
-    
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    align-items: center;
-
-    transition: transform 100ms ease, opacity 100ms ease;
-}
-
-.btn-ingresar:hover {
-    transform: scale(0.995);
-    opacity: 0.8;
-}
-
-.btn-ingresar svg {
-    width: 40px;
-    height: 40px;
-    color: #ededed;
-    flex-shrink: 0;
-}
-
-.btn-ingresar p {
-    font-size:  1.4rem;
-}
-
-.btn-carrito {
-    flex: 1;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    
-    max-width: 64px;
-    margin: 0 auto;
-    
-    transition: transform 100ms ease, opacity 100ms ease;
-}
-
-.btn-carrito svg {
-    width: 40px;
-    height: 40px; 
-    color: #ededed;
-    flex-shrink: 0;
-}
-
-.btn-carrito span {
-    background-color: #3480d7;
-    border-radius: 50%;
-    padding-left: 5px;
-    padding-right: 5px;
-}
-
-/* ----------------------------------------------------------------- */
-
-.btn-carrito:hover {
-    transform: scale(0.995);
-    opacity: 0.8;
-}
-
-#nav-inferior {
-    max-height: 45px;
-    padding: 0.2 0 0.3rem 0;
-    overflow: hidden;
-}
-
-.nav-list {
-    width: 90%;
-
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    align-items: center;
-
-    list-style: none;
-}
-
-.nav-item {
-    border-radius: 16px;
-    padding: 0px 4px;
-    transition: background-color 150ms ease,
-    transform 150ms ease;
-}
-
-.nav-item a {
-    text-transform: uppercase;
-    white-space: nowrap;
-    letter-spacing: 1px;
-
-    padding: 4px 12px;
-    font-size: 1.3rem;
-}
-
-.nav-item:hover {
-    background-color: rgba(0, 0, 0, 0.50);
-    box-shadow: 0 0 4px rgba(0, 0, 0, 0.50);
-    transform: scale(0.99);
-}
-
-.nav-item:first-child {
-    padding: 0 1.2rem;
-    text-align: center;
-    background-color: #ededed;
-    color: #151515;
-}
-
-.nav-item:first-child:hover {
-    background-color: rgba(237, 237, 237, 0.75);
-}
-
-/* ===================================
-            FOOTER AREA
-=================================== */
-
-.footer {
-    background-color: #212121;
-    padding: 2rem 2rem;
-}
-
-#redes{
-    width: 100%;
-
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    justify-content: space-evenly;
-
-    padding-bottom: 1rem;
-}
-
-.icono {
-    width: 64px;
-    height: 80px;
-    fill: #ededed;
-    display: inline-block;
-}
-
-.red-social {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-
-    padding: 0.75rem;
-
-    /* Los rotulos largos ("Llamanos al...", "Compra garantizada")
-       no deben desbordar el footer. */
-    min-width: 0;
-    max-width: 100%;
-    flex-wrap: wrap;
-}
-
-/* Clase (varias veces en el footer), no id: el HTML usa
-   class="redes-txt" y los ids duplicados no son validos. */
-.redes-txt {
-    margin-left: 1rem;
-    display: flex;
-    flex-direction: column;
-    text-wrap: nowrap;
-    min-width: 0;
-}
-
-.redes-txt h2 {
-    font-size: 1.75rem;
-}
-
-.redes-txt p {
-    font-size: 1.2rem;
-}
-
-#promociones{
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-
-    gap: 1rem;
-    
-}
-
-.promociones-img {
-    flex: 1;
-    max-width: 600px;
-    height: 275px;
-    background-size: cover;
-    background-position: center;
-}
-
-#promociones-1 {
-    background-image: url("../img/anuncioTeclado.png");
-}
-
-#promociones-2 {
-    background-image: url("../img/anuncioSwitch.png");
-}
-
-/* ===================================
-        TARJETA DE PRODUCTOS
-=================================== */
-
-.carta-producto {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-
-    flex: 1;
-    min-width: 240px;
-    max-width: 420px;
-    min-height: 420px; 
-
-    background-color: #373737;
-    border-radius: 1rem;
-    padding: 2rem 1.5rem 1.5rem 1.5rem; 
-}
-
-.carta-producto-info {
-    width: 100%;
-    flex: 1;
-    max-height: 360px;
-    transition: opacity 200ms ease-in;
-}
-
-.carta-producto-info:hover {
-    opacity: 0.75;
-}
-
-.carta-producto-info h3 {
-    padding: 0.75rem 0;
-    font-size: 1.5rem;
-    text-align: center;
-    font-weight: 300;
-}
-
-.carta-producto-info p {
-    color: #556ceb;
-    font-size: 1.75rem;
-    text-align: center;
-}
-
-.carta-producto button {
-    background: linear-gradient(to right,#6a09e0,#3480d7);
-
-    display: flex;
-    flex: row;
-    justify-content: center;
-    align-items: center;
-
-    padding: 0.5rem 1rem;
-    border-radius: 0.5rem;
-    width: 100%; 
-    font-size: 1.4rem; 
-    margin-top: 1rem;
-    transition: filter 200ms ease-out;
-}
-
-.carta-producto button svg {
-    width: 40px;
-    height: 24px;
-    fill: none;
-    stroke: #ededed;
-    stroke-width: 2px;
-}
-
-.carta-producto button:hover {
-    filter: brightness(150%);
 }
 
 /* PAGINA DE INICIO SESION */
@@ -929,4 +570,179 @@ HEADER Y SUS NAVS DE TODAS LAS PAGINAS
     font-size: 0.85rem;
     color: #9db4ff;
     margin-bottom: 4px;
+}
+
+/* ==========================
+   DISEÑO RESPONSIVE
+   Ajustes para celulares
+   (pantallas de hasta 1023 px)
+========================== */
+
+@media (max-width:1023px) {
+
+
+    #menu a{
+        font-size: clamp(1rem, 4vw, 1rem);
+    }
+
+    #inicio{
+        text-align:center;
+        gap:40px;
+    }
+
+    #texto-inicio h1{
+        font-size: clamp(46px, 9vw, 70px);
+    }
+
+    #texto-inicio h2{
+        font-size: 35px;
+        padding: 8px 20px;
+    }
+
+    #inicio img{
+        max-width: 220px;
+    }
+
+    #grafica-1{
+        width:220px;
+    }
+
+    #grafica-2{
+        width:180px;
+        margin-left: -70px;
+    }
+
+    #grafica-3{
+        width:160px;
+        margin-left: -110px;
+    }
+
+    #categorias-inicio{
+        grid-template-columns: repeat(4,1fr);
+    }
+
+    #img-cat-internos img{
+        width: 90%;
+        max-width: 280px;
+    }
+
+    #img-cat-perifericos img{
+        width: 90%;
+        max-width: 280px;
+    }
+
+    #img-cat-larga img{
+        width: 90%;
+        max-width:350px;
+    }
+
+}
+
+/* ==========================
+   DISEÑO RESPONSIVE
+   Ajustes para celulares
+   (pantallas de hasta 767 px)
+========================== */
+
+@media (max-width:767px) {
+
+
+    #menu{
+        width:60%;
+    }
+
+    #inicio{
+        flex-direction:column;
+        text-align:center;
+        gap:40px;
+    }
+
+    #texto-inicio h1{
+        font-size: clamp(36px, 8vw, 60px);
+    }
+
+    #texto-inicio h2{
+        font-size: clamp(36px, 4vw, 30px);
+        margin:auto;
+    }
+
+    #grafica-1{
+        width: 180px;
+        margin-left: 50px;
+    }
+
+    #grafica-2{
+        width: 150px;
+        margin-left: -70px;
+    }
+
+    #grafica-3{
+        width: 130px;
+        margin-left: -110px;
+    }
+
+    #categorias-inicio{
+        grid-template-columns: repeat(2,1fr);
+    }
+
+    #img-cat-internos img{
+        width: 180px;
+        max-width: 100%;
+        margin-right: 0;
+        padding: 0;
+    }
+
+    #img-cat-perifericos img{
+        width: 140px;
+        max-width: 100%;
+        margin-left: 0;
+        padding: 0;;
+    }
+
+}
+
+/* ==========================
+   DISEÑO RESPONSIVE
+   Ajustes para celulares más pequeños
+   (pantallas de hasta 481 px)
+========================== */
+
+@media (max-width:481px) {
+
+    #texto-inicio h2{
+        font-size: clamp(15px, 2vw, 10px);
+        margin:auto;
+    }
+
+    #grafica-1{
+        width: 5px;
+        margin-left: 50px;
+    }
+
+    #grafica-2{
+        width: 90px;
+        margin-left: -70px;
+    }
+
+    #grafica-3{
+        width: 90px;
+        margin-left: -110px;
+    }
+
+    #cont-cat-internos{
+        font-size: 7px;
+    }
+
+    #cont-cat-perifericos{
+        font-size: 7px;
+    }
+
+    #cont-cat-larga{
+        font-size: 10px;
+    }
+
+    #cat-variadas button{
+        font-size: 7px;
+    }
+
 }

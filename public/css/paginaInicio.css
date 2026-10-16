@@ -1,24 +1,15 @@
-/* ----------- MAIN ----------- */
-
-main {
-    background-color: inherit;
-    padding-bottom: 2rem;
-    width: 100%;
-}
-
-
 /* HERO SECTION */
-
 .hero {
     display: flex;
-    justify-content: start;
+    justify-content: center;
     align-items: center;
-    width: 100%;
-    min-height: calc(100dvh - 200px);
-    padding: 0 8rem;
 
-    background: linear-gradient(to right,#6a09e0,#3480d7);
+    width: 100%;
+    /* max-width: 1400px;
+    margin: 0 auto; */
+    min-height: calc(100dvh - 200px);
     
+    background: linear-gradient(to right,#6a09e0,#3480d7);
 }
 
 .hero-txt {
@@ -27,6 +18,7 @@ main {
     flex-direction: column;
     gap: 1.2rem;
     align-items: center;
+    justify-content: center;
 
     text-transform: uppercase;
 }
@@ -49,43 +41,42 @@ main {
 
 .hero-imgs {
     flex: 1;
+    max-width: 100dvw;
+    overflow-x: hidden;
     display:flex;
     justify-content:center;
-    align-items:flex-end;
+    align-items:center;
 }
 
 .hero img {
-    width: 100%;
     max-width: 320px;
-    height: auto;
     cursor: pointer;
+    overflow-x: hidden;
 }
 
 #grafica-1 {
     width:300px;
-    z-index:3;
+    z-index:30;
 
 }
 
 #grafica-2 {
     width:260px;
     margin-left:-100px;
-    z-index:2;
+    z-index:20;
 }
 
 #grafica-3 {
     width:240px;
     margin-left:-150px;
-    z-index:1;
+    z-index:10;
 }
 
 /* CATEGORÍAS INICIO */
 
 .categorias {
     width: 100%;
-    margin: 0 auto;
     padding: 1rem 1rem;
-
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -126,48 +117,6 @@ main {
 }
 
 /* ==========================
-   LO NUEVO
-   Ajuste de el titulo y 
-   margenes para
-   la seccion de productos nuevos
-========================== */
-
-#lo-nuevo{
-    width: 100%;
-    margin: 0 auto;
-}
-
-#lo-nuevo h2 {
-    text-transform: uppercase;
-    margin: 20px;
-    margin-left: 40px;
-    font-size: 20px;
-}
-
-/* ==========================
-   OBJETOS
-========================== */
-
-.contenedor-lo-nuevo {
-    padding: 0 2rem;
-    
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-
-    width: 100%;
-    gap: 1.5rem;
-}
-
-.contenedor-destacado {
-    padding: 0 2rem;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    
-    gap: 1.5rem;
-}
-
-
-/* ==========================
    CATEGORIAS VARIADAS
    Cambio de diseño de las cajas
    para 3 categorias variadas y destacadas
@@ -179,36 +128,36 @@ main {
 }
 
 #cat-arriba{
-    margin: 0 auto;
-    margin-bottom: 20px;
-    margin-top: 20px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-    color: white;
+    /* margin: 0 auto; */
+    margin: 1.25rem 0;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1.25rem;
     text-transform: uppercase;
     text-align: center;
 }
 
-#cate-internos{
-    width: 100%;
+#cate-internos, #cate-perifericos{
+    flex: 1;
+    min-width: 300px;
     margin: 0 auto;
     background:linear-gradient(to right, #303030, #747474);
-    border-radius: 25px;
+    border-radius: 24px;
     display: flex;
     justify-content: space-between;
     padding: 30px;
-    flex-direction: row-reverse;
+    flex-direction: row;
     align-items: center;
     overflow: hidden;
     transition: transform 0.3s ease;
 }
 
-#cate-internos:hover{
+#cate-internos:hover, #cate-perifericos:hover{
     transform: scale(1.02);
 }
 
-#img-cat-internos img{
+#img-cat-internos img, #img-cat-perifericos img {
     display: block;
     width: 100%;
     max-width: 600px;
@@ -235,38 +184,7 @@ main {
     padding-right: 20px;
 }
 
-#cate-perifericos{
-    width: 100%;
-    margin: 0 auto;
-    background: linear-gradient(to left, #747474, #303030);
-    border-radius: 25px;
-    display: flex;
-    flex-direction: row-reverse;
-    align-items: center;
-    justify-content: space-between;
-    overflow: hidden;
-    transition: transform 0.3s ease;
-}
-
-#cate-perifericos:hover{
-    transform: scale(1.02);
-}
-
-
-#img-cat-perifericos img{
-    display: block;
-    width: 100%;
-    max-width: 400px;
-    height: auto;
-    padding: 0 40px;
-    margin-left: -40px;
-}
-
-#img-cat-perifericos img:hover{
-    /* width: 120%; */
-}
-
-#img-cat-perifericos{
+#img-cat-perifericos {
     display: flex;
     justify-content: flex-start;
 }
@@ -288,7 +206,6 @@ main {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    color: white;
     text-align: center;
     text-transform: uppercase;
     transition: transform 0.3s ease;
@@ -308,14 +225,6 @@ main {
     gap: 20px;
     padding: 0 40px;
 }
-
-#cate-internos,
-#cate-perifericos,
-#cate-larga {
-    color: white;
-    text-decoration: none;
-}
-
 
 #cate-internos h2,
 #cate-perifericos h2,
@@ -338,17 +247,17 @@ main {
    el h2 y algun detalle de los margenes
 ========================== */
 
-#destacados{
+#destacados, #lo-nuevo{
     width: 100%;
     margin: 0 auto;
 }
 
-#destacados h2{
-    color: white;
+#destacados h2, #lo-nuevo h2{
+    color: #ededed;
     text-transform: uppercase;
     margin: 20px;
     margin-left: 40px;
-    font-size: 20px;
+    font-size: 1.25rem;
 }
 
 /* PAGINA DE INICIO SESION */
@@ -830,5 +739,25 @@ main {
     .carrusel__flecha {
         width: 2.25rem;
         height: 2.25rem;
+    }
+}
+
+
+@media(max-width: 767px) {
+    .hero {
+        flex-direction: column;
+        align-items: center;
+    }
+
+
+
+    #grafica-1 {
+        width: 260px;
+    }
+    #grafica-2 {
+        width: 240px;
+    }
+    #grafica-3 {
+        width: 220px;
     }
 }

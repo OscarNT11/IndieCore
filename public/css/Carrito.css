@@ -3,62 +3,6 @@
     flex-direction: row;
 }
 
-.productos {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    padding: 1rem 2rem;
-
-}
-
-.producto {
-    width: 100%;
-    background-color: #414141;
-    padding: 0.5rem 1rem;
-    display: flex;
-    flex-direction: row;
-    gap: 1rem;
-}
-
-.producto img {
-    flex: 1;
-    background-color:#373737;
-    padding: 0.5rem 0.5rem;
-    max-width: 180px;
-    height: 150px;
-    object-fit: cover;
-    object-position: center;
-}
-
-.producto form {
-    flex: 1;
-}
-
-.producto h2 {
-    font-size: 1.75rem;
-    padding-bottom: 0.5rem;
-}
-
-.producto label {
-    font-size: 1.5rem;
-}
-
-.producto input {
-    background-color: transparent;
-    border: 1px solid black;
-    font-size: 1.5rem; 
-    width: 4rem; 
-    padding: 0.25rem 0.5rem; 
-}
-
-.producto-precio {
-    flex: 1; 
-    font-size: 1.75rem;
-    text-align: end;
-}
-
-
 /* COMPRAR */
 
 .contenedor-comprar {
