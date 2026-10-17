@@ -16,59 +16,59 @@
 
             <!-- CATEGORIAS -->
             
-            <section class="catgorias">
+            <section class="categorias">
 
-                <a href="index.php?pagina=catalogo" class="catgoria-link">
-                    <div class="catgorias-objeto">
+                <a href="index.php?pagina=catalogo" class="categoria-link">
+                    <div class="categorias-objeto">
                     <img src="public/img/Teclado.png" alt="Imagen de Teclado">
                     <h2>Teclados</h2>
                     </div>
                 </a>
 
-                <a href="index.php?pagina=catalogo" class="catgoria-link">
-                    <div class="catgorias-objeto">
+                <a href="index.php?pagina=catalogo" class="categoria-link">
+                    <div class="categorias-objeto">
                     <img src="public/img/Monitor.png" alt="Imagen de Monitor">
                     <h2>Monitores</h2>
                     </div>
                 </a>
 
-                <a href="index.php?pagina=catalogo" class="catgoria-link">
-                    <div class="catgorias-objeto">
+                <a href="index.php?pagina=catalogo" class="categoria-link">
+                    <div class="categorias-objeto">
                     <img src="public/img/Celular.png" alt="Imagen de Celular">
                     <h2>Celulares</h2>
                     </div>
                 </a>
 
-                <a href="index.php?pagina=catalogo" class="catgoria-link">
-                    <div class="catgorias-objeto">
+                <a href="index.php?pagina=catalogo" class="categoria-link">
+                    <div class="categorias-objeto">
                     <img src="public/img/Consola.png" alt="Imagen de Consola">
                     <h2>Consolas</h2>
                     </div>
                 </a>
 
-                <a href="index.php?pagina=catalogo" class="catgoria-link">
-                    <div class="catgorias-objeto">
+                <a href="index.php?pagina=catalogo" class="categoria-link">
+                    <div class="categorias-objeto">
                     <img src="public/img/Auriculares.png" alt="Imagen de Auriculares">
                     <h2>Auriculares</h2>
                     </div>
                 </a>
 
-                <a href="index.php?pagina=catalogo" class="catgoria-link">
-                    <div class="catgorias-objeto">
+                <a href="index.php?pagina=catalogo" class="categoria-link">
+                    <div class="categorias-objeto">
                     <img src="public/img/Notebook.png" alt="Imagen de Notebook">
                     <h2>Notebooks</h2>
                     </div>
                 </a>
 
-                <a href="index.php?pagina=catalogo" class="catgoria-link">
-                    <div class="catgorias-objeto">
+                <a href="index.php?pagina=catalogo" class="categoria-link">
+                    <div class="categorias-objeto">
                     <img src="public/img/Tarjetas graficas.png" alt="Imagen de Tarjeta Gráfica">
                     <h2>Tarjetas G.</h2>
                     </div>
                 </a>
 
-                <a href="index.php?pagina=catalogo class="catgoria-link">
-                    <div class="catgorias-objeto">
+                <a href="index.php?pagina=catalogo" class="categoria-link">
+                    <div class="categorias-objeto">
                     <img src="public/img/Mause.png" alt="Imagen de Mouse">
                     <h2>Mouse</h2>
                     </div>
@@ -85,21 +85,31 @@
                 <?php if (empty($listaDeProductos)): ?>
                     <p class="mensaje-vacio">No se encontraron productos.</p>
                 <?php else: ?>
-                    <div class="grilla-productos">
-                        <?php foreach ($listaDeProductos as $producto): ?>
-                            <article class="tarjeta-producto">
-                                <a
-                                    class="tarjeta-producto__enlace"
-                                    href="index.php?pagina=producto&id=<?php echo $producto['id_producto']; ?>"
-                                    title="Ver detalle de <?php echo htmlspecialchars($producto['nombre']); ?>">
-                                    <img
-                                        class="tarjeta-producto__imagen"
-                                        src="public/img/ImagenesProductos/<?php echo htmlspecialchars($producto['imagen']); ?>"
-                                        alt="<?php echo htmlspecialchars($producto['nombre']); ?>">
-                                </a>
 
-                                <h3><?php echo htmlspecialchars($producto['nombre']); ?></h3>
-                                <p class="precio">$<?php echo number_format($producto['precio'], 2, ',', '.'); ?></p>
+                <div class="grilla-productos">
+                    <?php foreach ($listaDeProductos as $producto): ?>
+                        <article class="tarjeta-producto">
+                            <a
+                                class="tarjeta-producto__enlace"
+                                href="index.php?pagina=producto&id=<?php echo $producto['id_producto']; ?>"
+                                title="Ver detalle de <?php echo htmlspecialchars($producto['nombre']); ?>">
+                                <img
+                                    class="tarjeta-producto__imagen"
+                                    src="public/img/ImagenesProductos/<?php echo htmlspecialchars($producto['imagen']); ?>"
+                                    alt="<?php echo htmlspecialchars($producto['nombre']); ?>">
+                            </a>
+
+                            <span class="categoria-badge"><?php echo htmlspecialchars($producto['nombre_categoria']); ?></span>
+                            <h3><?php echo htmlspecialchars($producto['nombre']); ?></h3>
+                            <p class="precio">$<?php echo number_format($producto['precio'], 2, ',', '.'); ?></p>
+                            <p class="stock">Stock: <?php echo (int) $producto['stock']; ?></p>
+                            
+                            <div class="tarjeta-producto__acciones">
+                                <a
+                                    href="index.php?pagina=producto&id=<?php echo $producto['id_producto']; ?>"
+                                    class="boton boton--secundario">
+                                    Ver detalles
+                                </a>
 
                                 <button
                                     class="boton boton--principal boton-agregar-carrito"
@@ -110,11 +120,11 @@
                                     <?php echo ($producto['stock'] <= 0) ? 'disabled' : ''; ?>>
                                     Agregar al carrito
                                 </button>
-                            </article>
-                        <?php endforeach; ?>
-                    </div>
+                            </div>
+                        </article>
+                    <?php endforeach; ?>
+                </div>
                 <?php endif; ?>
-
             </section>
 
             <!-- ==========================
@@ -173,38 +183,50 @@
 
                 <h2>Destacados</h2>
 
-                    <?php if (empty($listaDeProductos)): ?>
-                        <p class="mensaje-vacio">No se encontraron productos.</p>
-                    <?php else: ?>
-                        <div class="grilla-productos">
-                            <?php foreach ($listaDeProductos as $producto): ?>
-                                <article class="tarjeta-producto">
-                                    <a
-                                        class="tarjeta-producto__enlace"
-                                        href="index.php?pagina=producto&id=<?php echo $producto['id_producto']; ?>"
-                                        title="Ver detalle de <?php echo htmlspecialchars($producto['nombre']); ?>">
-                                        <img
-                                            class="tarjeta-producto__imagen"
-                                            src="public/img/ImagenesProductos/<?php echo htmlspecialchars($producto['imagen']); ?>"
-                                            alt="<?php echo htmlspecialchars($producto['nombre']); ?>">
-                                    </a>
+                <?php if (empty($listaDeProductos)): ?>
+                    <p class="mensaje-vacio">No se encontraron productos.</p>
+                <?php else: ?>
 
-                                    <h3><?php echo htmlspecialchars($producto['nombre']); ?></h3>
-                                    <p class="precio">$<?php echo number_format($producto['precio'], 2, ',', '.'); ?></p>
+                <div class="grilla-productos">
+                    <?php foreach ($listaDeProductos as $producto): ?>
+                        <article class="tarjeta-producto">
+                            <a
+                                class="tarjeta-producto__enlace"
+                                href="index.php?pagina=producto&id=<?php echo $producto['id_producto']; ?>"
+                                title="Ver detalle de <?php echo htmlspecialchars($producto['nombre']); ?>">
+                                <img
+                                    class="tarjeta-producto__imagen"
+                                    src="public/img/ImagenesProductos/<?php echo htmlspecialchars($producto['imagen']); ?>"
+                                    alt="<?php echo htmlspecialchars($producto['nombre']); ?>">
+                            </a>
 
-                                    <button
-                                        class="boton boton--principal boton-agregar-carrito"
-                                        data-id-producto="<?php echo $producto['id_producto']; ?>"
-                                        data-nombre-producto="<?php echo htmlspecialchars($producto['nombre']); ?>"
-                                        data-precio-producto="<?php echo $producto['precio']; ?>"
-                                        data-stock-producto="<?php echo (int) $producto['stock']; ?>"
-                                        <?php echo ($producto['stock'] <= 0) ? 'disabled' : ''; ?>>
-                                        Agregar al carrito
-                                    </button>
-                                </article>
-                            <?php endforeach; ?>
+                            <span class="categoria-badge"><?php echo htmlspecialchars($producto['nombre_categoria']); ?></span>
+                            <h3><?php echo htmlspecialchars($producto['nombre']); ?></h3>
+                            <p class="precio">$<?php echo number_format($producto['precio'], 2, ',', '.'); ?></p>
+                            <p class="stock">Stock: <?php echo (int) $producto['stock']; ?></p>
+
+                            <div class="tarjeta-producto__acciones">
+                                
+                                <a
+                                    href="index.php?pagina=producto&id=<?php echo $producto['id_producto']; ?>"
+                                    class="boton boton--secundario">
+                                    Ver detalles
+                                </a>
+
+                                <button
+                                    class="boton boton--principal boton-agregar-carrito"
+                                    data-id-producto="<?php echo $producto['id_producto']; ?>"
+                                    data-nombre-producto="<?php echo htmlspecialchars($producto['nombre']); ?>"
+                                    data-precio-producto="<?php echo $producto['precio']; ?>"
+                                    data-stock-producto="<?php echo (int) $producto['stock']; ?>"
+                                    <?php echo ($producto['stock'] <= 0) ? 'disabled' : ''; ?>>
+                                    Agregar al carrito
+                                </button>
+                            </div>
+                        </article>
+                        <?php endforeach; ?>
+                    </div>
                     <?php endif; ?>
-                </div>
             </section>
 
         <!-- ==========================

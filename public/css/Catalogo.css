@@ -1,50 +1,13 @@
-/* ==========================
-atributos o categoria para los producto
-========================== */
-.atributos{
-    flex: 1;
-    max-width: 200px;
-    height: 80dvh;
 
-
-    overflow-y: auto;
-    display: flex;
-    background-color: #171717;
-    position: sticky;
-    top: calc(120px + 0.5rem);
-}
-
-.atributo{
-padding: 8px 0px 4px 4px;
-font-size: 0.85rem;
-list-style-type: none;
-}
-
-.atributo:hover {
-    background-color: #3f3f3f;
-}
-/* ==========================
-productos
-========================== */
-.lista-productos{
-    flex: 1;
-
-    display: grid;
-    /* auto-fill en vez de auto-fit: evita que una sola tarjeta se estire
-       a todo el ancho. */
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 1rem;
-    padding: 0.5rem 1rem;
-}
 
 /* =============================================================
-CATALOGO: LAYOUT DE DOS COLUMNAS
-Tabla de categorías a la izquierda + grilla de productos
+CATALOGO: SECCION PRINCIPAL
+CONTIENE EL ENCABEZADO Y EL MENU DE CATALOGO-LAYOUT
 ============================================================= */
 
 .catalogo {
     width: 100%;
-    padding: 1rem 1.5rem 2rem;
+    padding: 1rem 1rem 2rem;
 }
 
 .catalogo h2 {
@@ -53,14 +16,22 @@ Tabla de categorías a la izquierda + grilla de productos
     font-weight: 300;
     letter-spacing: 1px;
 }
+/* =============================================================
+CATALOGO LAYOUT: 
+CONTIENE DOS LAYOUTS, UNO DE FILTRAJE Y EL OTRO DE PRODUCTOS
+============================================================= */
 
 .catalogo-layout {
-    display: grid;
-    grid-template-columns: 220px 1fr;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
     gap: 1.5rem;
 }
 
-/* ---------- Barra lateral de categorías ---------- */
+/* =============================================================
+CATALOGO LAYOUT: 
+CONTIENE DOS LAYOUTS, UNO DE FILTRAJE Y EL OTRO DE PRODUCTOS
+============================================================= */
 
 .catalogo-categorias {
     align-self: start;
@@ -69,6 +40,9 @@ Tabla de categorías a la izquierda + grilla de productos
     top: calc(120px + 1rem);
 
     max-height: 80vh;
+    flex: 1;
+    min-width: 180px;
+    max-width: 210px;
     overflow-y: auto;
 
     background-color: #171717;
@@ -127,15 +101,19 @@ Tabla de categorías a la izquierda + grilla de productos
     font-weight: 700;
 }
 
-/* ---------- Contenedor de productos ---------- */
+/* =============================================================
+CATALOGO LAYOUT: 
+CONTIENE DOS LAYOUTS, UNO DE FILTRAJE Y EL OTRO DE PRODUCTOS
+============================================================= */
 
 .catalogo-productos {
-    min-width: 0;
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 0.5rem;
+    padding: 0.5rem 0rem 1rem 0rem;
 }
 
-.catalogo-productos .grilla-productos {
-    padding: 0;
-}
 
 .catalogo-productos .mensaje-vacio {
     padding: 2rem;
@@ -143,13 +121,33 @@ Tabla de categorías a la izquierda + grilla de productos
     color: #9a9a9a;
 }
 
-@media (max-width: 800px) {
-    .catalogo-layout {
-        grid-template-columns: 1fr;
+
+@media (max-width: 767px) {
+    .catalogo-categorias {
+        display: none;
     }
 
-    .catalogo-categorias {
-        position: static;
-        max-height: none;
+    .catalogo-productos .tarjeta-producto {
+        min-width: 210px;
+    }
+
+    .catalogo-productos {
+    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+    }
+}
+
+/* FALTA APROBACION GRUPAL PARA DECIDIR SI M0STRAR
+DOS PRODUCTOS POR FILA O SOLO UNO */
+
+@media (max-width: 481px) {
+    .catalogo-productos .tarjeta-producto {
+        justify-self: center;
+    }
+     .catalogo-productos .tarjeta-producto {
+        min-width: 190px;
+    }
+
+    .catalogo-productos {
+    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
     }
 }

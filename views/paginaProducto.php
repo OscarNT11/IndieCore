@@ -6,12 +6,12 @@ $cssExtra = ['public/css/paginaProducto.css'];
 require __DIR__ . '/header.php';
 ?>
 
-           <!-- ==========================
+        <!-- ==========================
            DETALLE DEL PRODUCTO
            Imagen a la izquierda, ficha de compra a la derecha
         ========================== -->
 
-           <section class="venta-producto">
+        <section class="venta-producto">
 
             <?php
                 $stockDisponible = (int) $producto['stock'];
@@ -130,77 +130,81 @@ require __DIR__ . '/header.php';
 
 
 
-           <!-- ==========================
+        <!-- ==========================
            DUDAS CLIENTE
         ========================== -->
 
-           <section class="dudas">
-                <div class="divisor-negro"></div>
-                <h2>Opiniones del Producto</h2>
-                <form action="">
-                    <input type="text" name="question" id="question" placeholder = "Escribe una pregunta...">
-                    <button type="submit">Enviar</button>
-                </form>
+        <section class="dudas">
 
-                <details class="dudas-toggle">
-                    <summary>Reseñas y Preguntas de otros Usuarios: </summary>
-                    <div class="dudas-contenido">
-                        <p>Aquí irán todas las reseñas que se encuentren en la BD! </p>
-                    </div>
-                </details>
+            <div class="divisor-negro"></div>
+            <h2>Opiniones del Producto</h2>
+            <form action="">
+                <input type="text" name="question" id="question" placeholder = "Escribe una pregunta...">
+                <button type="submit">Enviar</button>
+            </form>
+
+            <details class="dudas-toggle">
+                <summary>Reseñas y Preguntas de otros Usuarios: </summary>
+                <div class="dudas-contenido">
+                    <p>Aquí irán todas las reseñas que se encuentren en la BD! </p>
+                </div>
+            </details>
+
+        </section>
 
 
-            </section>
-
-           <!-- ==========================
+        <!-- ==========================
            PRODUCTOS RELACIONADOS
         ========================== -->
-           <section class="productos-relacionados">
-                <h2>
-                    Más de <?php echo htmlspecialchars($producto['nombre_categoria']); ?>
-                </h2>
 
-                <?php if (empty($listaDeProductos)): ?>
-                    <p class="mensaje-vacio">No hay otros productos de esta categoría por el momento.</p>
-                <?php else: ?>
-                    <div class="grilla-productos">
-                        <?php foreach ($listaDeProductos as $productoRelacionado): ?>
-                            <article class="tarjeta-producto">
-                                <a
-                                    class="tarjeta-producto__enlace"
-                                    href="index.php?pagina=producto&id=<?php echo $productoRelacionado['id_producto']; ?>"
-                                    title="Ver detalle de <?php echo htmlspecialchars($productoRelacionado['nombre']); ?>">
-                                    <img
-                                        class="tarjeta-producto__imagen"
-                                        src="public/img/ImagenesProductos/<?php echo htmlspecialchars($productoRelacionado['imagen']); ?>"
-                                        alt="<?php echo htmlspecialchars($productoRelacionado['nombre']); ?>">
-                                </a>
+        <section class="productos-relacionados">
+            <h2>
+                Más de <?php echo htmlspecialchars($producto['nombre_categoria']); ?>
+            </h2>
+            
+            <?php if (empty($listaDeProductos)): ?>
+                <p class="mensaje-vacio">No hay otros productos de esta categoría por el momento.</p>
+            <?php else: ?>
 
-                                <span class="categoria-badge"><?php echo htmlspecialchars($productoRelacionado['nombre_categoria']); ?></span>
-                                <h3><?php echo htmlspecialchars($productoRelacionado['nombre']); ?></h3>
-                                <p class="precio">$<?php echo number_format($productoRelacionado['precio'], 2, ',', '.'); ?></p>
-                                <p class="stock">Stock: <?php echo (int) $productoRelacionado['stock']; ?></p>
+            <div class="grilla-productos">
 
-                                <div class="tarjeta-producto__acciones">
-                                    <a
-                                        href="index.php?pagina=producto&id=<?php echo $productoRelacionado['id_producto']; ?>"
-                                        class="boton boton--secundario">
-                                        Ver detalle
-                                    </a>
+                <?php foreach ($listaDeProductos as $productoRelacionado): ?>
+                    
+                    <article class="tarjeta-producto">
+                        <a
+                            class="tarjeta-producto__enlace"
+                            href="index.php?pagina=producto&id=<?php echo $productoRelacionado['id_producto']; ?>"
+                            title="Ver detalle de <?php echo htmlspecialchars($productoRelacionado['nombre']); ?>">
+                            <img
+                                class="tarjeta-producto__imagen"
+                                src="public/img/ImagenesProductos/<?php echo htmlspecialchars($productoRelacionado['imagen']); ?>"
+                                alt="<?php echo htmlspecialchars($productoRelacionado['nombre']); ?>">
+                        </a>
+                        <span class="categoria-badge"><?php echo htmlspecialchars($productoRelacionado['nombre_categoria']); ?></span>
+                        <h3><?php echo htmlspecialchars($productoRelacionado['nombre']); ?></h3>
+                        <p class="precio">$<?php echo number_format($productoRelacionado['precio'], 2, ',', '.'); ?></p>
+                        <p class="stock">Stock: <?php echo (int) $productoRelacionado['stock']; ?></p>
 
-                                    <button
-                                        class="boton boton--principal boton-agregar-carrito"
-                                        data-id-producto="<?php echo $productoRelacionado['id_producto']; ?>"
-                                        data-nombre-producto="<?php echo htmlspecialchars($productoRelacionado['nombre']); ?>"
-                                        data-precio-producto="<?php echo $productoRelacionado['precio']; ?>"
-                                        data-stock-producto="<?php echo (int) $productoRelacionado['stock']; ?>"
-                                        <?php echo ($productoRelacionado['stock'] <= 0) ? 'disabled' : ''; ?>>
-                                        Agregar al carrito
-                                    </button>
-                                <!-- </div> -->
-                            </article>
-                        <?php endforeach; ?>
-                    </div>
+                        <div class="tarjeta-producto__acciones">
+                            <a
+                                href="index.php?pagina=producto&id=<?php echo $productoRelacionado['id_producto']; ?>"
+                                class="boton boton--secundario">
+                                Ver detalles
+                            </a>
+
+                            <button
+                                class="boton boton--principal boton-agregar-carrito"
+                                data-id-producto="<?php echo $productoRelacionado['id_producto']; ?>"
+                                data-nombre-producto="<?php echo htmlspecialchars($productoRelacionado['nombre']); ?>"
+                                data-precio-producto="<?php echo $productoRelacionado['precio']; ?>"
+                                data-stock-producto="<?php echo (int) $productoRelacionado['stock']; ?>"
+                                <?php echo ($productoRelacionado['stock'] <= 0) ? 'disabled' : ''; ?>>
+                                Agregar al carrito
+                            </button>
+                        </div>
+                        </article>
+                    <?php endforeach; ?>
+                </div>
                 <?php endif; ?>
             </section>
 
