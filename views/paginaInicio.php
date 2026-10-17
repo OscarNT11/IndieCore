@@ -16,59 +16,59 @@
 
             <!-- CATEGORIAS -->
             
-            <section class="categorias">
+            <section class="catgorias">
 
-                <a href="index.php?pagina=catalogo" class="categoria-link">
-                    <div class="categorias-objeto">
+                <a href="index.php?pagina=catalogo" class="catgoria-link">
+                    <div class="catgorias-objeto">
                     <img src="public/img/Teclado.png" alt="Imagen de Teclado">
                     <h2>Teclados</h2>
                     </div>
                 </a>
 
-                <a href="index.php?pagina=catalogo" class="categoria-link">
-                    <div class="categorias-objeto">
+                <a href="index.php?pagina=catalogo" class="catgoria-link">
+                    <div class="catgorias-objeto">
                     <img src="public/img/Monitor.png" alt="Imagen de Monitor">
                     <h2>Monitores</h2>
                     </div>
                 </a>
 
-                <a href="index.php?pagina=catalogo" class="categoria-link">
-                    <div class="categorias-objeto">
+                <a href="index.php?pagina=catalogo" class="catgoria-link">
+                    <div class="catgorias-objeto">
                     <img src="public/img/Celular.png" alt="Imagen de Celular">
                     <h2>Celulares</h2>
                     </div>
                 </a>
 
-                <a href="index.php?pagina=catalogo" class="categoria-link">
-                    <div class="categorias-objeto">
+                <a href="index.php?pagina=catalogo" class="catgoria-link">
+                    <div class="catgorias-objeto">
                     <img src="public/img/Consola.png" alt="Imagen de Consola">
                     <h2>Consolas</h2>
                     </div>
                 </a>
 
-                <a href="index.php?pagina=catalogo" class="categoria-link">
-                    <div class="categorias-objeto">
+                <a href="index.php?pagina=catalogo" class="catgoria-link">
+                    <div class="catgorias-objeto">
                     <img src="public/img/Auriculares.png" alt="Imagen de Auriculares">
                     <h2>Auriculares</h2>
                     </div>
                 </a>
 
-                <a href="index.php?pagina=catalogo" class="categoria-link">
-                    <div class="categorias-objeto">
+                <a href="index.php?pagina=catalogo" class="catgoria-link">
+                    <div class="catgorias-objeto">
                     <img src="public/img/Notebook.png" alt="Imagen de Notebook">
                     <h2>Notebooks</h2>
                     </div>
                 </a>
 
-                <a href="index.php?pagina=catalogo" class="categoria-link">
-                    <div class="categorias-objeto">
+                <a href="index.php?pagina=catalogo" class="catgoria-link">
+                    <div class="catgorias-objeto">
                     <img src="public/img/Tarjetas graficas.png" alt="Imagen de Tarjeta Gráfica">
                     <h2>Tarjetas G.</h2>
                     </div>
                 </a>
 
-                <a href="index.php?pagina=catalogo class="categoria-link">
-                    <div class="categorias-objeto">
+                <a href="index.php?pagina=catalogo class="catgoria-link">
+                    <div class="catgorias-objeto">
                     <img src="public/img/Mause.png" alt="Imagen de Mouse">
                     <h2>Mouse</h2>
                     </div>
@@ -127,35 +127,34 @@
 
                 <div id="cat-arriba">
 
-                    <!-- Cada tarjeta es un enlace a la categoría real de la BD
+                    <!-- Cada tarjeta es un enlace a la categoria real de la BD
                          (index.php?pagina=catalogo&categoria=ID) -->
-
-                    <a id="cate-internos" href="index.php?pagina=catalogo&categoria=4">
-                        <div id="img-cat-internos">
+                    <a class="cat-container" id="cat-internos" href="index.php?pagina=catalogo&categoria=4">
+                        <div class="cat-image" id="img-cat-internos">
                             <img src="public/img/Grafica-edit.png" alt="Tarjetas gráficas y componentes internos">
                         </div>
-                        <div id="cont-cat-internos">
-                            <h2>Componentes
-                                <br> internos</h2>
+                        <div class="cat-contenido" id="cont-cat-internos">
+                            <h2>Componentes<br>internos</h2>
                         </div>
                     </a>
 
-                    <a id="cate-perifericos" href="index.php?pagina=catalogo&categoria=3">
-                        <div id="cont-cat-perifericos">
+                    <a class="cat-container" id="cat-perifericos" href="index.php?pagina=catalogo&categoria=3">
+                        <div class="cat-contenido" id="cont-cat-perifericos">
                             <h2>Periféricos</h2>
                         </div>
-                        <div id="img-cat-perifericos">
+                        <div class="cat-image" id="img-cat-perifericos">
                             <img src="public/img/Mouse-edit.png" alt="Mouse, teclados y auriculares">
                         </div>
                     </a>
 
                 </div>
 
-                <a id="cate-larga" href="index.php?pagina=catalogo&categoria=5">
-                    <div id="img-cat-larga">
+
+                <a class="cat-container" id="cat-larga" href="index.php?pagina=catalogo&categoria=5">
+                    <div class="cat-image" id="img-cat-larga">
                         <img src="public/img/Celulares-edit.png" alt="Celulares y otros dispositivos">
                     </div>
-                    <div id="cont-cat-larga">
+                    <div class="cat-contenido" id="cont-cat-larga">
                         <h2>Otros
                             <br> dispositivos</h2>
                     </div>

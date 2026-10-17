@@ -29,7 +29,7 @@ HEADER Y SUS NAVS DE TODAS LAS PAGINAS
 }
 
 #nav-superior {
-    max-height: 75px;
+    max-height: 70px;
     gap: 12px;
 }
 
@@ -155,7 +155,7 @@ HEADER Y SUS NAVS DE TODAS LAS PAGINAS
 }
 
 #nav-inferior {
-    max-height: 45px;
+    max-height: 40px;
     padding: 0 0 0.3rem 0;
 }
 

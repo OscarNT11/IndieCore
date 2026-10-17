@@ -211,7 +211,7 @@ require __DIR__ . '/header.php';
             ========================== -->
 
         <?php require __DIR__ . '/modalLogin.php'; ?>
-
+        
         <?php
 // catalogo.js conecta el botón "Agregar al carrito" y el contador.
 // carrusel.js pone las flechas en "Más de <categoría>" cuando hay

@@ -1,0 +1,412 @@
+/* ======================================
+            COMPONENTE TARJETA
+====================================== */
+
+
+
+/* La marca del producto, debajo del nombre en las tarjetas. */
+.tarjeta-producto .marca {
+    font-size: 0.85rem;
+    color: #9db4ff;
+    margin-bottom: 4px;
+}
+/* -------------------------------------------------------- */
+
+.tarjeta-producto {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+
+    background-color: #373737;
+    border: 1px solid #4a4a4a;
+    border-radius: 1rem;
+    padding: 1.25rem 1rem 1.25rem;
+
+    transition: transform 200ms ease, box-shadow 200ms ease;
+}
+/* ==========================
+   GRILLA Y TARJETAS DE PRODUCTO
+   Estilos para las tarjetas de producto
+   que se muestran en "Lo nuevo" y "Destacados"
+   (y en el catálogo)
+========================== */
+
+.grilla-productos {
+    display: grid;
+    /* auto-fill (no auto-fit): mantiene las pistas vacías, así una sola
+       tarjeta NO se estira a todo el ancho; conserva su tamaño de 220px. */
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1.5rem;
+
+    width: 100%;
+    padding: 1rem 2rem 2rem;
+}
+
+/* ==========================
+   CARRUSEL DE PRODUCTOS
+   Flechas laterales para recorrer la fila cuando hay
+   más de 4 productos.
+
+   El bloque .carrusel lo crea public/js/carrusel.js
+   SOLO si la grilla tiene más de 4 tarjetas; con 4 o
+   menos, la grilla se queda como está.
+========================== */
+
+.carrusel {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    padding: 0 1rem;
+}
+
+/* Aquí vive el bloque carrusel: la fila ocupa el espacio
+   que queda entre las dos flechas. */
+.carrusel .grilla-productos {
+    flex: 1 1 auto;
+    min-width: 0;
+
+    /* Fila que se desplaza en horizontal. El grid pasa a ser
+       un contenedor de una sola fila: cada tarjeta vale 1/4
+       del ancho visible, para que se vean 4 a la vez. */
+    display: flex;
+    flex-wrap: nowrap;
+
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    scroll-snap-type: x mandatory;
+
+    /* Se oculta la barra: para eso están las flechas.
+       (En Firefox se usa scrollbar-width.) */
+    scrollbar-width: none;
+}
+
+.carrusel .grilla-productos::-webkit-scrollbar {
+    display: none;
+}
+
+.carrusel .grilla-productos > .tarjeta-producto {
+    /* 1/4 del espacio libre, descontando los huecos (gap).
+       Se deja un pelín menos para que asome la tarjeta
+       siguiente y se note que hay más. */
+    flex: 0 0 calc((100% - 3 * 1.5rem) / 4 - 0.5rem);
+
+    scroll-snap-align: start;
+}
+
+/* ---------- Flechas ---------- */
+
+.carrusel__flecha {
+    flex: 0 0 auto;
+
+    width: 2.75rem;
+    height: 2.75rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 1.75rem;
+    line-height: 1;
+
+    color: #ffffff;
+    background-color: #2f2f2f;
+
+    border: 1px solid #4a4a4a;
+    border-radius: 50%;
+
+    cursor: pointer;
+
+    transition: background-color 150ms ease, opacity 150ms ease;
+}
+
+.carrusel__flecha:hover:not(:disabled) {
+    background-color: #6a09e0;
+}
+
+.carrusel__flecha:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+/* Si la fila entra completa (pantalla ancha o pocas tarjetas),
+   las flechas se ocultan: no hay nada que recorrer. */
+.carrusel--completo .carrusel__flecha {
+    visibility: hidden;
+}
+
+/* ---------- Responsive: menos productos por vista ---------- */
+
+@media (max-width: 1100px) {
+    .carrusel .grilla-productos > .tarjeta-producto {
+        flex-basis: calc((100% - 2 * 1.5rem) / 3 - 0.5rem);
+    }
+}
+
+@media (max-width: 800px) {
+    .carrusel .grilla-productos > .tarjeta-producto {
+        flex-basis: calc((100% - 1.5rem) / 2 - 0.5rem);
+    }
+}
+
+@media (max-width: 520px) {
+    .carrusel {
+        padding: 0 0.5rem;
+    }
+
+    .carrusel .grilla-productos > .tarjeta-producto {
+        flex-basis: 85%;
+    }
+
+    .carrusel__flecha {
+        width: 2.25rem;
+        height: 2.25rem;
+    }
+}
+
+.tarjeta-producto:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45);
+}
+
+.tarjeta-producto__enlace {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+}
+
+.tarjeta-producto__imagen {
+    width: 100%;
+    height: 100%;
+    max-width: 200px;
+
+    object-fit: contain;
+}
+
+.tarjeta-producto__enlace:hover .tarjeta-producto__imagen {
+    transform: scale(1.05);
+    transition: transform 200ms ease;
+}
+
+.tarjeta-producto h3 {
+    margin-top: 0.75rem;
+
+    font-size: 1.25rem;
+    font-weight: 300;
+    text-align: center;
+    color: #ededed;
+}
+
+.categoria-badge {
+    margin-top: 0.5rem;
+    padding: 0.15rem 0.75rem;
+
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+
+    background-color: #4a4a4a;
+    border-radius: 999px;
+    color: #cccccc;
+}
+
+.tarjeta-producto .precio {
+    margin: 0.5rem 0 0.75rem;
+
+    font-size: 1.6rem;
+    color: #6fa8ff;
+    text-align: center;
+}
+
+.tarjeta-producto .stock {
+    font-size: 0.9rem;
+    color: #9a9a9a;
+}
+
+/* Botones de la tarjeta */
+
+.tarjeta-producto .boton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    margin-top: 0.75rem;
+    padding: 0.6rem 1rem;
+
+    font-size: 1rem;
+    text-transform: uppercase;
+    border-radius: 0.5rem;
+    transition: filter 200ms ease, opacity 200ms ease;
+}
+
+.boton--principal {
+    background: linear-gradient(to right, #6a09e0, #3480d7);
+    color: #ffffff;
+}
+
+.boton--secundario {
+    background-color: #ededed;
+    color: #151515;
+}
+
+.tarjeta-producto .boton:hover {
+    filter: brightness(115%);
+}
+
+.tarjeta-producto .boton:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    filter: none;
+}
+
+/* ==========================
+   GRILLA Y TARJETAS DE PRODUCTO
+   Estilos para las tarjetas de producto
+   que se muestran en "Lo nuevo" y "Destacados"
+   (y en el catálogo)
+========================== */
+
+.grilla-productos {
+    display: grid;
+    /* auto-fill (no auto-fit): mantiene las pistas vacías, así una sola
+       tarjeta NO se estira a todo el ancho; conserva su tamaño de 220px. */
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1.5rem;
+
+    width: 100%;
+    padding: 1rem 2rem 2rem;
+}
+
+/* ==========================
+   CARRUSEL DE PRODUCTOS
+   Flechas laterales para recorrer la fila cuando hay
+   más de 4 productos.
+
+   El bloque .carrusel lo crea public/js/carrusel.js
+   SOLO si la grilla tiene más de 4 tarjetas; con 4 o
+   menos, la grilla se queda como está.
+========================== */
+
+.carrusel {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    padding: 0 1rem;
+}
+
+/* Aquí vive el bloque carrusel: la fila ocupa el espacio
+   que queda entre las dos flechas. */
+.carrusel .grilla-productos {
+    flex: 1 1 auto;
+    min-width: 0;
+
+    /* Fila que se desplaza en horizontal. El grid pasa a ser
+       un contenedor de una sola fila: cada tarjeta vale 1/4
+       del ancho visible, para que se vean 4 a la vez. */
+    display: flex;
+    flex-wrap: nowrap;
+
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    scroll-snap-type: x mandatory;
+
+    /* Se oculta la barra: para eso están las flechas.
+       (En Firefox se usa scrollbar-width.) */
+    scrollbar-width: none;
+}
+
+.carrusel .grilla-productos::-webkit-scrollbar {
+    display: none;
+}
+
+.carrusel .grilla-productos > .tarjeta-producto {
+    /* 1/4 del espacio libre, descontando los huecos (gap).
+       Se deja un pelín menos para que asome la tarjeta
+       siguiente y se note que hay más. */
+    flex: 0 0 calc((100% - 3 * 1.5rem) / 4 - 0.5rem);
+
+    scroll-snap-align: start;
+}
+
+/* ---------- Flechas ---------- */
+
+.carrusel__flecha {
+    flex: 0 0 auto;
+
+    width: 2.75rem;
+    height: 2.75rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 1.75rem;
+    line-height: 1;
+
+    color: #ffffff;
+    background-color: #2f2f2f;
+
+    border: 1px solid #4a4a4a;
+    border-radius: 50%;
+
+    cursor: pointer;
+
+    transition: background-color 150ms ease, opacity 150ms ease;
+}
+
+.carrusel__flecha:hover:not(:disabled) {
+    background-color: #6a09e0;
+}
+
+.carrusel__flecha:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+/* Si la fila entra completa (pantalla ancha o pocas tarjetas),
+   las flechas se ocultan: no hay nada que recorrer. */
+.carrusel--completo .carrusel__flecha {
+    visibility: hidden;
+}
+
+/* ---------- Responsive: menos productos por vista ---------- */
+
+@media (max-width: 1100px) {
+    .carrusel .grilla-productos > .tarjeta-producto {
+        flex-basis: calc((100% - 2 * 1.5rem) / 3 - 0.5rem);
+    }
+}
+
+@media (max-width: 800px) {
+    .carrusel .grilla-productos > .tarjeta-producto {
+        flex-basis: calc((100% - 1.5rem) / 2 - 0.5rem);
+    }
+}
+
+@media (max-width: 520px) {
+    .carrusel {
+        padding: 0 0.5rem;
+    }
+
+    .carrusel .grilla-productos > .tarjeta-producto {
+        flex-basis: 85%;
+    }
+
+    .carrusel__flecha {
+        width: 2.25rem;
+        height: 2.25rem;
+    }
+}

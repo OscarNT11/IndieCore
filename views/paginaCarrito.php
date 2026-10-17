@@ -1,4 +1,7 @@
-<?php require __DIR__ . '/header.php'; ?>
+<?php 
+$cssExtra = ['public/css/Carrito.css'];
+require __DIR__ . '/header.php'; 
+?>
 
 <section class="carrito">
 

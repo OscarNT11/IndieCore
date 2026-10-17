@@ -28,9 +28,10 @@
             etiquetaCss('public/css/generales.css');
             etiquetaCss('public/css/Catalogo.css');
             etiquetaCss('public/css/paginaInicio.css');
-            etiquetaCss('public/css/Carrito.css');
             etiquetaCss('public/css/header.css');
             etiquetaCss('public/css/footer.css');
+            etiquetaCss('public/css/Login.css');
+            etiquetaCss('public/css/Tarjeta.css');
 
             // Hojas propias de una vista (las define el controlador o la vista)
             if (isset($cssExtra)) {
