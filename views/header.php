@@ -79,6 +79,10 @@
                 <?php $usuarioEnHeader = usuarioActual(); ?>
 
                 <div class="usuario-logueado">
+                    <a
+                        class="usuario-logueado"
+                        href="index.php?pagina=cuenta"
+                        title="Ver mi cuenta">
                     <?php if (!empty($usuarioEnHeader['foto'])): ?>
                         <img
                             class="usuario-logueado__foto"
@@ -87,10 +91,6 @@
                     <?php else: ?>
                         <svg class="usuario-logueado__icono"><use href="public/img/iconos.svg#icono-persona"></use></svg>
                     <?php endif; ?>
-                    <a
-                        class="usuario-logueado__nombre"
-                        href="index.php?pagina=cuenta"
-                        title="Ver mi cuenta">
                         <?php echo escapar($usuarioEnHeader['nombre']); ?>
                     </a>
                 </div>

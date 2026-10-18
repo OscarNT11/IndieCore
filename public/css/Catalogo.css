@@ -110,7 +110,8 @@ CONTIENE DOS LAYOUTS, UNO DE FILTRAJE Y EL OTRO DE PRODUCTOS
     flex: 1;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 0.5rem;
+    column-gap: 0.5rem;
+    row-gap: 0.75rem;
     padding: 0.5rem 0rem 1rem 0rem;
 }
 
@@ -122,17 +123,17 @@ CONTIENE DOS LAYOUTS, UNO DE FILTRAJE Y EL OTRO DE PRODUCTOS
 }
 
 
-@media (max-width: 767px) {
+@media (max-width: 768px) {
     .catalogo-categorias {
         display: none;
     }
 
     .catalogo-productos .tarjeta-producto {
-        min-width: 210px;
+        min-width: 0px;
     }
 
     .catalogo-productos {
-    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
     }
 }
 
@@ -140,14 +141,13 @@ CONTIENE DOS LAYOUTS, UNO DE FILTRAJE Y EL OTRO DE PRODUCTOS
 DOS PRODUCTOS POR FILA O SOLO UNO */
 
 @media (max-width: 481px) {
+
     .catalogo-productos .tarjeta-producto {
         justify-self: center;
-    }
-     .catalogo-productos .tarjeta-producto {
-        min-width: 190px;
+        width: 100%;
     }
 
     .catalogo-productos {
-    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
     }
 }

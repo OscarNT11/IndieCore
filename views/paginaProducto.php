@@ -138,7 +138,7 @@ require __DIR__ . '/header.php';
 
             <div class="divisor-negro"></div>
             <h2>Opiniones del Producto</h2>
-            <form action="">
+            <form action="" class="form-resenia">
                 <input type="text" name="question" id="question" placeholder = "Escribe una pregunta...">
                 <button type="submit">Enviar</button>
             </form>

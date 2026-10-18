@@ -125,20 +125,6 @@
 }
 
 /* ==========================
-   GRILLA
-   (CONTENDOR DE TARJETAS PARA: Inicio.php y Producto.php
-========================== */
-
-.grilla-productos {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 1.25rem;
-
-    width: 100%;
-    padding: 1rem 2rem 2rem 2rem;
-}
-
-/* ==========================
    CARRUSEL DE PRODUCTOS
    Flechas laterales para recorrer la fila cuando hay
    más de 4 productos.
@@ -156,9 +142,11 @@
     padding: 0 1rem;
 }
 
-/* Aquí vive el bloque carrusel: la fila ocupa el espacio
-   que queda entre las dos flechas. */
-.carrusel .grilla-productos {
+/* ==========================
+    GRILLA
+    (CONTENDOR DE TARJETAS PARA: Inicio.php y Producto.php
+========================== */
+.grilla-productos {
     flex: 1 1 auto;
     min-width: 0;
 
@@ -176,6 +164,8 @@
     /* Se oculta la barra: para eso están las flechas.
        (En Firefox se usa scrollbar-width.) */
     scrollbar-width: none;
+    gap: 0.75rem;
+    padding: 1rem 2rem 2rem 2rem;
 }
 
 .carrusel .grilla-productos::-webkit-scrollbar {
@@ -240,7 +230,7 @@
     }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 768px) {
     .carrusel .grilla-productos > .tarjeta-producto {
         flex-basis: calc((100% - 1.5rem) / 2 - 0.5rem);
     }
@@ -259,4 +249,7 @@
         width: 2.25rem;
         height: 2.25rem;
     }
+
+
+    
 }

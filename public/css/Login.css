@@ -294,24 +294,24 @@
    "Iniciar Sesion" sino el nombre del usuario y "Cerrar sesión".
    ========================================================== */
 
+/* El nombre es un enlace a "Mi cuenta" (antes era un <p>). */
 .usuario-logueado {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-
     gap: 4px;
 
-    color: #ededed;
-    text-align: center;
-}
 
-.usuario-logueado svg {
-    width: 28px;
-    height: 28px;
-    fill: none;
-    stroke: #ededed;
-    stroke-width: 2px;
+    font-size: 0.95rem;
+    max-width: 160px;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    color: inherit;
+    transition: color 150ms ease;
 }
 
 /* Foto de perfil del usuario en el header (antes era siempre el icono). */
@@ -325,37 +325,20 @@
     border: 2px solid #6a09e0;
 }
 
-.usuario-logueado__icono {
-    width: 38px;
-    height: 38px;
-    color: #ededed;
+.usuario-logueado svg {
+    width: 36px;
+    height: 36px;
+    fill: none;
+    stroke: #ededed;
+    stroke-width: 2px;
 }
 
-.usuario-logueado p {
-    font-size: 0.95rem;
-    max-width: 160px;
-
-    /* Un nombre largo no debe romper el header */
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-/* El nombre es un enlace a "Mi cuenta" (antes era un <p>). */
-.usuario-logueado .usuario-logueado__nombre {
-    font-size: 0.95rem;
-    max-width: 160px;
-
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-
-    color: #ededed;
-    transition: color 150ms ease;
-}
-
-.usuario-logueado .usuario-logueado__nombre:hover {
+.usuario-logueado:hover {
     color: #9db4ff;
+}
+
+.usuario-logueado:hover img {
+    opacity: 0.8;
 }
 
 /* El enlace "Cerrar sesión" se movió a la página de cuenta

@@ -333,16 +333,16 @@
     font-weight: 500;
 }
 
-.dudas form {
+.form-resenia {
     display: flex;
     flex-direction: row;
     margin-bottom: 1.5rem;
+    gap: 1rem;
 }
 
-.dudas input {
+.form-resenia input {
     flex: 1;
     padding: 0.6rem;
-    margin: 0 1rem;
     border: 2px solid #292929;
     border-radius: 12px;
     background-color: transparent;
@@ -352,34 +352,35 @@
     transition: transform 0.8 ease;
 }
 
-.dudas input::placeholder {
+.form-resenia input::placeholder {
     color: inherit;
 }
 
-.dudas input:focus {
+.form-resenia input:focus {
     outline: none;
     transform: scale(1.01);
     border-color: #222;
     box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
 }
 
-.dudas button {
+.form-resenia button {
   background: linear-gradient(to left, #340b85, #2573d8);
   color: #fff;
   border: none;
   border-radius: 16px;
-  min-width: 128px;
+  flex: 1;
+  max-width: 128px;
 
   font-size: 1.1rem;
   font-weight: 500;
 
   cursor: pointer;
 
-  padding: 0 24px;
+  padding: 0.5rem 1.5rem;
   transition: opacity 0.2s;
 }
 
-.dudas button:hover {
+.form-resenia button:hover {
   opacity: 0.7;
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
 }
@@ -429,14 +430,14 @@
 
 .productos-relacionados {
     width: 100%;
-    padding: 0rem 2rem 2rem 2rem;
-    background: #444;
+    margin: 0 auto;
+    background-color: #444;
 }
 
 .productos-relacionados h2 {
     color: #ededed;
     font-size: 2.25rem;
-    padding: 1.75rem 0 0.5rem;
+    padding: 1.25rem 0 0.5rem 2rem;
     font-weight: 500;
 }
 
@@ -448,7 +449,7 @@
 
 /* ---------- Responsive: la ficha pasa debajo de la imagen ---------- */
 
-@media (max-width: 767px) {
+@media (max-width: 768px) {
 
     .detalle-producto {
         flex-direction: column;
@@ -462,4 +463,12 @@
         min-height: 300px;
         padding: 0.5rem 1rem;
     }
+}
+
+@media (max-width: 481px) {
+
+    .form-resenia {
+        flex-direction: column;
+    }
+    
 }

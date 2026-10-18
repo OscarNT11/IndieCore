@@ -148,19 +148,18 @@
     gap: 0.5rem;
 
     transition: transform 0.3s ease;
-    padding: 0.5rem 0.75rem;
+    padding: 0.5rem;
 }
 
 #cat-larga {
     padding-bottom: 0;
-    padding-right: 2rem;
 }
 
 .cat-container div {
     flex: 1; 
 }
 
-#cat-internos, #cat-perifericos{
+#cat-internos, #cat-perifericos {
     flex: 1;
     justify-content: space-between;
     min-width: 280px;
@@ -175,7 +174,7 @@
 .cat-contenido {
     flex: 1;
     display: flex;
-    flex-direction: column;
+    justify-content: center;
     align-items: center;
 }
 
@@ -272,7 +271,7 @@
     }
 
     #img-cat-larga {
-        min-width: 210px;
+        max-width: 240px;
     }
 
 }
@@ -298,7 +297,11 @@
         width: 160px;
         max-width: 100%;
         margin-left: 0;
-        padding: 0;;
+        padding: 0;
+    }
+
+    #img-cat-larga img {
+        max-width: 160px;
     }
 
 
