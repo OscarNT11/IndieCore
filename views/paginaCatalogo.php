@@ -7,20 +7,23 @@ $terminoBusqueda = isset($_GET['q']) ? trim((string) $_GET['q']) : '';
 ?>
 
 <section class="catalogo">
+
+    <button type="button" class="btn-filtro">
+        <svg><use href="public/img/iconos.svg#icono-filtro"></use></svg>
+    </button>
     
-    <!-- AQUI TIENE QUE ESTAR EL ICONO QUE ABRIRA LAS CATEGORIAS -->
     <h2>
-        <?php if ($terminoBusqueda !== ''): ?>
-            Resultados para "<?php echo htmlspecialchars($terminoBusqueda); ?>"
-        <?php else: ?>
-            Catalogos de Productos
-        <?php endif; ?>
+            <?php if ($terminoBusqueda !== ''): ?>
+                Resultados para "<?php echo htmlspecialchars($terminoBusqueda); ?>"
+            <?php else: ?>
+                Catalogos de Productos
+            <?php endif; ?>
     </h2>
 
     <div class="catalogo-layout">
 
         <!-- Tabla lateral con las categorías disponibles -->
-        <aside class="catalogo-categorias">
+        <aside class="catalogo-categorias ocultar-filtro">
 
             <table class="tabla-categorias">
                 <caption>Categorías</caption>
@@ -131,6 +134,6 @@ $terminoBusqueda = isset($_GET['q']) ? trim((string) $_GET['q']) : '';
 // Esta vista necesita catalogo.js para los botones "Agregar al carrito"
 // y carrusel.js para las flechas cuando hay más de 4 productos.
 // (footer.php ya carga storage.js y login.js)
-$scriptsExtra = ['public/js/catalogo.js', 'public/js/carrusel.js'];
+$scriptsExtra = ['public/js/catalogo.js', 'public/js/carrusel.js', "public/js/filtrado.js"];
 require __DIR__ . '/footer.php';
 ?>

@@ -109,12 +109,6 @@ HEADER Y SUS NAVS DE TODAS LAS PAGINAS
     opacity: 0.8;
 }
 
-.btn-ingresar svg {
-    width: 40px;
-    height: 40px;
-    color: #ededed;
-    flex-shrink: 0;
-}
 
 .btn-ingresar p {
     font-size:  1.4rem;
@@ -131,13 +125,6 @@ HEADER Y SUS NAVS DE TODAS LAS PAGINAS
     margin: 0 auto;
     
     transition: transform 100ms ease, opacity 100ms ease;
-}
-
-.btn-carrito svg {
-    width: 40px;
-    height: 40px; 
-    color: #ededed;
-    flex-shrink: 0;
 }
 
 .btn-carrito span {

@@ -7,15 +7,16 @@ CONTIENE EL ENCABEZADO Y EL MENU DE CATALOGO-LAYOUT
 
 .catalogo {
     width: 100%;
-    padding: 1rem 1rem 2rem;
+    padding: 1rem 1rem 2rem 1rem;
+    position: relative;
 }
-
 .catalogo h2 {
-    margin-bottom: 1rem;
     font-size: 2rem;
     font-weight: 300;
     letter-spacing: 1px;
+    margin-bottom: 1rem;
 }
+
 /* =============================================================
 CATALOGO LAYOUT: 
 CONTIENE DOS LAYOUTS, UNO DE FILTRAJE Y EL OTRO DE PRODUCTOS
@@ -27,6 +28,26 @@ CONTIENE DOS LAYOUTS, UNO DE FILTRAJE Y EL OTRO DE PRODUCTOS
     flex-direction: row;
     gap: 1.5rem;
 }
+
+.contenedor-para-filtro {
+    display: flex;
+    flex-direction: row;
+}
+
+/* =============================================================
+BOTON FILTRADO
+============================================================= */
+
+.btn-filtro {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(to bottom, #6a09e0, #3480d7);
+    border-radius: 50%;
+    padding: 0.7rem 0.8rem;
+    z-index: 100;
+}
+
 
 /* =============================================================
 CATALOGO LAYOUT: 
@@ -49,6 +70,9 @@ CONTIENE DOS LAYOUTS, UNO DE FILTRAJE Y EL OTRO DE PRODUCTOS
     border: 1px solid #333;
     border-radius: 0.75rem;
 }
+
+/* Solo para abrir en tamanios menores o iguales a 768 */
+
 
 .tabla-categorias {
     width: 100%;
@@ -124,9 +148,29 @@ CONTIENE DOS LAYOUTS, UNO DE FILTRAJE Y EL OTRO DE PRODUCTOS
 
 
 @media (max-width: 768px) {
-    .catalogo-categorias {
+
+
+    .btn-filtro {
+        display: flex;
+        position: fixed;
+        bottom: 2rem;
+        right: 1rem;
+    }
+
+    .ocultar-filtro {
         display: none;
     }
+
+    .mostrar-filtrado {
+        display: flex;
+        position: fixed;
+        z-index: 100;
+        top: 5rem;
+        left: 0;
+        width: 100%;
+        max-width: 300px;
+    }
+
 
     .catalogo-productos .tarjeta-producto {
         min-width: 0px;

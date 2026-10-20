@@ -59,6 +59,13 @@ input, input::placeholder {
     border: none;
 }
 
+svg {
+    width: 40px;
+    height: 40px; 
+    color: #ededed;
+    flex-shrink: 0;
+}
+
 /* ==============================
 OSCAR NUÑEZ - Falta hacer responsive panel, arreglar primero BD
 ============================== */
