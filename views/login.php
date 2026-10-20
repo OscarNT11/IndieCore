@@ -3,6 +3,7 @@
 // Solo carga el modal: la página se ve de fondo con el header y el footer,
 // y login.js abre automaticamente la ventana de login al detectar
 // ?pagina=login (#pantalla-transparente).
+
 require __DIR__ . '/header.php';
 ?>
 

@@ -34,7 +34,7 @@ class ProductoController {
 
         $listaDeCategorias = $this->productoModel->listarCategorias();
 
-        require __DIR__ . '/../views/paginaListado.php';
+        require __DIR__ . '/../views/paginaCatalogo.php';
     }
 
     public function mostrarDetalle() {

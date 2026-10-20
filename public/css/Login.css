@@ -1,0 +1,401 @@
+/* PAGINA DE INICIO SESION */
+
+#pantalla-transparente {
+    display: none;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background-color: rgba(0, 0, 0, 0.6);
+
+    justify-content: center;
+    align-items: center;
+
+    z-index: 1000;
+}
+
+#ventana-login {
+    width: 400px;
+    padding: 30px;
+
+    background-color: #2d2d2d;
+
+    border-radius: 20px;
+    position: relative;
+}
+
+
+.espacio-texto{
+    background-color: #737373;
+    display: flex;
+    width: 100%;
+    height: 35px;
+    border-radius: 8px;
+    border: none;
+}
+
+#login [type="checkbox"]{
+    width: 18px;
+    height: 18px;
+    margin-right: 10px;
+    accent-color: #6a00ff;
+}
+
+#inicio-sesion{
+    border-radius: 15px;
+    margin: 40px;
+    padding: 30px;
+    color: white;
+}
+
+.nombre-usuario{
+    margin-top: 20px ;
+    margin-bottom: 20px;
+}
+
+.contraseña{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#boton-inicioSesion {
+    background:linear-gradient(to right, #6d1ae5, #2c72be);
+    border: none;
+    border-radius: 8px;
+    padding: 10px 18px;
+    font-size: 14px;
+    text-transform: uppercase;
+    cursor: pointer;
+    gap: 10px;
+    margin: 0 auto;
+    display: block;
+    padding-left: 115px;
+    padding-right: 115px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.enviar{
+    color: white;
+    text-decoration: none;
+}
+
+#recordar{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: white;
+}
+
+#login input{
+    width: 100%;
+    height: 30px;
+    border: none;
+    border-radius: 8px;
+    padding: 0 15px;
+}
+
+#login input[type="password"]{
+    margin-top: 20px;
+}
+
+#login input[type="text"]{
+    margin-top: 20px;
+}
+
+#login{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* PAGINA DE REGISTRO */
+
+#pantalla-registro {
+    display: none;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background-color: rgba(0, 0, 0, 0.6);
+
+    justify-content: center;
+    align-items: center;
+
+    z-index: 1000;
+}
+
+#ventana-registro {
+    position: relative;
+
+    width: 400px;
+    padding: 30px;
+
+    background-color: #2d2d2d;
+
+    border-radius: 20px;
+}
+
+#boton-Registrarse{
+    background:linear-gradient(to right, #6d1ae5, #2c72be);
+    border: none;
+    border-radius: 8px;
+    padding: 10px 18px;
+    font-size: 14px;
+    text-transform: uppercase;
+    cursor: pointer;
+    gap: 10px;
+    margin: 0 auto;
+    margin-bottom: 20px;
+    display: block;
+    padding-left: 115px;
+    padding-right: 115px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+#confirmar-contraseña{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#correo-electronico{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#register [type="checkbox"]{
+    width: 18px;
+    height: 18px;
+    margin-right: 10px;
+    accent-color: #6a00ff;
+}
+
+#register input{
+    width: 100%;
+    height: 30px;
+    border: none;
+    border-radius: 8px;
+    padding: 0 15px;
+}
+
+#register input[type="password"]{
+    margin-top: 20px;
+}
+
+#register input[type="email"]{
+    margin-top: 20px;
+}
+
+#register input[type="text"]{
+    margin-top: 20px;
+}
+
+.cerrar-ventana{
+    position: absolute;
+
+    top: 15px;
+    right: 15px;
+
+    width: 40px;
+    height: 40px;
+
+    padding: 2;
+    margin: 2;
+
+    background: none;
+    border: none;
+
+    color: white;
+    font-size: 20px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    cursor: pointer;
+}
+
+
+/* ==========================================================
+   MENSAJES DE ERROR DE LOS FORMULARIOS (login y registro)
+   Cada .campo es un div que envuelve label + input + mensaje.
+   El <span class="mensaje-error"> lo rellena public/js/login.js
+   (antes esto era un alert(), ahora es texto bajo el campo).
+   ========================================================== */
+
+.campo {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Reserva la altura del mensaje para que el formulario no salte
+   cuando el texto aparece o desaparece. */
+.mensaje-error {
+    display: block;
+
+    min-height: 1rem;
+    margin-top: 4px;
+
+    font-size: 0.8rem;
+    line-height: 1.2;
+
+    color: #ff5c5c;
+}
+
+/* El atributo :empty no basta porque el texto se pone y se quita
+   desde JS: cuando está vacío, el span no ocupa nada visible. */
+.mensaje-error:empty {
+    margin-top: 0;
+}
+
+/* ---------- Campo en estado de error ---------- */
+
+.campo-con-error {
+    /* El borde rojo va sobre el input, no sobre el contenedor,
+       porque .espacio-texto tiene border: none y se vería cortado. */
+    outline: 2px solid #ff5c5c;
+    outline-offset: 0;
+
+    /* Pequeño sacudida para llamar la atención sin exagerar */
+    animation: sacudida-error 200ms ease;
+}
+
+.campo-con-error::placeholder {
+    color: #ffd7d7;
+}
+
+@keyframes sacudida-error {
+    0%   { transform: translateX(0); }
+    25%  { transform: translateX(-4px); }
+    50%  { transform: translateX(4px); }
+    75%  { transform: translateX(-2px); }
+    100% { transform: translateX(0); }
+}
+
+/* Accesibilidad: quien prefiera menos movimiento no ve la sacudida */
+@media (prefers-reduced-motion: reduce) {
+    .campo-con-error {
+        animation: none;
+    }
+}
+
+/* ==========================================================
+   SESIÓN: usuario logueado en el header
+   Cuando hay sesión iniciada, el header ya no muestra el botón
+   "Iniciar Sesion" sino el nombre del usuario y "Cerrar sesión".
+   ========================================================== */
+
+/* El nombre es un enlace a "Mi cuenta" (antes era un <p>). */
+.usuario-logueado {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+
+
+    font-size: 0.95rem;
+    max-width: 160px;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    color: inherit;
+    transition: color 150ms ease;
+}
+
+/* Foto de perfil del usuario en el header (antes era siempre el icono). */
+.usuario-logueado__foto {
+    width: 38px;
+    height: 38px;
+
+    border-radius: 50%;
+    object-fit: cover;
+
+    border: 2px solid #6a09e0;
+}
+
+.usuario-logueado svg {
+    width: 36px;
+    height: 36px;
+    fill: none;
+    stroke: #ededed;
+    stroke-width: 2px;
+}
+
+.usuario-logueado:hover {
+    color: #9db4ff;
+}
+
+.usuario-logueado:hover img {
+    opacity: 0.8;
+}
+
+/* El enlace "Cerrar sesión" se movió a la página de cuenta
+   (botón .cuenta__acciones .boton--salir), así que el header ya
+   no lo muestra ni necesita sus estilos. */
+
+/* ==========================================================
+   ERRORES DEL SERVIDOR EN LOS MODALES
+   Los pinta modalLogin.php a partir del array $errores que
+   devuelve UsuarioController (login o registro).
+   ========================================================== */
+
+.lista-errores {
+    list-style: none;
+
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    margin-top: 4px;
+    padding: 10px 14px;
+
+    background-color: rgba(255, 92, 92, 0.12);
+    border-left: 3px solid #ff5c5c;
+    border-radius: 6px;
+
+    color: #ff8a8a;
+    font-size: 0.85rem;
+    line-height: 1.3;
+}
+
+/* ==========================================================
+   AVISO DE ÉXITO TRAS INICIAR SESIÓN O REGISTRARSE
+   Lo crea public/js/login.js al volver con ?login=ok / ?registro=ok
+   ========================================================== */
+
+.aviso-sesion {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+
+    padding: 14px 20px;
+
+    background-color: #1f7a3d;
+    color: #ffffff;
+    font-size: 0.95rem;
+
+    border-radius: 10px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+
+    z-index: 2000;
+
+    opacity: 1;
+    transition: opacity 500ms ease, transform 500ms ease;
+}
+
+.aviso-sesion--oculto {
+    opacity: 0;
+    transform: translateY(10px);
+}

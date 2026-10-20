@@ -1,7 +1,9 @@
 <?php
 // controllers/UsuarioController.php
 require_once __DIR__ . '/../models/UsuarioModel.php';
+
 class UsuarioController {
+    
     private $conexion;
     private $usuarioModel;
 
@@ -25,38 +27,34 @@ class UsuarioController {
             $password = $_POST['password'] ?? '';
             $password2 = $_POST['password2'] ?? '';
 
+            // Comprobar longitud
             if (mb_strlen($nombre) < 2 || mb_strlen($nombre) > 50) {
                 $errores[] = "El nombre debe tener entre 2 y 50 caracteres.";
             }
 
-            // El nombre solo admite letras, números, espacios y unos pocos
-            // signos seguros (_ - . y tildes/ñ). Cualquier cosa que parezca
-            // código (<, >, " , ', ;, &, etc.) se rechaza aquí, en el
-            // servidor, para que no se guarde en la BD.
+            // Comprobar caracteres
             if (!nombreUsuarioValido($nombre)) {
                 $errores[] = "El nombre de usuario solo puede tener letras, números, espacios y los signos _ - .";
             }
 
+
             if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                 $errores[] = "El correo electrónico no es válido.";
             }
-
             elseif ($this->usuarioModel->existeEmail($email)) {
                 $errores[] = "Ya existe una cuenta con ese correo.";
             }
 
+            // Validar contrasenias por tamanio y similitud
             if (strlen($password) < 8) {
                 $errores[] = "La contraseña debe tener al menos 8 caracteres.";
             }
-
             if ($password !== $password2) {
                 $errores[] = "Las contraseñas no coinciden.";
             }
 
+            // Si no hay errores se procede a crear al usuario
             if (empty($errores)) {
-
-                // Se guarda la cuenta en la BD y se inicia la sesión para
-                // que el usuario quede logueado al navegar.
                 $idUsuario = $this->usuarioModel->crearUsuario($nombre, $email, $password);
 
                 if ($idUsuario === false) {
@@ -65,7 +63,6 @@ class UsuarioController {
                     $_SESSION['id_usuario'] = $idUsuario;
                     $_SESSION['nombre_usuario'] = $nombre;
                     $_SESSION['email_usuario'] = $email;
-
                     // Toda cuenta nueva nace con rol 'cliente' (el DEFAULT de
                     // la tabla). El rol se cambia después desde phpMyAdmin y,
                     // al volver a iniciar sesión, se carga en $_SESSION['rol'].
@@ -79,11 +76,12 @@ class UsuarioController {
             }
         }
 
-        // La vista se carga SIEMPRE (GET incluido). Antes este require estaba
-        // dentro del if de POST, así que al abrir index.php?pagina=registro
-        // con GET no se incluía nada y se veía una página en blanco.
+        /* La vista se carga SIEMPRE (GET incluido). Antes este require estaba
+        dentro del if de POST, así que al abrir index.php?pagina=registro
+        con GET no se incluía nada y se veía una página en blanco. */
         require __DIR__ . '/../views/registro.php';
     }
+
 
     /* Muestra (y procesa) el formulario de inicio de sesión.
        index.php llama a este método para ?pagina=login; sin él la URL
@@ -98,16 +96,16 @@ class UsuarioController {
             $usuarioIngresado = trim($_POST['usuario'] ?? '');
             $password = $_POST['password'] ?? '';
 
+
+            // Verifica que ningun campo este vacio
             if ($usuarioIngresado === '') {
                 $errores[] = "Ingresa tu nombre de usuario o correo.";
             }
-
             if ($password === '') {
                 $errores[] = "Ingresa tu contraseña.";
             }
 
             if (empty($errores)) {
-
                 // Se busca la cuenta por correo o por nombre de usuario.
                 $usuario = $this->usuarioModel->buscarPorEmail($usuarioIngresado);
 
@@ -134,6 +132,7 @@ class UsuarioController {
 
         require __DIR__ . '/../views/login.php';
     }
+
 
     /* Página "Mi cuenta": muestra y actualiza los datos del usuario logueado,
        incluida la foto de perfil. Solo accesible con la sesión iniciada. */
@@ -163,6 +162,7 @@ class UsuarioController {
             // ---------- 1. Confirmación del correo ----------
             // Para cambiar el nombre o la contraseña hay que escribir el
             // correo de la cuenta. Si no coincide, no se cambia nada.
+            // VALIDACION POR GMAIL o CONTRASENIA
             $correoConfirmado = ($correoConfirmacion !== '')
                 && (strcasecmp($correoConfirmacion, $usuario['email']) === 0);
 

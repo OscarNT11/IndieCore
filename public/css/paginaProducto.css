@@ -1,45 +1,5 @@
-/*-- ==========================
-    Oscar Nuñez 12/7/2026
-    ========================== */
 /* ==========================
-   *{
-   Ajuste general de la pagina 
-   para determinar los margenes, padding,
-   el scroll y box-sizing de la pagina
-========================== */
-
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    scroll-behavior: smooth;
-}
-
-/* ==========================
-   IMG
-   Ajuste general de la pagina 
-   para determinar los limites de las imagenes
-========================== */
-
-img{
-    max-width:100%;
-    height:auto;
-    display:block;
-}
-
-/* ==========================
-   MAIN
-   Ajuste de el fondo para el main
-========================== */
-
-main{
-    background-color: #292929;
-}
-
-
-/* ==========================
-   VENTA PRODUCTO
-   Ajuste de el fondo para el main
+   SECCION PRINCIPAL: VENTA PRODUCTO
 ========================== */
 
 .venta-producto {
@@ -49,7 +9,6 @@ main{
     background-color: #444444;
     display: flex;
     flex-direction: column;
-    color: #ededed;
 }
 
 /* ==========================
@@ -58,11 +17,9 @@ main{
 ========================== */
 
 .detalle-producto {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(320px, 420px);
-    align-items: start;
-    gap: 2.5rem;
-
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
     width: 100%;
 }
 
@@ -73,6 +30,7 @@ main{
     align-items: center;
     justify-content: center;
 
+    flex: 1;
     min-height: 420px;
     padding: 2rem;
 
@@ -92,6 +50,7 @@ main{
 /* ---------- Columna derecha: cuadro de informacion ---------- */
 
 .detalle-producto__ficha {
+    flex: 1;
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
@@ -147,7 +106,7 @@ main{
     color: #ff8a8a;
 }
 
-/* ---------- Contador de cantidad ---------- */
+/* Contador de cantidad */
 
 .detalle-producto__compra {
     margin-top: 0.5rem;
@@ -264,120 +223,6 @@ main{
     color: #ededed;
 }
 
-/* ---------- Responsive: la ficha pasa debajo de la imagen ---------- */
-
-@media (max-width: 900px) {
-
-    .detalle-producto {
-        grid-template-columns: minmax(0, 1fr);
-        gap: 1.5rem;
-    }
-
-    .detalle-producto__ficha {
-        position: static;
-    }
-
-    .detalle-producto__imagen {
-        min-height: 300px;
-        padding: 1rem;
-    }
-}
-
-.tarjeta-producto {
-    background-color: #666;
-    border: 1px solid #555;
-    border-radius: 1rem; 
-    padding: 1rem;
-}
-
-.tarjeta-producto h2 {
-    color: #fff;
-}
-
-.producto-precio {
-    color: #fff;
-    font-size: 2rem;
-    margin-top: 1rem;
-    padding: 5px;
-    text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
-}
-
-.producto-caracteristicas {
-    padding: 8px 12px;
-}
-
-.producto-caracteristicas h3 {
-    margin-bottom: 6px;
-    font-weight: 500;
-}
-
-.caracteristica {
-    padding: 2px 6px;
-}
-
-.carrito-form {
-  display: flex;
-  align-items: stretch; 
-  margin: 0.75rem 0;
-
-  border: 1px solid #cfcfcf;
-  border-radius: 8px;
-  overflow: hidden;
-
-  max-width: 400px;
-  font-size: 1.3rem;
-}
-
-.cantidad-contenedor {
-  background-color: #fff;
-  padding: 12px 16px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  color: #555;
-}
-
-.cantidad-contenedor input {
-  border:  none;
-  outline: none; 
-  width: 40px;
-  font-size: inherit;
-}
-
-.cantidad-contenedor input:focus {
-    border: 1px solid #555;
-    border-radius: 8px;
-}
-
-.producto-carrito {
-  flex: 1;
-  background: linear-gradient(to left, #340b85, #2573d8);
-  color: #fff;
-  border: none;
-
-  font-size: 1.1rem;
-  font-weight: 500;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  gap: 4px;
-  cursor: pointer;
-
-  padding: 12px 24px;
-  transition: opacity 0.2s;
-}
-
-.btn-carrito:hover {
-  opacity: 0.8;
-}
-
-.icono-carrito {
-  width: 30px;
-  height: 30px;
-  object-fit: contain;
-}
 
 /* ==========================
    ESPECIFICACIONES PRODUCTO
@@ -488,16 +333,16 @@ main{
     font-weight: 500;
 }
 
-.dudas form {
+.form-resenia {
     display: flex;
     flex-direction: row;
     margin-bottom: 1.5rem;
+    gap: 1rem;
 }
 
-.dudas input {
+.form-resenia input {
     flex: 1;
     padding: 0.6rem;
-    margin: 0 1rem;
     border: 2px solid #292929;
     border-radius: 12px;
     background-color: transparent;
@@ -507,34 +352,35 @@ main{
     transition: transform 0.8 ease;
 }
 
-.dudas input::placeholder {
+.form-resenia input::placeholder {
     color: inherit;
 }
 
-.dudas input:focus {
+.form-resenia input:focus {
     outline: none;
     transform: scale(1.01);
     border-color: #222;
     box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
 }
 
-.dudas button {
+.form-resenia button {
   background: linear-gradient(to left, #340b85, #2573d8);
   color: #fff;
   border: none;
   border-radius: 16px;
-  min-width: 128px;
+  flex: 1;
+  max-width: 128px;
 
   font-size: 1.1rem;
   font-weight: 500;
 
   cursor: pointer;
 
-  padding: 0 24px;
+  padding: 0.5rem 1.5rem;
   transition: opacity 0.2s;
 }
 
-.dudas button:hover {
+.form-resenia button:hover {
   opacity: 0.7;
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
 }
@@ -584,14 +430,14 @@ main{
 
 .productos-relacionados {
     width: 100%;
-    padding: 0rem 2rem 2rem 2rem;
-    background: #444;
+    margin: 0 auto;
+    background-color: #444;
 }
 
 .productos-relacionados h2 {
     color: #ededed;
     font-size: 2.25rem;
-    padding: 1.75rem 0 0.5rem;
+    padding: 1.25rem 0 0.5rem 2rem;
     font-weight: 500;
 }
 
@@ -601,316 +447,28 @@ main{
     color: #9a9a9a;
 }
 
-.productos-contenedor {
-    width: 100%;
-    height: 70vh;
-    padding: 1rem 0;
-    display: flex;
-    flex-direction: row;
-    gap: 2rem;
-    align-items: center;
-    margin: 0 auto;
+/* ---------- Responsive: la ficha pasa debajo de la imagen ---------- */
+
+@media (max-width: 768px) {
+
+    .detalle-producto {
+        flex-direction: column;
+    }
+
+    .detalle-producto__ficha {
+        position: static;
+    }
+
+    .detalle-producto__imagen {
+        min-height: 300px;
+        padding: 0.5rem 1rem;
+    }
 }
 
-.producto-card {
-    background: #373737;
-    border-radius: 16px;
-    padding: 20px;
+@media (max-width: 481px) {
 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    min-height: 420px; 
-    width: 100%;
-    min-width: 0;
+    .form-resenia {
+        flex-direction: column;
+    }
+    
 }
-
-.producto-card img{
-    width: 180px;
-    height: 180px;      
-    object-fit: contain;
-    margin-top: 16px;
-    margin-bottom: 12px;
-       
-}
-
-.card-contenido{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    flex: 1;
-    text-align: center;
-    font-size: 1.1rem;
-}
-
-
-.producto-card ul{
-    color: #fff;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    list-style: none;
-    word-break: break-word;
-}
-
-.producto-card li{
-    word-break: break-word;
-}
-
-.producto-card button{
-    background-color: transparent;
-    border: 2px solid #fff;
-    border-radius: 8px;
-    padding: 10px 18px;
-    font-size: 14px;
-    text-transform: uppercase;
-    cursor: pointer;
-    color: #fff;
-}
-
-.producto-precio {
-    margin-top: 5px;
-    color: #315894;
-}
-
-/* PAGINA DE INICIO SESION */
-
-#pantalla-transparente {
-    display: none;
-
-    position: fixed;
-    top: 0;
-    left: 0;
-
-    width: 100%;
-    height: 100%;
-
-    background-color: rgba(0, 0, 0, 0.6);
-
-    justify-content: center;
-    align-items: center;
-
-    z-index: 1000;
-}
-
-#ventana-login {
-    width: 400px;
-    padding: 30px;
-
-    background-color: #2d2d2d;
-
-    border-radius: 20px;
-    position: relative;
-}
-
-
-.espacio-texto{
-    background-color: #737373;
-    display: flex;
-    width: 100%;
-    height: 35px;
-    border-radius: 8px;
-    border: none;
-}
-
-#login [type="checkbox"]{
-    width: 18px;
-    height: 18px;
-    margin-right: 10px;
-    accent-color: #6a00ff;
-}
-
-#inicio-sesion{
-    border-radius: 15px;
-    margin: 40px;
-    padding: 30px;
-    color: white;
-}
-
-.nombre-usuario{
-    margin-top: 20px ;
-    margin-bottom: 20px;
-}
-
-.contraseña{
-    margin-top: 20px;
-    margin-bottom: 20px;
-}
-
-#boton-inicioSesion {
-    background:linear-gradient(to right, #6d1ae5, #2c72be);
-    border: none;
-    border-radius: 8px;
-    padding: 10px 18px;
-    font-size: 14px;
-    text-transform: uppercase;
-    cursor: pointer;
-    gap: 10px;
-    margin: 0 auto;
-    display: block;
-    padding-left: 115px;
-    padding-right: 115px;
-    padding-top: 15px;
-    padding-bottom: 15px;
-}
-
-.enviar{
-    color: white;
-    text-decoration: none;
-}
-
-#recordar{
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    color: white;
-}
-
-#login input{
-    width: 100%;
-    height: 30px;
-    border: none;
-    border-radius: 8px;
-    padding: 0 15px;
-}
-
-#login input[type="password"]{
-    margin-top: 20px;
-}
-
-#login input[type="text"]{
-    margin-top: 20px;
-}
-
-#login{
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-/* PAGINA DE REGISTRO */
-
-#pantalla-registro {
-    display: none;
-
-    position: fixed;
-    top: 0;
-    left: 0;
-
-    width: 100%;
-    height: 100%;
-
-    background-color: rgba(0, 0, 0, 0.6);
-
-    justify-content: center;
-    align-items: center;
-
-    z-index: 1000;
-}
-
-#ventana-registro {
-    position: relative;
-
-    width: 400px;
-    padding: 30px;
-
-    background-color: #2d2d2d;
-
-    border-radius: 20px;
-}
-
-#boton-Registrarse{
-    background:linear-gradient(to right, #6d1ae5, #2c72be);
-    border: none;
-    border-radius: 8px;
-    padding: 10px 18px;
-    font-size: 14px;
-    text-transform: uppercase;
-    cursor: pointer;
-    gap: 10px;
-    margin: 0 auto;
-    margin-bottom: 20px;
-    display: block;
-    padding-left: 115px;
-    padding-right: 115px;
-    padding-top: 15px;
-    padding-bottom: 15px;
-}
-
-#confirmar-contraseña{
-    margin-top: 20px;
-    margin-bottom: 20px;
-}
-
-#correo-electronico{
-    margin-top: 20px;
-    margin-bottom: 20px;
-}
-
-#register [type="checkbox"]{
-    width: 18px;
-    height: 18px;
-    margin-right: 10px;
-    accent-color: #6a00ff;
-}
-
-#register input{
-    width: 100%;
-    height: 30px;
-    border: none;
-    border-radius: 8px;
-    padding: 0 15px;
-}
-
-#register input[type="password"]{
-    margin-top: 20px;
-}
-
-#register input[type="email"]{
-    margin-top: 20px;
-}
-
-#register input[type="text"]{
-    margin-top: 20px;
-}
-
-.cerrar-ventana{
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    width: 40px;
-    height: 40px;
-    padding: 2;
-    margin: 2;
-    background: none;
-    border: none;
-    color: white;
-    font-size: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-}
-
-/* ==========================
-   CARRUSEL DE PRODUCTOS RELACIONADOS
-   El bloque .carrusel lo crea public/js/carrusel.js solo si
-   la grilla tiene más de 4 tarjetas. Aquí solo se ajusta al
-   fondo gris de la sección "Más de <categoría>".
-========================== */
-
-.productos-relacionados .carrusel {
-    padding: 0;
-}
-
-.productos-relacionados .carrusel__flecha {
-    color: #ededed;
-    background-color: #2f2f2f;
-    border-color: #4a4a4a;
-}
-
-.productos-relacionados .carrusel__flecha:hover:not(:disabled) {
-    background-color: #6a09e0;
-}
-

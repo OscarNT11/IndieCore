@@ -1,12 +1,12 @@
 /* ==========================================================
    PÁGINA DEL CARRITO
-   Este script SOLO se carga en views/paginaCarrito.php.
+   Este script SOLO se carga en views/Carrito.php.
    Las funciones obtenerCarrito / guardarCarrito / actualizarContador
    vienen de storage.js, que el footer carga en todas las páginas.
    ========================================================== */
 
 /* Pinta el resumen de compra: cantidad de productos y total.
-   Los elementos están en paginaCarrito.php. */
+   Los elementos están en Carrito.php. */
 function actualizarResumen() {
 
     const carrito = obtenerCarrito();

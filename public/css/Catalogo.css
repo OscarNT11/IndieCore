@@ -1,0 +1,185 @@
+
+
+/* =============================================================
+CATALOGO: SECCION PRINCIPAL
+CONTIENE EL ENCABEZADO Y EL MENU DE CATALOGO-LAYOUT
+============================================================= */
+
+.catalogo {
+    width: 100%;
+    padding: 1rem 1rem 2rem 1rem;
+    position: relative;
+}
+.catalogo h2 {
+    font-size: 2rem;
+    font-weight: 300;
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
+}
+
+/* =============================================================
+CATALOGO LAYOUT: 
+CONTIENE DOS LAYOUTS, UNO DE FILTRAJE Y EL OTRO DE PRODUCTOS
+============================================================= */
+
+.catalogo-layout {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 1.5rem;
+}
+
+.contenedor-para-filtro {
+    display: flex;
+    flex-direction: row;
+}
+
+/* =============================================================
+BOTON FILTRADO
+============================================================= */
+
+.btn-filtro {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(to bottom, #6a09e0, #3480d7);
+    border-radius: 50%;
+    padding: 0.7rem 0.8rem;
+    z-index: 100;
+}
+
+
+/* =============================================================
+CATALOGO LAYOUT: 
+CONTIENE DOS LAYOUTS, UNO DE FILTRAJE Y EL OTRO DE PRODUCTOS
+============================================================= */
+
+.catalogo-categorias {
+    align-self: start;
+
+    position: sticky;
+    top: calc(120px + 1rem);
+
+    max-height: 80vh;
+    flex: 1;
+    min-width: 180px;
+    max-width: 210px;
+    overflow-y: auto;
+
+    background-color: #171717;
+    border: 1px solid #333;
+    border-radius: 0.75rem;
+}
+
+/* Solo para abrir en tamanios menores o iguales a 768 */
+
+
+.tabla-categorias {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tabla-categorias caption {
+    padding: 0.85rem 1rem;
+
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-align: left;
+
+    color: #ededed;
+    background-color: #212121;
+    border-bottom: 1px solid #333;
+}
+
+.tabla-categorias td {
+    padding: 0;
+    border-bottom: 1px solid #2b2b2b;
+}
+
+.tabla-categorias tr:last-child td {
+    border-bottom: none;
+}
+
+.categoria-enlace {
+    display: block;
+    width: 100%;
+
+    padding: 0.7rem 1rem;
+
+    font-size: 1rem;
+    color: #ededed;
+
+    border-left: 3px solid transparent;
+    transition: background-color 150ms ease, border-color 150ms ease;
+}
+
+.categoria-enlace:hover {
+    background-color: #3f3f3f;
+}
+
+.categoria-enlace--activa {
+    background-color: #2a2a2a;
+    border-left-color: #6a09e0;
+    color: #ffffff;
+    font-weight: 700;
+}
+
+/* =============================================================
+CATALOGO LAYOUT: 
+CONTIENE DOS LAYOUTS, UNO DE FILTRAJE Y EL OTRO DE PRODUCTOS
+============================================================= */
+
+.catalogo-productos {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    column-gap: 0.5rem;
+    row-gap: 0.75rem;
+    padding: 0.5rem 0rem 1rem 0rem;
+}
+
+.catalogo-productos .mensaje-vacio {
+    padding: 2rem;
+    text-align: center;
+    color: #9a9a9a;
+}
+
+
+@media (max-width: 768px) {
+
+    .btn-filtro {
+        display: flex;
+        position: fixed;
+        bottom: 2rem;
+        right: 1rem;
+    }
+
+    .ocultar-filtro {
+        display: none;
+    }
+
+    .mostrar-filtrado {
+        display: flex;
+        position: fixed;
+        z-index: 100;
+        top: 5rem;
+        left: 0;
+        width: 100%;
+        max-width: 300px;
+    }
+}
+
+@media (max-width: 481px) {
+
+    .catalogo-productos {
+        grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+        column-gap: 0.4rem;
+    }
+
+    .catalogo-productos .tarjeta-producto {
+       justify-self: center;
+       width: 100%;
+       padding: 0.5rem;
+    }
+}

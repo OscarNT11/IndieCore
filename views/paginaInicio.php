@@ -67,7 +67,7 @@
                     </div>
                 </a>
 
-                <a href="index.php?pagina=catalogo class="categoria-link">
+                <a href="index.php?pagina=catalogo" class="categoria-link">
                     <div class="categorias-objeto">
                     <img src="public/img/Mause.png" alt="Imagen de Mouse">
                     <h2>Mouse</h2>
@@ -85,21 +85,31 @@
                 <?php if (empty($listaDeProductos)): ?>
                     <p class="mensaje-vacio">No se encontraron productos.</p>
                 <?php else: ?>
-                    <div class="grilla-productos">
-                        <?php foreach ($listaDeProductos as $producto): ?>
-                            <article class="tarjeta-producto">
-                                <a
-                                    class="tarjeta-producto__enlace"
-                                    href="index.php?pagina=producto&id=<?php echo $producto['id_producto']; ?>"
-                                    title="Ver detalle de <?php echo htmlspecialchars($producto['nombre']); ?>">
-                                    <img
-                                        class="tarjeta-producto__imagen"
-                                        src="public/img/ImagenesProductos/<?php echo htmlspecialchars($producto['imagen']); ?>"
-                                        alt="<?php echo htmlspecialchars($producto['nombre']); ?>">
-                                </a>
 
-                                <h3><?php echo htmlspecialchars($producto['nombre']); ?></h3>
-                                <p class="precio">$<?php echo number_format($producto['precio'], 2, ',', '.'); ?></p>
+                <div class="grilla-productos">
+                    <?php foreach ($listaDeProductos as $producto): ?>
+                        <article class="tarjeta-producto">
+                            <a
+                                class="tarjeta-producto__enlace"
+                                href="index.php?pagina=producto&id=<?php echo $producto['id_producto']; ?>"
+                                title="Ver detalle de <?php echo htmlspecialchars($producto['nombre']); ?>">
+                                <img
+                                    class="tarjeta-producto__imagen"
+                                    src="public/img/ImagenesProductos/<?php echo htmlspecialchars($producto['imagen']); ?>"
+                                    alt="<?php echo htmlspecialchars($producto['nombre']); ?>">
+                            </a>
+
+                            <span class="categoria-badge"><?php echo htmlspecialchars($producto['nombre_categoria']); ?></span>
+                            <h3><?php echo htmlspecialchars($producto['nombre']); ?></h3>
+                            <p class="precio">$<?php echo number_format($producto['precio'], 2, ',', '.'); ?></p>
+                            <p class="stock">Stock: <?php echo (int) $producto['stock']; ?></p>
+                            
+                            <div class="tarjeta-producto__acciones">
+                                <a
+                                    href="index.php?pagina=producto&id=<?php echo $producto['id_producto']; ?>"
+                                    class="boton boton--secundario">
+                                    Ver detalles
+                                </a>
 
                                 <button
                                     class="boton boton--principal boton-agregar-carrito"
@@ -110,11 +120,11 @@
                                     <?php echo ($producto['stock'] <= 0) ? 'disabled' : ''; ?>>
                                     Agregar al carrito
                                 </button>
-                            </article>
-                        <?php endforeach; ?>
-                    </div>
+                            </div>
+                        </article>
+                    <?php endforeach; ?>
+                </div>
                 <?php endif; ?>
-
             </section>
 
             <!-- ==========================
@@ -127,35 +137,34 @@
 
                 <div id="cat-arriba">
 
-                    <!-- Cada tarjeta es un enlace a la categoría real de la BD
+                    <!-- Cada tarjeta es un enlace a la categoria real de la BD
                          (index.php?pagina=catalogo&categoria=ID) -->
-
-                    <a id="cate-internos" href="index.php?pagina=catalogo&categoria=4">
-                        <div id="img-cat-internos">
+                    <a class="cat-container" id="cat-internos" href="index.php?pagina=catalogo&categoria=4">
+                        <div class="cat-image" id="img-cat-internos">
                             <img src="public/img/Grafica-edit.png" alt="Tarjetas gráficas y componentes internos">
                         </div>
-                        <div id="cont-cat-internos">
-                            <h2>Componentes
-                                <br> internos</h2>
+                        <div class="cat-contenido" id="cont-cat-internos">
+                            <h2>Componentes<br>internos</h2>
                         </div>
                     </a>
 
-                    <a id="cate-perifericos" href="index.php?pagina=catalogo&categoria=3">
-                        <div id="cont-cat-perifericos">
+                    <a class="cat-container" id="cat-perifericos" href="index.php?pagina=catalogo&categoria=3">
+                        <div class="cat-contenido" id="cont-cat-perifericos">
                             <h2>Periféricos</h2>
                         </div>
-                        <div id="img-cat-perifericos">
+                        <div class="cat-image" id="img-cat-perifericos">
                             <img src="public/img/Mouse-edit.png" alt="Mouse, teclados y auriculares">
                         </div>
                     </a>
 
                 </div>
 
-                <a id="cate-larga" href="index.php?pagina=catalogo&categoria=5">
-                    <div id="img-cat-larga">
+
+                <a class="cat-container" id="cat-larga" href="index.php?pagina=catalogo&categoria=5">
+                    <div class="cat-image" id="img-cat-larga">
                         <img src="public/img/Celulares-edit.png" alt="Celulares y otros dispositivos">
                     </div>
-                    <div id="cont-cat-larga">
+                    <div class="cat-contenido" id="cont-cat-larga">
                         <h2>Otros
                             <br> dispositivos</h2>
                     </div>
@@ -174,40 +183,50 @@
 
                 <h2>Destacados</h2>
 
-                <div class="contenedor-destacado">
-                    <?php if (empty($listaDeProductos)): ?>
-                        <p class="mensaje-vacio">No se encontraron productos.</p>
-                    <?php else: ?>
-                        <div class="grilla-productos">
-                            <?php foreach ($listaDeProductos as $producto): ?>
-                                <article class="tarjeta-producto">
-                                    <a
-                                        class="tarjeta-producto__enlace"
-                                        href="index.php?pagina=producto&id=<?php echo $producto['id_producto']; ?>"
-                                        title="Ver detalle de <?php echo htmlspecialchars($producto['nombre']); ?>">
-                                        <img
-                                            class="tarjeta-producto__imagen"
-                                            src="public/img/ImagenesProductos/<?php echo htmlspecialchars($producto['imagen']); ?>"
-                                            alt="<?php echo htmlspecialchars($producto['nombre']); ?>">
-                                    </a>
+                <?php if (empty($listaDeProductos)): ?>
+                    <p class="mensaje-vacio">No se encontraron productos.</p>
+                <?php else: ?>
 
-                                    <h3><?php echo htmlspecialchars($producto['nombre']); ?></h3>
-                                    <p class="precio">$<?php echo number_format($producto['precio'], 2, ',', '.'); ?></p>
+                <div class="grilla-productos">
+                    <?php foreach ($listaDeProductos as $producto): ?>
+                        <article class="tarjeta-producto">
+                            <a
+                                class="tarjeta-producto__enlace"
+                                href="index.php?pagina=producto&id=<?php echo $producto['id_producto']; ?>"
+                                title="Ver detalle de <?php echo htmlspecialchars($producto['nombre']); ?>">
+                                <img
+                                    class="tarjeta-producto__imagen"
+                                    src="public/img/ImagenesProductos/<?php echo htmlspecialchars($producto['imagen']); ?>"
+                                    alt="<?php echo htmlspecialchars($producto['nombre']); ?>">
+                            </a>
 
-                                    <button
-                                        class="boton boton--principal boton-agregar-carrito"
-                                        data-id-producto="<?php echo $producto['id_producto']; ?>"
-                                        data-nombre-producto="<?php echo htmlspecialchars($producto['nombre']); ?>"
-                                        data-precio-producto="<?php echo $producto['precio']; ?>"
-                                        data-stock-producto="<?php echo (int) $producto['stock']; ?>"
-                                        <?php echo ($producto['stock'] <= 0) ? 'disabled' : ''; ?>>
-                                        Agregar al carrito
-                                    </button>
-                                </article>
-                            <?php endforeach; ?>
-                        </div>
+                            <span class="categoria-badge"><?php echo htmlspecialchars($producto['nombre_categoria']); ?></span>
+                            <h3><?php echo htmlspecialchars($producto['nombre']); ?></h3>
+                            <p class="precio">$<?php echo number_format($producto['precio'], 2, ',', '.'); ?></p>
+                            <p class="stock">Stock: <?php echo (int) $producto['stock']; ?></p>
+
+                            <div class="tarjeta-producto__acciones">
+                                
+                                <a
+                                    href="index.php?pagina=producto&id=<?php echo $producto['id_producto']; ?>"
+                                    class="boton boton--secundario">
+                                    Ver detalles
+                                </a>
+
+                                <button
+                                    class="boton boton--principal boton-agregar-carrito"
+                                    data-id-producto="<?php echo $producto['id_producto']; ?>"
+                                    data-nombre-producto="<?php echo htmlspecialchars($producto['nombre']); ?>"
+                                    data-precio-producto="<?php echo $producto['precio']; ?>"
+                                    data-stock-producto="<?php echo (int) $producto['stock']; ?>"
+                                    <?php echo ($producto['stock'] <= 0) ? 'disabled' : ''; ?>>
+                                    Agregar al carrito
+                                </button>
+                            </div>
+                        </article>
+                        <?php endforeach; ?>
+                    </div>
                     <?php endif; ?>
-                </div>
             </section>
 
         <!-- ==========================

@@ -1,7 +1,10 @@
 <?php
+/* ============================================================================
+ * ARCHIVO DE CONEXION A LA BASE DE DATOS
+ * ============================================================================ */
 $host = "localhost";
 $user = "root";
-$pass = ""; //tecno_parts311!
+$pass = ""; //tecno_parts311! - Se cambia en un futuro.
 $db = "tecnoparts";
 
 $conn = mysqli_connect($host, $user, $pass, $db);
