@@ -1,6 +1,7 @@
 <?php
 // controllers/UsuarioController.php
 require_once __DIR__ . '/../models/UsuarioModel.php';
+require_once __DIR__ . '/../models/PedidoModel.php';
 class UsuarioController {
     private $conexion;
     private $usuarioModel;
@@ -11,7 +12,7 @@ class UsuarioController {
     }
 
     public function registro() {
-        
+
         $errores = [];
         $nombre = '';
         $email = '';
@@ -152,6 +153,12 @@ class UsuarioController {
 
         // Datos del usuario tal como están guardados ahora mismo.
         $usuario = $this->usuarioModel->obtenerPorId($idUsuario);
+
+        // Historial de pedidos del usuario, del más nuevo al más viejo.
+        // Cada pedido trae su estado (pendiente, pagado, rechazado, ...)
+        // y sus líneas en $pedido['detalles'].
+        $pedidoModel = new PedidoModel($this->conexion);
+        $historialPedidos = $pedidoModel->listarHistorialPorUsuario($idUsuario);
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 

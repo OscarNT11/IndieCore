@@ -38,7 +38,11 @@ class PagoModel {
             return false;
         }
 
-        // El resultado solo puede ser uno de los dos valores del ENUM.
+        // La columna `resultado` es un ENUM('aprobado','rechazado'): no admite
+        // "pendiente". Un pago en efectivo o por transferencia todavía NO está
+        // cobrado, así que se guarda como 'rechazado' = intento no cobrado
+        // (no significa que el cliente haya fallado) y el PEDIDO queda en
+        // estado 'pendiente' hasta que se cobre.
         $resultado = ($resultado === 'aprobado') ? 'aprobado' : 'rechazado';
 
         // El método debe ser uno de los del ENUM; si no, se usa tarjeta_credito.
@@ -56,6 +60,9 @@ class PagoModel {
         if ($pagaConTarjeta) {
             $nuevoEstado = ($resultado === 'aprobado') ? 'pagado' : 'rechazado';
         } else {
+            // Efectivo o transferencia: el pedido se registra pero el pago
+            // todavía no está hecho, así que queda 'pendiente'.
+            $resultado = 'rechazado';
             $nuevoEstado = 'pendiente';
         }
 

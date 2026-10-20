@@ -48,6 +48,7 @@ $metodoSeleccionado = isset($envio['metodo_pago']) ? $envio['metodo_pago'] : 'ta
                     <input type="text" id="envio-nombre" name="envio_nombre"
                            placeholder="Quién recibe el pedido"
                            value="<?php echo escapar($envio['nombre'] ?? ''); ?>" required>
+                    <span class="checkout__error" aria-live="polite"></span>
                 </div>
 
                 <div class="checkout__campo">
@@ -55,6 +56,7 @@ $metodoSeleccionado = isset($envio['metodo_pago']) ? $envio['metodo_pago'] : 'ta
                     <input type="text" id="envio-direccion" name="envio_direccion"
                            placeholder="Calle, número, apartamento"
                            value="<?php echo escapar($envio['direccion'] ?? ''); ?>" required>
+                    <span class="checkout__error" aria-live="polite"></span>
                 </div>
 
                 <div class="checkout__fila">
@@ -63,6 +65,7 @@ $metodoSeleccionado = isset($envio['metodo_pago']) ? $envio['metodo_pago'] : 'ta
                         <input type="text" id="envio-ciudad" name="envio_ciudad"
                                placeholder="Ciudad o localidad"
                                value="<?php echo escapar($envio['ciudad'] ?? ''); ?>" required>
+                        <span class="checkout__error" aria-live="polite"></span>
                     </div>
 
                     <div class="checkout__campo">
@@ -76,6 +79,7 @@ $metodoSeleccionado = isset($envio['metodo_pago']) ? $envio['metodo_pago'] : 'ta
                                 </option>
                             <?php endforeach; ?>
                         </select>
+                        <span class="checkout__error" aria-live="polite"></span>
                     </div>
                 </div>
 
@@ -84,6 +88,7 @@ $metodoSeleccionado = isset($envio['metodo_pago']) ? $envio['metodo_pago'] : 'ta
                     <input type="tel" id="envio-telefono" name="envio_telefono"
                            placeholder="Ej: 099 123 456"
                            value="<?php echo escapar($envio['telefono'] ?? ''); ?>" required>
+                    <span class="checkout__error" aria-live="polite"></span>
                 </div>
             </fieldset>
 
@@ -119,41 +124,54 @@ $metodoSeleccionado = isset($envio['metodo_pago']) ? $envio['metodo_pago'] : 'ta
 
                 <!-- Estos campos solo se muestran (y se exigen) con tarjeta;
                      carrito-checkout.js los habilita según el método elegido. -->
-                <div class="checkout__tarjeta" id="checkoutDatosTarjeta">
+                <div class="checkout__tarjeta" id="checkoutDatosTarjeta" hidden>
                     <div class="checkout__campo">
                         <label for="tarjeta-numero">Número de tarjeta</label>
                         <input type="text" id="tarjeta-numero" name="tarjeta_numero"
+                               autocomplete="off" data-lpignore="true" data-1p-ignore="true"
                                inputmode="numeric" maxlength="19"
-                               placeholder="1234 5678 9012 3456"
+                               placeholder="Número de tarjeta"
                                value="<?php echo escapar($envio['tarjeta_numero'] ?? ''); ?>">
+                        <span class="checkout__error" aria-live="polite"></span>
                     </div>
 
                     <div class="checkout__campo">
                         <label for="tarjeta-titular">Titular de la tarjeta</label>
                         <input type="text" id="tarjeta-titular" name="tarjeta_titular"
+                               autocomplete="off" data-lpignore="true" data-1p-ignore="true"
                                placeholder="Nombre como figura en la tarjeta"
                                value="<?php echo escapar($envio['tarjeta_titular'] ?? ''); ?>">
+                        <span class="checkout__error" aria-live="polite"></span>
                     </div>
 
                     <div class="checkout__fila">
                         <div class="checkout__campo">
                             <label for="tarjeta-vencimiento">Vencimiento (MM/AA)</label>
                             <input type="text" id="tarjeta-vencimiento" name="tarjeta_vencimiento"
+                                   autocomplete="off" data-lpignore="true" data-1p-ignore="true"
                                    inputmode="numeric" maxlength="5" placeholder="MM/AA"
                                    value="<?php echo escapar($envio['tarjeta_vencimiento'] ?? ''); ?>">
+                            <span class="checkout__error" aria-live="polite"></span>
                         </div>
 
                         <div class="checkout__campo">
                             <label for="tarjeta-cvv">CVV</label>
                             <input type="text" id="tarjeta-cvv" name="tarjeta_cvv"
-                                   inputmode="numeric" maxlength="4" placeholder="123"
-                                   value="<?php echo escapar($envio['tarjeta_cvv'] ?? ''); ?>">
+                                   autocomplete="off" data-lpignore="true" data-1p-ignore="true"
+                                   inputmode="numeric" maxlength="4" placeholder="CVV">
+                            <span class="checkout__error" aria-live="polite"></span>
                         </div>
                     </div>
 
                     <p class="checkout__nota">
                         Solo se guardan los últimos 4 dígitos de la tarjeta. Los demás datos
                         no se almacenan en la base de datos.
+                    </p>
+
+                    <p class="checkout__nota">
+                        Pago simulado: si el número de tarjeta termina en un dígito
+                        <strong>par</strong> el pago se aprueba; si termina en
+                        <strong>impar</strong> se rechaza.
                     </p>
                 </div>
             </fieldset>

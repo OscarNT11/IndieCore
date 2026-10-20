@@ -134,14 +134,22 @@ class PedidoController {
         // Datos de tarjeta: solo interesan los últimos 4 dígitos.
         $ultimos4 = null;
 
-        if ($this->esMetodoConTarjeta($datosEnvio['metodo_pago'])) {
-            $soloDigitos = preg_replace('/\D/', '', $datosEnvio['tarjeta_numero']);
-            $ultimos4 = substr($soloDigitos, -4);
-        }
-
-        // tarjeta_credito / tarjeta_debito son "aprobado" en esta demo;
-        // transferencia y efectivo quedan pendientes hasta cobrarse.
+        // SIMULACIÓN DEL PAGO (no hay pasarela real ni algoritmos válidos):
+        //   último dígito PAR   -> pago aprobado
+        //   último dígito IMPAR -> pago rechazado
+        // Transferencia y efectivo quedan 'pendiente' hasta cobrarse.
         $resultadoPago = 'aprobado';
+
+        if ($this->esMetodoConTarjeta($datosEnvio['metodo_pago'])) {
+
+            $soloDigitos = preg_replace('/\D/', '', $datosEnvio['tarjeta_numero']);
+
+            $ultimos4 = substr($soloDigitos, -4);
+
+            $ultimoDigito = (int) substr($soloDigitos, -1);
+
+            $resultadoPago = ($ultimoDigito % 2 === 0) ? 'aprobado' : 'rechazado';
+        }
 
         // ---------- Guardado ----------
         // El pedido y su detalle se guardan juntos: si algo falla, se
@@ -170,6 +178,18 @@ class PedidoController {
 
                 if ($detalleGuardado === false) {
                     throw new Exception('No se pudo guardar una línea del pedido.');
+                }
+
+                // El stock se descuenta en la MISMA transacción del pedido:
+                // si una línea no se puede descontar (sin stock suficiente),
+                // se revierte todo y no queda ni pedido ni stock tocado.
+                $stockDescontado = $this->productoModel->descontarStock(
+                    $linea['id'],
+                    $linea['cantidad']
+                );
+
+                if ($stockDescontado === false) {
+                    throw new Exception('No hay stock suficiente del producto ' . $linea['id'] . '.');
                 }
             }
 

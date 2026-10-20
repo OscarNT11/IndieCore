@@ -183,6 +183,219 @@
     filter: brightness(115%);
 }
 
+/* =============================================================
+   FACTURA DEL PEDIDO
+   Bloque .factura: es lo único que se imprime (ver @media print).
+   ============================================================= */
+
+.factura {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+
+    padding: 2rem 2.25rem 1.5rem;
+
+    background-color: #373737;
+    border: 1px solid #4a4a4a;
+    border-radius: 1rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+/* ---------- Cabecera: empresa + identificación ---------- */
+
+.factura__cabecera {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1.5rem;
+
+    padding-bottom: 1.25rem;
+    border-bottom: 2px solid #4a4a4a;
+}
+
+.factura__empresa {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    min-width: 240px;
+}
+
+.factura__logo {
+    width: 68px;
+    height: 68px;
+    object-fit: contain;
+}
+
+.factura__empresa-datos h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: #ffffff;
+}
+
+.factura__empresa-datos p {
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: #b5b5b5;
+}
+
+.factura__identificacion {
+    text-align: right;
+
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.factura__titulo-doc {
+    font-size: 1.4rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    color: #6fa8ff;
+}
+
+.factura__numero {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.factura__dato {
+    font-size: 0.9rem;
+    color: #d5d5d5;
+}
+
+.factura__dato span {
+    margin-right: 0.4rem;
+    color: #9a9a9a;
+}
+
+.factura__estado {
+    align-self: flex-end;
+    margin-top: 0.4rem;
+    margin-left: 0;
+    font-size: 0.8rem;
+}
+
+/* ---------- Cliente / pago ---------- */
+
+.factura__partes {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+.factura__parte {
+    padding: 1rem 1.25rem;
+
+    background-color: #2f2f2f;
+    border: 1px solid #454545;
+    border-radius: 0.75rem;
+}
+
+.factura__parte h2 {
+    margin-bottom: 0.5rem;
+
+    font-size: 0.8rem;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #9a9a9a;
+}
+
+.factura__parte p {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #d5d5d5;
+}
+
+.factura__parte-nombre {
+    font-weight: 700;
+    color: #ffffff !important;
+}
+
+/* ---------- Tabla de productos ---------- */
+
+.factura__tabla {
+    border-radius: 0.75rem;
+}
+
+/* ---------- Totales ---------- */
+
+.factura__totales {
+    align-self: flex-end;
+
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+
+    min-width: 280px;
+}
+
+.factura__linea-total {
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+
+    font-size: 0.95rem;
+    color: #b5b5b5;
+}
+
+.factura__linea-total--final {
+    padding-top: 0.5rem;
+
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: #6fa8ff;
+
+    border-top: 1px solid #4a4a4a;
+}
+
+/* ---------- Pie ---------- */
+
+.factura__pie {
+    padding-top: 1rem;
+    border-top: 1px solid #4a4a4a;
+}
+
+.factura__pie p {
+    font-size: 0.8rem;
+    text-align: center;
+    color: #9a9a9a;
+}
+
+/* ---------- Aviso y acciones ---------- */
+
+.pedido-confirmado__aviso {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.pedido-confirmado__acciones {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+}
+
+.pedido-confirmado__acciones .boton {
+    padding: 0.85rem 2rem;
+
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-radius: 0.5rem;
+    transition: filter 200ms ease;
+}
+
+.pedido-confirmado__acciones .boton:hover {
+    filter: brightness(115%);
+}
+
 /* ---------- Responsive ---------- */
 
 @media (max-width: 640px) {
@@ -205,5 +418,161 @@
         align-self: stretch;
         font-size: 1.3rem;
         text-align: center;
+    }
+
+    .factura {
+        padding: 1.25rem 1rem 1rem;
+        gap: 1rem;
+    }
+
+    .factura__cabecera {
+        flex-direction: column;
+    }
+
+    .factura__identificacion {
+        align-items: flex-start;
+        text-align: left;
+    }
+
+    .factura__estado {
+        align-self: flex-start;
+    }
+
+    .factura__partes {
+        grid-template-columns: 1fr;
+    }
+
+    /* La tabla tiene 4 columnas: en móvil se reduce el padding y el
+       texto para que entre sin desbordar la pantalla. */
+    .factura__tabla th,
+    .factura__tabla td {
+        padding: 0.45rem 0.35rem;
+        font-size: 0.78rem;
+        white-space: normal;
+        word-break: break-word;
+    }
+
+    .factura__tabla th {
+        letter-spacing: 0;
+    }
+
+    .factura__tabla th:nth-child(1),
+    .factura__tabla td:nth-child(1) {
+        width: 45%;
+    }
+
+    .factura__totales {
+        align-self: stretch;
+        min-width: 0;
+    }
+
+    .pedido-confirmado__acciones {
+        flex-direction: column;
+    }
+
+    .pedido-confirmado__acciones .boton {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+/* =============================================================
+   IMPRESIÓN: solo sale la factura
+   Se ocultan header, footer, aviso de resultado y botones, y el
+   documento pasa a blanco y negro para ahorrar tinta.
+   ============================================================= */
+
+@media print {
+
+    @page {
+        size: A4;
+        margin: 14mm;
+    }
+
+    html,
+    body {
+        background: #ffffff !important;
+        color: #000000 !important;
+    }
+
+    .no-imprimir,
+    .header,
+    .footer {
+        display: none !important;
+    }
+
+    .contenido-principal {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    .pedido-confirmado {
+        max-width: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .factura {
+        padding: 0;
+        gap: 12px;
+
+        background: #ffffff !important;
+        border: none;
+        border-radius: 0;
+        box-shadow: none;
+    }
+
+    .factura * {
+        color: #000000 !important;
+    }
+
+    .factura__cabecera {
+        border-bottom: 2px solid #000000;
+        padding-bottom: 10px;
+    }
+
+    .factura__partes {
+        page-break-inside: avoid;
+    }
+
+    .factura__parte {
+        background: #ffffff !important;
+        border: 1px solid #999999;
+    }
+
+    .factura__tabla {
+        background: #ffffff !important;
+        border: 1px solid #999999;
+    }
+
+    .factura__tabla thead {
+        background: #eeeeee !important;
+    }
+
+    .factura__tabla th,
+    .factura__tabla td {
+        border-top: 1px solid #bbbbbb;
+        color: #000000 !important;
+    }
+
+    .factura__tabla tr {
+        page-break-inside: avoid;
+    }
+
+    .factura__linea-total--final {
+        border-top: 1px solid #000000;
+    }
+
+    /* La etiqueta de estado conserva el texto pero sin relleno de
+       color, para que se lea bien en impresoras B/N. */
+    .factura__estado,
+    .pedido-confirmado__estado {
+        background: #ffffff !important;
+        border: 1px solid #000000 !important;
+        color: #000000 !important;
+    }
+
+    .factura__pie {
+        border-top: 1px solid #999999;
     }
 }

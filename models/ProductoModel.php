@@ -173,5 +173,44 @@ class ProductoModel {
         }
         return $listaCategorias;
     }
+
+    /* Descuenta del stock las unidades compradas de un producto.
+
+       El UPDATE lleva la condición `stock >= ?`, así nunca queda stock
+       negativo: si otro usuario se llevó las últimas unidades entre el
+       recálculo del carrito y este momento, la consulta no modifica nada
+       y se devuelve false para que el pedido se cancele.
+
+       Se llama dentro de la transacción del pedido. */
+    public function descontarStock($idProducto, $cantidad) {
+
+        $idProducto = (int) $idProducto;
+        $cantidad = (int) $cantidad;
+
+        if ($idProducto <= 0 || $cantidad <= 0) {
+            return false;
+        }
+
+        $stmt = mysqli_prepare(
+            $this->conn,
+            "UPDATE productos SET stock = stock - ? WHERE id_producto = ? AND stock >= ?"
+        );
+
+        if (!$stmt) {
+            return false;
+        }
+
+        mysqli_stmt_bind_param($stmt, "iii", $cantidad, $idProducto, $cantidad);
+
+        $ejecutado = mysqli_stmt_execute($stmt);
+
+        // affected_rows = 0 significa que no se actualizó ninguna fila
+        // (el producto no existe o no quedaba stock suficiente).
+        $seDesconto = $ejecutado && mysqli_stmt_affected_rows($stmt) === 1;
+
+        mysqli_stmt_close($stmt);
+
+        return $seDesconto;
+    }
 }
 ?>

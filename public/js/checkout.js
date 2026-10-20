@@ -47,6 +47,25 @@ opcionesMetodo.forEach((opcion) => {
 
 actualizarCamposTarjeta();
 
+/* Los avisos de "falta llenar" se limpian apenas el usuario
+   escribe o elige algo en el campo. */
+if (formularioCheckout) {
+
+    formularioCheckout.addEventListener("input", (evento) => {
+
+        if (evento.target.classList.contains("campo-con-error")) {
+            limpiarError(evento.target);
+        }
+    });
+
+    formularioCheckout.addEventListener("change", (evento) => {
+
+        if (evento.target.classList.contains("campo-con-error")) {
+            limpiarError(evento.target);
+        }
+    });
+}
+
 /* ==========================================================
    VALIDACIÓN ANTES DE ENVIAR
    Si algo falta, se frena el envío y se avisa en el mismo campo,
@@ -177,6 +196,11 @@ if (formularioCheckout) {
 
         if (hayError) {
             evento.preventDefault();
+
+            // Se lleva al usuario al primer campo que falta llenar.
+            const primerError = formularioCheckout.querySelector(".campo-con-error");
+
+            if (primerError) primerError.focus();
         }
     });
 }

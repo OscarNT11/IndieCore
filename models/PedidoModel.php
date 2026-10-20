@@ -151,4 +151,73 @@ class PedidoModel {
         return $stmt->execute();
     }
 
+    /* Historial de pedidos de un usuario para "Mi cuenta": la lista de sus
+       pedidos (del más nuevo al más viejo), cada uno con su estado, el método
+       de pago usado y sus líneas de detalle ya agrupadas.
+
+       Se filtra SIEMPRE por id_usuario: un usuario solo ve sus pedidos.
+       Se resuelve con dos consultas en vez de una por pedido (N+1): primero
+       los pedidos, después todos sus detalles juntos. */
+    public function listarHistorialPorUsuario($idUsuario) {
+
+        $idUsuario = (int) $idUsuario;
+
+        $stmt = $this->conn->prepare("
+            SELECT p.*, pg.metodo_pago, pg.ultimos4, pg.resultado
+            FROM pedidos p
+            LEFT JOIN pagos pg ON pg.id_pedido = p.id_pedido
+            WHERE p.id_usuario = ?
+            ORDER BY p.fecha DESC, p.id_pedido DESC");
+
+        $stmt->bind_param("i", $idUsuario);
+        $stmt->execute();
+
+        $pedidos = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+
+        $stmt->close();
+
+        if (empty($pedidos)) {
+            return array();
+        }
+
+        // Detalles de todos los pedidos del usuario en una sola consulta.
+        $ids = array();
+        foreach ($pedidos as $pedido) {
+            $ids[] = (int) $pedido['id_pedido'];
+        }
+
+        $marcadores = implode(',', array_fill(0, count($ids), '?'));
+
+        $stmtDetalles = $this->conn->prepare("
+            SELECT dp.*, COALESCE(dp.nombre_producto, pr.nombre) AS nombre_producto
+            FROM detalles_pedido dp
+            INNER JOIN pedidos p ON p.id_pedido = dp.id_pedido
+            LEFT JOIN productos pr ON pr.id_producto = dp.id_producto
+            WHERE dp.id_pedido IN ($marcadores) AND p.id_usuario = ?");
+
+        $tipos = str_repeat('i', count($ids)) . 'i';
+        $parametros = array_merge($ids, array($idUsuario));
+
+        $stmtDetalles->bind_param($tipos, ...$parametros);
+        $stmtDetalles->execute();
+
+        $detalles = $stmtDetalles->get_result()->fetch_all(MYSQLI_ASSOC);
+
+        $stmtDetalles->close();
+
+        // Cada detalle se cuelga de su pedido.
+        $detallesPorPedido = array();
+
+        foreach ($detalles as $detalle) {
+            $detallesPorPedido[(int) $detalle['id_pedido']][] = $detalle;
+        }
+
+        foreach ($pedidos as $indice => $pedido) {
+            $id = (int) $pedido['id_pedido'];
+
+            $pedidos[$indice]['detalles'] = $detallesPorPedido[$id] ?? array();
+        }
+
+        return $pedidos;
+    }
 }

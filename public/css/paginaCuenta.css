@@ -264,6 +264,205 @@ distinguirlo de las acciones principales. */
     gap: 4px;
 }
 
+/* ==========================================================
+   HISTORIAL DE PEDIDOS (debajo del panel de datos)
+   ========================================================== */
+
+.cuenta__historial {
+    width: 100%;
+    max-width: 900px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    padding: 2rem;
+
+    background-color: #373737;
+    border-radius: 1rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+.cuenta__historial-titulo {
+    font-size: 1.5rem;
+    font-weight: 300;
+    letter-spacing: 1px;
+}
+
+.cuenta__historial-vacio {
+    color: #9a9a9a;
+    font-size: 0.95rem;
+}
+
+.cuenta__historial-vacio a {
+    color: #6fa8ff;
+    text-decoration: underline;
+}
+
+/* ---------- Lista de pedidos ---------- */
+
+.cuenta__pedidos {
+    list-style: none;
+
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.cuenta__pedido {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+
+    padding: 1rem 1.25rem;
+
+    background-color: #2b2b2b;
+    border: 1px solid #4a4a4a;
+    border-radius: 0.75rem;
+}
+
+/* ---------- Cabecera: número, fecha y estado ---------- */
+
+.cuenta__pedido-cabecera {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid #3d3d3d;
+}
+
+.cuenta__pedido-numero {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.cuenta__pedido-fecha {
+    font-size: 0.85rem;
+    color: #9a9a9a;
+}
+
+.cuenta__pedido-estado {
+    margin-left: auto;
+
+    padding: 0.25rem 0.75rem;
+
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+
+    border-radius: 999px;
+    border: 1px solid transparent;
+}
+
+/* Un color por estado del pedido */
+.cuenta__pedido-estado--pendiente {
+    background-color: rgba(255, 193, 7, 0.12);
+    border-color: #8a6d1f;
+    color: #ffd166;
+}
+
+.cuenta__pedido-estado--pagado {
+    background-color: rgba(31, 122, 61, 0.18);
+    border-color: #1f7a3d;
+    color: #7fe0a3;
+}
+
+.cuenta__pedido-estado--rechazado {
+    background-color: rgba(255, 92, 92, 0.12);
+    border-color: #7a2f2f;
+    color: #ff8a8a;
+}
+
+.cuenta__pedido-estado--enviado {
+    background-color: rgba(52, 128, 215, 0.15);
+    border-color: #2a5f9e;
+    color: #8fc0ff;
+}
+
+.cuenta__pedido-estado--entregado {
+    background-color: rgba(106, 9, 224, 0.15);
+    border-color: #6a09e0;
+    color: #c4a2ff;
+}
+
+.cuenta__pedido-estado--cancelado {
+    background-color: rgba(160, 160, 160, 0.12);
+    border-color: #5c5c5c;
+    color: #bdbdbd;
+}
+
+/* ---------- Productos del pedido ---------- */
+
+.cuenta__pedido-detalle {
+    list-style: none;
+
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.cuenta__pedido-detalle li {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+
+    font-size: 0.9rem;
+    color: #dddddd;
+}
+
+.cuenta__pedido-producto small {
+    margin-left: 0.35rem;
+    color: #9a9a9a;
+}
+
+.cuenta__pedido-subtotal {
+    white-space: nowrap;
+    color: #bdbdbd;
+}
+
+/* ---------- Pie: método de pago y total ---------- */
+
+.cuenta__pedido-pie {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+
+    padding-top: 0.75rem;
+    border-top: 1px solid #3d3d3d;
+}
+
+.cuenta__pedido-metodo {
+    font-size: 0.85rem;
+    color: #9a9a9a;
+}
+
+.cuenta__pedido-total {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #6fa8ff;
+}
+
+.cuenta__pedido-enlace {
+    align-self: flex-end;
+
+    font-size: 0.85rem;
+    color: #6fa8ff;
+    text-decoration: underline;
+}
+
+.cuenta__pedido-enlace:hover {
+    color: #a9cbff;
+}
+
 /* ---------- Responsive ---------- */
 
 @media (max-width: 800px) {
@@ -299,5 +498,18 @@ distinguirlo de las acciones principales. */
 
     .cuenta__acciones .boton {
         width: 100%;
+    }
+
+    .cuenta__historial {
+        padding: 1.25rem;
+    }
+
+    .cuenta__pedido {
+        padding: 0.9rem 1rem;
+    }
+
+    /* Número y fecha arriba, estado debajo para que no se apriete */
+    .cuenta__pedido-estado {
+        margin-left: 0;
     }
 }
