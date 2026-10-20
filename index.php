@@ -59,13 +59,21 @@ switch ($paginaSolicitada) {
         require __DIR__ . '/views/paginaPanel.php';
         break;
 
+    case 'checkout':
+        // Datos de envío + método de pago, antes de guardar el pedido.
+        // El carrito llega por POST desde el botón "Finalizar compra".
+        $controlador = new PedidoController($conn);
+        $controlador->mostrarCheckout();
+        break;
+
     case 'confirmar-pedido':
+        // Procesa el checkout: guarda pedido + detalle + pago (POST).
         $controlador = new PedidoController($conn);
         $controlador->confirmarPedido();
         break;
 
     case 'pedido':
-        // Confirmación renderizada tras guardar el pedido.
+        // Confirmación: lee el pedido ya guardado con ?pagina=pedido&id=N
         $controlador = new PedidoController($conn);
         $controlador->mostrarConfirmacion();
         break;

@@ -10,6 +10,26 @@ require __DIR__ . '/header.php';
 $fotoActual = !empty($usuario['foto'])
     ? $usuario['foto']
     : null;
+
+// Historial de pedidos del usuario (PedidoModel::listarHistorialPorUsuario).
+// Cada pedido trae: fecha, estado, precio_total, metodo_pago y 'detalles'.
+$historialPedidos = $historialPedidos ?? array();
+
+$nombresDeEstado = array(
+    'pendiente' => 'Pago pendiente',
+    'pagado'    => 'Pago aprobado',
+    'rechazado' => 'Pago rechazado',
+    'enviado'   => 'Enviado',
+    'entregado' => 'Entregado',
+    'cancelado' => 'Cancelado',
+);
+
+$nombresDeMetodo = array(
+    'tarjeta_credito' => 'Tarjeta de crédito',
+    'tarjeta_debito'  => 'Tarjeta de débito',
+    'transferencia'   => 'Transferencia bancaria',
+    'efectivo'        => 'Efectivo al recibir',
+);
 ?>
 
 <section class="cuenta">
@@ -146,6 +166,100 @@ $fotoActual = !empty($usuario['foto'])
             </div>
         </div>
     </form>
+
+    <!-- ==========================
+         HISTORIAL DE PEDIDOS
+         Pedidos del usuario logueado, del más nuevo al más viejo,
+         con su estado, método de pago, productos y total.
+         ========================== -->
+    <section class="cuenta__historial" aria-labelledby="titulo-historial">
+
+        <h2 class="cuenta__historial-titulo" id="titulo-historial">Historial de pedidos</h2>
+
+        <?php if (empty($historialPedidos)): ?>
+
+            <p class="cuenta__historial-vacio">
+                Todavía no realizaste ningún pedido.
+                <a href="index.php?pagina=catalogo">Ir al catálogo</a>
+            </p>
+
+        <?php else: ?>
+
+            <ul class="cuenta__pedidos">
+
+                <?php foreach ($historialPedidos as $pedidoHistorial): ?>
+
+                    <?php
+                    $estadoPedido = $pedidoHistorial['estado'] ?? 'pendiente';
+                    $detallesDelHistorial = $pedidoHistorial['detalles'] ?? array();
+                    $fechaPedido = !empty($pedidoHistorial['fecha'])
+                        ? date('d/m/Y H:i', strtotime($pedidoHistorial['fecha']))
+                        : '';
+                    ?>
+
+                    <li class="cuenta__pedido">
+
+                        <div class="cuenta__pedido-cabecera">
+                            <span class="cuenta__pedido-numero">
+                                Pedido #<?php echo (int) $pedidoHistorial['id_pedido']; ?>
+                            </span>
+
+                            <span class="cuenta__pedido-fecha">
+                                <?php echo escapar($fechaPedido); ?>
+                            </span>
+
+                            <span class="cuenta__pedido-estado cuenta__pedido-estado--<?php echo escapar($estadoPedido); ?>">
+                                <?php echo escapar($nombresDeEstado[$estadoPedido] ?? $estadoPedido); ?>
+                            </span>
+                        </div>
+
+                        <?php if (!empty($detallesDelHistorial)): ?>
+                            <ul class="cuenta__pedido-detalle">
+                                <?php foreach ($detallesDelHistorial as $detalleHistorial): ?>
+                                    <li>
+                                        <span class="cuenta__pedido-producto">
+                                            <?php echo escapar($detalleHistorial['nombre_producto'] ?? ('Producto #' . (int) $detalleHistorial['id_producto'])); ?>
+                                            <small>×<?php echo (int) $detalleHistorial['cantidad']; ?></small>
+                                        </span>
+                                        <span class="cuenta__pedido-subtotal">
+                                            $<?php echo number_format((float) $detalleHistorial['precio_unitario'] * (int) $detalleHistorial['cantidad'], 2, ',', '.'); ?>
+                                        </span>
+                                    </li>
+                                <?php endforeach; ?>
+                            </ul>
+                        <?php endif; ?>
+
+                        <div class="cuenta__pedido-pie">
+                            <span class="cuenta__pedido-metodo">
+                                <?php
+                                $metodoDelPedido = $pedidoHistorial['metodo_pago'] ?? '';
+
+                                echo escapar($nombresDeMetodo[$metodoDelPedido] ?? 'Sin método de pago');
+
+                                if (!empty($pedidoHistorial['ultimos4'])) {
+                                    echo ' (terminada en ' . escapar($pedidoHistorial['ultimos4']) . ')';
+                                }
+                                ?>
+                            </span>
+
+                            <span class="cuenta__pedido-total">
+                                Total: $<?php echo number_format((float) $pedidoHistorial['precio_total'], 2, ',', '.'); ?>
+                            </span>
+                        </div>
+
+                        <a
+                            class="cuenta__pedido-enlace"
+                            href="index.php?pagina=pedido&id=<?php echo (int) $pedidoHistorial['id_pedido']; ?>">
+                            Ver detalle
+                        </a>
+                    </li>
+
+                <?php endforeach; ?>
+
+            </ul>
+
+        <?php endif; ?>
+    </section>
 </section>
 
 <!-- ==========================

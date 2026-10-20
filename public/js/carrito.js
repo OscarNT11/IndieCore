@@ -283,15 +283,16 @@ if (botonFinalizar) {
             return;
         }
 
-        // Se envía el carrito al servidor (index.php?pagina=confirmar-pedido)
-        // mediante un formulario oculto, y PedidoController lo guarda en la BD.
+        // Se envía el carrito al checkout (index.php?pagina=checkout),
+        // donde el usuario completa el envío y elige el método de pago.
+        // El pedido todavía NO se guarda: eso pasa al confirmar el checkout.
         const carrito = obtenerCarrito();
 
         const formulario = document.createElement("form");
 
         formulario.method = "POST";
 
-        formulario.action = "index.php?pagina=confirmar-pedido";
+        formulario.action = "index.php?pagina=checkout";
 
         const campoCarrito = document.createElement("input");
 
@@ -313,19 +314,35 @@ if (botonFinalizar) {
 refrescarCarrito();
 
 /* --- Resultado del pedido ---
-   Solo se llega acá con ?pedido=error: el caso correcto ya no pasa por el
-   carrito, se muestra views/pedido.php, que vacía el carrito por su cuenta. */
+   Solo se llega acá cuando algo impidió seguir: el caso correcto termina en
+   views/pedido.php, que vacía el carrito por su cuenta. */
+const MENSAJES_DEL_PEDIDO = {
+    error: "No se pudo registrar el pedido. Intenta nuevamente.",
+    sesion: "Iniciá sesión para poder confirmar tu pedido.",
+    vacio: "Algunos productos de tu carrito ya no tienen stock. Revisalo y volvé a intentarlo."
+};
+
 function avisarResultadoDelPedido() {
 
     const resultado = new URLSearchParams(window.location.search).get("pedido");
 
-    if (resultado !== "error") return;
+    const mensaje = MENSAJES_DEL_PEDIDO[resultado];
 
-    alert("No se pudo registrar el pedido. Intenta nuevamente.");
+    if (!mensaje) return;
+
+    alert(mensaje);
+
+    // Si el problema fue la sesión, se abre el modal de login directamente.
+    if (resultado === "sesion") {
+
+        const pantallaLogin = document.getElementById("pantalla-transparente");
+
+        if (pantallaLogin) pantallaLogin.style.display = "flex";
+    }
 
     // Se quita el parámetro de la URL para que un refresco no repita el aviso.
     const urlLimpia = window.location.pathname + window.location.search
-        .replace(/([?&])pedido=error&?/, "$1")
+        .replace(/([?&])pedido=[a-z]+&?/, "$1")
         .replace(/[?&]$/, "");
 
     window.history.replaceState({}, "", urlLimpia);

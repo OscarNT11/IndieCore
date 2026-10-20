@@ -43,7 +43,7 @@ CREATE TABLE `productos` (
 CREATE TABLE `pedidos` (
   `id_pedido` INT AUTO_INCREMENT PRIMARY KEY,
   `fecha` DATETIME NOT NULL,
-  `estado` ENUM('pendiente', 'pagado', 'rechazado') NOT NULL DEFAULT 'pendiente',
+  `estado` ENUM('pendiente', 'pagado', 'rechazado', 'enviado', 'entregado', 'cancelado') NOT NULL DEFAULT 'pendiente',
   `precio_total` DECIMAL(10, 2) NOT NULL,
   `id_usuario` INT NOT NULL,
   `envio_nombre` VARCHAR(255) NOT NULL,
@@ -61,17 +61,24 @@ CREATE TABLE `detalles_pedido` (
   `precio_unitario` DECIMAL(10, 2) NOT NULL,
   `id_pedido` INT NOT NULL,
   `id_producto` INT NOT NULL,
+  -- Nombre del producto tal como estaba al comprar: el pedido ya emitido
+  -- conserva su texto aunque el producto se renombre después.
+  `nombre_producto` VARCHAR(255) NULL,
   FOREIGN KEY (`id_pedido`) REFERENCES `pedidos`(`id_pedido`),
-  FOREIGN KEY (`id_producto`) REFERENCES `productos`(`id_producto`) 
+  FOREIGN KEY (`id_producto`) REFERENCES `productos`(`id_producto`)
 );
 
 -- 5. Pagos
+-- Cada intento de pago de un pedido. El metodo_pago guarda CÓMO se pagó
+-- (tarjeta de crédito, débito, transferencia bancaria o efectivo) y ultimos4
+-- solo tiene sentido cuando se paga con tarjeta.
 CREATE TABLE `pagos` (
   `id_pago` INT AUTO_INCREMENT PRIMARY KEY,
   `id_pedido` INT NOT NULL,
   `fecha_pago` DATETIME NOT NULL,
   `monto` DECIMAL(10, 2) NOT NULL,
-  `ultimos4` CHAR(4) NOT NULL,
+  `metodo_pago` ENUM('tarjeta_credito', 'tarjeta_debito', 'transferencia', 'efectivo') NOT NULL,
+  `ultimos4` CHAR(4),
   `resultado` ENUM('aprobado', 'rechazado') NOT NULL, 
   CONSTRAINT `fk_pago_pedido`
     FOREIGN KEY (`id_pedido`) REFERENCES `pedidos`(`id_pedido`)

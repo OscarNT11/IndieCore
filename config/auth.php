@@ -10,8 +10,8 @@ function nombreUsuarioValido($nombre) {
 
 
 function redirigir($pagina) {
-header("Location: index.php?pagina=" . $pagina);
-exit;
+    header("Location: index.php?pagina=" . $pagina . $extra);
+    exit;
 }
 
 /* Devuelve la pagina en la que esta el usuario (el valor de ?pagina=),
