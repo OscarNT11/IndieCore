@@ -133,22 +133,11 @@ CONTIENE DOS LAYOUTS, UNO DE FILTRAJE Y EL OTRO DE PRODUCTOS
 .catalogo-productos {
     flex: 1;
     display: grid;
-    /* Tablet normal, laptop y PC: 4 productos por fila.
-       minmax(0, ...) evita que las tarjetas desborden la columna. */
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
     column-gap: 0.5rem;
     row-gap: 0.75rem;
     padding: 0.5rem 0rem 1rem 0rem;
 }
-
-/* Dentro de la grilla, la tarjeta ocupa el ancho de su columna
-   (el min-width: 240px de .tarjeta-producto rompería el 3x3 / 2x2 en pantallas chicas). */
-.catalogo-productos .tarjeta-producto {
-    width: 100%;
-    min-width: 0;
-    max-width: none;
-}
-
 
 .catalogo-productos .mensaje-vacio {
     padding: 2rem;
@@ -179,42 +168,18 @@ CONTIENE DOS LAYOUTS, UNO DE FILTRAJE Y EL OTRO DE PRODUCTOS
         width: 100%;
         max-width: 300px;
     }
-
-
-    /* Tablet pequeña: 3 productos por fila */
-    .catalogo-productos {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-}
-
-/* Celular: 2 productos por fila (hasta 600px) */
-
-@media (max-width: 600px) {
-
-    .catalogo-productos {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
 }
 
 @media (max-width: 481px) {
 
     .catalogo-productos {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
         column-gap: 0.4rem;
     }
 
-    /* En pantallas muy angostas se reduce el padding interno
-       para que dos tarjetas entren sin apretarse. */
     .catalogo-productos .tarjeta-producto {
-        padding: 0.6rem;
-    }
-
-    /* Celular chico: se ocultan categoría, stock y el botón
-       "Ver detalle" para que la tarjeta no se estire tanto.
-       El enlace de la imagen sigue llevando al detalle. */
-    .catalogo-productos .categoria-badge,
-    .catalogo-productos .stock,
-    .catalogo-productos .tarjeta-producto__acciones .boton--secundario {
-        display: none;
+       justify-self: center;
+       width: 100%;
+       padding: 0.5rem;
     }
 }
