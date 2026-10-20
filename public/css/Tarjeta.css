@@ -222,15 +222,18 @@
     visibility: hidden;
 }
 
-/* ---------- Responsive: menos productos por vista ---------- */
+/* ---------- Responsive: productos por vista ----------
+   Tablet normal / laptop / PC: 4 · Tablet pequeña: 3 · Celular: 2 */
 
 @media (max-width: 1023px) {
+    /* Tablet pequeña: 3 productos por vista */
     .carrusel .grilla-productos > .tarjeta-producto {
         flex-basis: calc((100% - 2 * 1.5rem) / 3 - 0.5rem);
     }
 }
 
 @media (max-width: 768px) {
+    /* Celular (y tablet muy angosta): 2 productos por vista */
     .carrusel .grilla-productos > .tarjeta-producto {
         flex-basis: calc((100% - 1.5rem) / 2 - 0.5rem);
     }
@@ -241,8 +244,16 @@
         padding: 0 0.5rem;
     }
 
+    .carrusel .grilla-productos {
+        gap: 0.5rem;
+        padding: 1rem 0.5rem 2rem 0.5rem;
+    }
+
+    /* Dos productos por vista en celulares. */
     .carrusel .grilla-productos > .tarjeta-producto {
-        flex-basis: 85%;
+        flex-basis: calc((100% - 0.5rem) / 2);
+        min-width: 0;
+        padding: 0.6rem;
     }
 
     .carrusel__flecha {
@@ -250,6 +261,12 @@
         height: 2.25rem;
     }
 
-
-    
+    /* Celular chico: se ocultan categoría, stock y el botón
+       "Ver detalle" para que la tarjeta no se estire tanto.
+       El enlace de la imagen sigue llevando al detalle. */
+    .grilla-productos .categoria-badge,
+    .grilla-productos .stock,
+    .grilla-productos .tarjeta-producto__acciones .boton--secundario {
+        display: none;
+    }
 }
