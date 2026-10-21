@@ -66,28 +66,6 @@ svg {
     flex-shrink: 0;
 }
 
-/* ==============================
-OSCAR NUÑEZ - Falta hacer responsive panel, arreglar primero BD
-============================== */
-
-/* ==========================================================
-   ENLACE AL PANEL EN EL NAV INFERIOR (solo admin / operador)
-   Lo pinta views/header.php cuando esGestor() es true.
-   ========================================================== */
-
-.nav-item--panel {
-    background-color: #5c6cff;
-}
-
-.nav-item--panel a {
-    color: #ffffff;
-    font-weight: 700;
-}
-
-.nav-item--panel:hover {
-    background-color: #7a87ff;
-}
-
 /* ==========================================================
    PANEL DE GESTIÓN (views/paginaPanel.php)
    ========================================================== */

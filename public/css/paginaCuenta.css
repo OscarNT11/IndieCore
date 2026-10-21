@@ -23,6 +23,29 @@
     text-align: center;
 }
 
+/* ==========================================================
+   ENLACE AL PANEL (solo admin / operador)
+   Lo pinta views/cuenta.php cuando esGestor() es true.
+   ========================================================== */
+
+.enlace-panel {
+    background-color: #5c6cff;
+    font-weight: 700;
+    border-radius: 1rem;
+    font-size: 2rem;
+    text-align: center;
+    padding:0.5rem 1.5rem;
+    background: linear-gradient(#7a2f2f, #4a1f1f);
+    border: 1px solid #400;
+    transition: transform 250ms ease;
+    transition: box-shadow 250ms ease;
+}
+
+.enlace-panel:hover {
+    transform: scale(0.98);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.45);
+}
+
 /* ---------- Panel principal ---------- */
 
 .cuenta__panel {
