@@ -1,0 +1,422 @@
+/* ==========================================================
+   PANEL DE GESTIÓN (views/paginaPanel.php y vistas de admin)
+   ========================================================== */
+
+/* El panel no lleva footer: la página ocupa toda la ventana para que
+   el fondo de la barra lateral llegue hasta abajo.
+   Las vistas del panel marcan el <body> con la clase "body-panel". */
+body.body-panel {
+    min-height: 100dvh;
+}
+
+body.body-panel .contenido-principal {
+    flex: 1;
+    min-height: calc(100dvh - 70px);
+    padding: 0;
+}
+
+/* En el panel el header no lleva la barra de navegación inferior:
+   el menú queda en la barra lateral. */
+body.body-panel #nav-inferior {
+    display: none;
+}
+
+body.body-panel .header {
+    border-bottom: 1px solid #4a4a4a;
+}
+
+/* ---------- Estructura: barra lateral + contenido ---------- */
+
+.panel-admin {
+    display: grid;
+    grid-template-columns: 215px minmax(0, 1fr);
+    align-items: stretch;
+    min-height: calc(100dvh - 70px);
+}
+
+/* Las vistas sin barra lateral usan una sola columna a todo el ancho. */
+.panel-admin--sin-barra {
+    display: block;
+    width: 100%;
+}
+
+.panel-admin__barra {
+    display: flex;
+    flex-direction: column;
+
+    background-color: #272626;
+    border-right: 1px solid #5c5c5c;
+}
+
+.panel-admin__menu {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+}
+
+.panel-admin__enlace {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    padding: 14px 18px;
+
+    color: #ededed;
+    font-size: 1.05rem;
+
+    border-bottom: 1px solid #3c3c3c;
+
+    transition: background-color 150ms ease;
+}
+
+.panel-admin__enlace:hover,
+.panel-admin__enlace--activo {
+    background-color: #585858;
+}
+
+.panel-admin__enlace svg {
+    width: 26px;
+    height: 26px;
+}
+
+.panel-admin__contenido {
+    min-width: 0;
+    padding: 32px 36px 48px;
+}
+
+/* ---------- Panel principal: tarjetas de secciones ---------- */
+
+.panel__titulo {
+    margin-bottom: 6px;
+    font-size: 2rem;
+    font-weight: 400;
+}
+
+.panel__saludo {
+    margin-bottom: 28px;
+    color: #c4c4c4;
+}
+
+.panel__tarjetas {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 18px;
+}
+
+.panel__tarjeta {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+
+    padding: 20px;
+
+    background-color: #272626;
+    color: inherit;
+
+    border: 1px solid #6b6b6b;
+    border-radius: 10px;
+
+    transition: background-color 150ms ease, transform 150ms ease;
+}
+
+.panel__tarjeta:hover {
+    background-color: #6b6b6b;
+    transform: translateY(-2px);
+}
+
+.panel__tarjeta h2 {
+    font-size: 1.1rem;
+    font-weight: 400;
+}
+
+.panel__tarjeta svg {
+    width: 30px;
+    height: 30px;
+}
+
+/* ---------- Título de sección con icono ---------- */
+
+.panel-admin__cabecera {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+
+    margin-bottom: 24px;
+}
+
+.panel-admin__cabecera h1 {
+    font-size: 2rem;
+    font-weight: 400;
+}
+
+.panel-admin__icono-boton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 44px;
+    height: 44px;
+
+    border: 2px solid #ededed;
+    border-radius: 4px;
+
+    transition: background-color 150ms ease;
+}
+
+.panel-admin__icono-boton:hover {
+    background-color: rgba(255, 255, 255, 0.12);
+}
+
+.panel-admin__icono-boton svg {
+    width: 24px;
+    height: 24px;
+}
+
+/* ---------- Tarjeta con el formulario ---------- */
+
+.panel-admin__tarjeta {
+    width: 100%;
+    max-width: 1120px;
+    padding: 28px 30px;
+
+    background-color: #3a3a3a;
+    border-radius: 8px;
+}
+
+.panel-admin__tarjeta .mb-3 {
+    margin-bottom: 26px;
+}
+
+.panel-admin__tarjeta .form-label {
+    display: block;
+    margin-bottom: 8px;
+
+    font-size: 1.05rem;
+    color: #ededed;
+}
+
+.panel-admin__tarjeta .form-control,
+.panel-admin__tarjeta .form-select {
+    display: block;
+    width: 100%;
+
+    padding: 11px 14px;
+
+    background-color: #8a8a8a;
+    color: #ededed;
+
+    border: 1px solid #9a9a9a;
+    border-radius: 6px;
+
+    font-family: inherit;
+    font-size: 1.05rem;
+}
+
+.panel-admin__tarjeta .form-control::placeholder {
+    color: #ededed;
+}
+
+.panel-admin__tarjeta .form-control:focus,
+.panel-admin__tarjeta .form-select:focus {
+    border-color: #ededed;
+    outline: none;
+}
+
+.panel-admin__tarjeta textarea.form-control {
+    min-height: 130px;
+    resize: vertical;
+}
+
+.panel-admin__tarjeta .form-check {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 26px;
+}
+
+.panel-admin__tarjeta .form-check-input {
+    width: 18px;
+    height: 18px;
+    accent-color: #ededed;
+}
+
+.panel-admin__tarjeta small {
+    display: block;
+    margin-top: 6px;
+    color: #c4c4c4;
+}
+
+.panel-admin__acciones {
+    display: flex;
+    gap: 12px;
+}
+
+/* ---------- Botones ---------- */
+
+.panel-admin__tarjeta .btn,
+.panel-productos .btn {
+    display: inline-block;
+
+    padding: 10px 20px;
+
+    font-family: inherit;
+    font-size: 1rem;
+
+    background-color: #5f5f5f;
+    color: #ededed;
+
+    border: 1px solid #777;
+    border-radius: 6px;
+
+    transition: background-color 150ms ease;
+}
+
+.panel-admin__tarjeta .btn:hover,
+.panel-productos .btn:hover {
+    background-color: #6f6f6f;
+}
+
+.panel-admin__tarjeta .btn-primary,
+.panel-productos .btn-primary {
+    background-color: #ededed;
+    color: #292929;
+    border-color: #ededed;
+}
+
+.panel-admin__tarjeta .btn-primary:hover,
+.panel-productos .btn-primary:hover {
+    background-color: #ffffff;
+}
+
+/* ---------- Mensajes ---------- */
+
+.panel-admin .text-danger,
+.panel-admin__tarjeta .text-danger,
+.panel-productos .text-danger {
+    margin-top: 6px;
+    color: #ff8a8a;
+    font-size: 0.95rem;
+}
+
+.panel-admin .alert-success,
+.panel-productos .alert {
+    margin-bottom: 18px;
+    padding: 12px 16px;
+
+    background-color: #2f4633;
+    color: #d6f5dc;
+
+    border: 1px solid #3f6b48;
+    border-radius: 6px;
+}
+
+/* ---------- Listado de productos ---------- */
+
+.panel-productos h1 {
+    margin-bottom: 24px;
+    font-size: 2rem;
+    font-weight: 400;
+}
+
+.panel-productos__acciones {
+    display: flex;
+    gap: 14px;
+    margin-bottom: 22px;
+}
+
+.panel-productos .table {
+    width: 100%;
+    border-collapse: collapse;
+
+    background-color: #3a3a3a;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.panel-productos .table th,
+.panel-productos .table td {
+    padding: 12px 14px;
+    text-align: left;
+    vertical-align: middle;
+
+    border-bottom: 1px solid #4c4c4c;
+}
+
+.panel-productos .table th {
+    background-color: #454545;
+    font-weight: 400;
+}
+
+.panel-productos .table tbody tr:hover {
+    background-color: #434343;
+}
+
+.panel-productos .table .btn-sm {
+    padding: 6px 12px;
+    font-size: 0.9rem;
+}
+
+.stock {
+    display: inline-block;
+    padding: 3px 10px;
+
+    font-size: 0.85rem;
+    border-radius: 999px;
+
+    background-color: #4f5a4f;
+}
+
+.stock-agotado {
+    background-color: #6b3434;
+}
+
+.stock-bajo {
+    background-color: #6b5a2e;
+}
+
+.stock-normal {
+    background-color: #3f5c46;
+}
+
+.stock-inactivo {
+    background-color: #4a4a4a;
+    color: #bdbdbd;
+}
+
+/* ---------- Pantallas chicas ---------- */
+
+@media (max-width: 760px) {
+
+    .panel-admin {
+        grid-template-columns: 1fr;
+    }
+
+    .panel-admin--sin-barra {
+        display: block;
+    }
+
+    .panel-admin__barra {
+        flex-direction: row;
+        border-right: none;
+        border-bottom: 1px solid #5c5c5c;
+    }
+
+    .panel-admin__menu {
+        flex-direction: row;
+        overflow-x: auto;
+    }
+
+    .panel-admin__enlace {
+        border-bottom: none;
+        border-right: 1px solid #3c3c3c;
+        white-space: nowrap;
+    }
+
+    .panel-admin__contenido {
+        padding: 22px 16px 36px;
+    }
+
+    .panel-admin__tarjeta {
+        padding: 20px 16px;
+    }
+}

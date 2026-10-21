@@ -212,5 +212,195 @@ class ProductoModel {
 
         return $seDesconto;
     }
+
+    /* Nivel de stock calculado en SQL: 'agotado', 'bajo' o 'normal'. */
+    private $sqlNivelStock = "CASE
+                WHEN p.stock = 0 THEN 'agotado'
+                WHEN p.stock <= p.stock_minimo THEN 'bajo'
+                ELSE 'normal'
+            END";
+
+    /* Columnas comunes de los listados de administración. */
+    private $columnasAdmin = "p.id_producto, p.nombre, p.marca, p.informacion,
+            p.precio, p.stock, p.stock_minimo, p.activo, p.foto AS imagen,
+            p.id_categoria, c.nombre AS nombre_categoria";
+
+    /* Listado completo para el panel de administración, con el nivel de
+       stock ya calculado y el nombre de la categoría. */
+    public function listarTodosAdmin() {
+
+        $sql = "SELECT $this->columnasAdmin,
+                $this->sqlNivelStock AS nivel_stock
+            FROM productos p
+            INNER JOIN categorias c USING (id_categoria)
+            ORDER BY p.nombre ASC";
+
+        return $this->ejecutarConsulta($sql);
+    }
+
+    /* Un producto con los mismos datos que usa el listado de administración. */
+    public function obtenerProductoAdmin($idProducto) {
+
+        $sql = "SELECT $this->columnasAdmin,
+                $this->sqlNivelStock AS nivel_stock
+            FROM productos p
+            INNER JOIN categorias c USING (id_categoria)
+            WHERE p.id_producto = ?";
+
+        $stmt = mysqli_prepare($this->conn, $sql);
+
+        if (!$stmt) {
+            return null;
+        }
+
+        $idProducto = (int) $idProducto;
+
+        mysqli_stmt_bind_param($stmt, "i", $idProducto);
+        mysqli_stmt_execute($stmt);
+
+        $resultado = mysqli_stmt_get_result($stmt);
+        $producto = $resultado ? mysqli_fetch_assoc($resultado) : null;
+
+        mysqli_stmt_close($stmt);
+
+        return $producto ?: null;
+    }
+
+    /* Productos activos cuyo stock llegó al mínimo o lo pasó. */
+    public function listarStockBajo() {
+
+        $sql = "SELECT $this->columnasAdmin,
+                $this->sqlNivelStock AS nivel_stock
+            FROM productos p
+            INNER JOIN categorias c USING (id_categoria)
+            WHERE p.stock <= p.stock_minimo AND p.activo = 1
+            ORDER BY p.nombre ASC";
+
+        return $this->ejecutarConsulta($sql);
+    }
+
+    /* Alta de un producto. Devuelve el id creado o false si hubo error. */
+    public function crear($datos) {
+
+        $stmt = mysqli_prepare(
+            $this->conn,
+            "INSERT INTO productos (nombre, marca, informacion, precio, stock, stock_minimo, activo, foto, id_categoria)
+             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"
+        );
+
+        if (!$stmt) {
+            return false;
+        }
+
+        $activo = (int) $datos['activo'];
+        $precio = (float) $datos['precio'];
+        $stock = (int) $datos['stock'];
+        $stockMinimo = (int) $datos['stock_minimo'];
+        $idCategoria = (int) $datos['id_categoria'];
+
+        // Tipos en el orden de las columnas del INSERT:
+        // nombre(s) marca(s) informacion(s) precio(d) stock(i) stock_minimo(i)
+        // activo(i) foto(s) id_categoria(i)
+        mysqli_stmt_bind_param(
+            $stmt,
+            "sssdiiisi",
+            $datos['nombre'],
+            $datos['marca'],
+            $datos['informacion'],
+            $precio,
+            $stock,
+            $stockMinimo,
+            $activo,
+            $datos['foto'],
+            $idCategoria
+        );
+
+        $ejecutado = mysqli_stmt_execute($stmt);
+
+        mysqli_stmt_close($stmt);
+
+        return $ejecutado ? mysqli_insert_id($this->conn) : false;
+    }
+
+    /* Modificación de un producto existente. Devuelve true si se modificó. */
+    public function modificar($datos) {
+
+        $stmt = mysqli_prepare(
+            $this->conn,
+            "UPDATE productos SET nombre = ?, marca = ?, informacion = ?, precio = ?, stock = ?,
+                    stock_minimo = ?, activo = ?, foto = ?, id_categoria = ?
+             WHERE id_producto = ?"
+        );
+
+        if (!$stmt) {
+            return false;
+        }
+
+        $activo = (int) $datos['activo'];
+        $precio = (float) $datos['precio'];
+        $stock = (int) $datos['stock'];
+        $stockMinimo = (int) $datos['stock_minimo'];
+        $idCategoria = (int) $datos['id_categoria'];
+        $idProducto = (int) $datos['id_producto'];
+
+        // mismo orden que el INSERT, con id_producto(i) al final.
+        mysqli_stmt_bind_param(
+            $stmt,
+            "sssdiiisii",
+            $datos['nombre'],
+            $datos['marca'],
+            $datos['informacion'],
+            $precio,
+            $stock,
+            $stockMinimo,
+            $activo,
+            $datos['foto'],
+            $idCategoria,
+            $idProducto
+        );
+
+        $ejecutado = mysqli_stmt_execute($stmt);
+
+        mysqli_stmt_close($stmt);
+
+        return $ejecutado;
+    }
+
+    /* Baja lógica ($activo = 0) o reactivación ($activo = 1). */
+    public function cambiarEstado($idProducto, $activo) {
+
+        $stmt = mysqli_prepare($this->conn, "UPDATE productos SET activo = ? WHERE id_producto = ?");
+
+        if (!$stmt) {
+            return false;
+        }
+
+        $idProducto = (int) $idProducto;
+        $activo = $activo ? 1 : 0;
+
+        mysqli_stmt_bind_param($stmt, "ii", $activo, $idProducto);
+
+        $ejecutado = mysqli_stmt_execute($stmt);
+
+        mysqli_stmt_close($stmt);
+
+        return $ejecutado;
+    }
+
+    /* Ejecuta una consulta de solo lectura y devuelve todas sus filas. */
+    private function ejecutarConsulta($sql) {
+
+        $resultado = mysqli_query($this->conn, $sql);
+
+        if (!$resultado) {
+            return array();
+        }
+
+        $filas = mysqli_fetch_all($resultado, MYSQLI_ASSOC);
+
+        mysqli_free_result($resultado);
+
+        return $filas;
+    }
 }
 ?>

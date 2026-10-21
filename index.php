@@ -14,8 +14,17 @@ require_once __DIR__ . "/models/UsuarioModel.php";
 require_once __DIR__ . "/controllers/ProductoController.php";
 require_once __DIR__ . "/controllers/PedidoController.php";
 require_once __DIR__ . "/controllers/UsuarioController.php";
+require_once __DIR__ . "/controllers/AdminProductoController.php";
 
 $paginaSolicitada = isset($_GET['pagina']) ? $_GET['pagina'] : 'home';
+
+// Las páginas del ABM solo están disponibles para administradores y
+// operadores. El controlador lo vuelve a comprobar al construirse.
+if (strpos($paginaSolicitada, 'admin_') === 0 && !esGestor()) {
+    http_response_code(403);
+    require __DIR__ . '/views/sin_permiso.php';
+    exit;
+}
 
 switch ($paginaSolicitada) {
 
@@ -47,15 +56,8 @@ switch ($paginaSolicitada) {
         break;
 
     case 'panel':
-        // Panel de gestión: solo administradores y operadores.
-        // requerirRol() corta con 403 y views/sin_permiso.php si el rol
-        // no es el adecuado (o redirige al login si no hay sesión).
-        if (!esGestor()) {
-            http_response_code(403);
-            require __DIR__ . '/views/sin_permiso.php';
-            break;
-        }
-
+        // Panel de gestión: solo administradores y operadores
+        // (paginaPanel.php vuelve a comprobarlo al incluirse).
         require __DIR__ . '/views/paginaPanel.php';
         break;
 
@@ -93,6 +95,30 @@ switch ($paginaSolicitada) {
     case 'logout':
         $controlador = new UsuarioController($conn);
         $controlador->logout();
+        break;
+
+    case 'admin_producto':
+        // Lista de productos para administración
+        $controlador = new AdminProductoController($conn);
+        $controlador->listar();
+        break;
+
+    case 'admin_producto_crear':
+        // Formulario para crear un nuevo producto
+        $controlador = new AdminProductoController($conn);
+        $controlador->crear();
+        break;
+
+    case 'admin_producto_editar':
+        // Formulario para editar un producto existente
+        $controlador = new AdminProductoController($conn);
+        $controlador->editar();
+        break;
+
+    case 'admin_producto_estado':
+        // Cambia el estado de un producto existente
+        $controlador = new AdminProductoController($conn);
+        $controlador->cambiarEstado();
         break;
 
     default:

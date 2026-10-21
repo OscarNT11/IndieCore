@@ -3,8 +3,9 @@
 require_once __DIR__ . '/../models/UsuarioModel.php';
 
 require_once __DIR__ . '/../models/PedidoModel.php';
+require_once __DIR__ . '/../config/imagenes.php';
 class UsuarioController {
-    
+
     private $conexion;
     private $usuarioModel;
 
@@ -198,9 +199,9 @@ class UsuarioController {
             // ---------- 3. Foto de perfil (se puede subir sin confirmar) ----------
             $rutaFotoNueva = null;
 
-            if (isset($_FILES['foto']) && $_FILES['foto']['error'] !== UPLOAD_ERR_NO_FILE) {
+            if (hayArchivoImagen($_FILES['foto'] ?? null)) {
 
-                $resultadoFoto = $this->guardarFotoPerfil($_FILES['foto']);
+                $resultadoFoto = guardarImagenSubida($_FILES['foto'], 'perfil', 'perfil');
 
                 if (isset($resultadoFoto['error'])) {
                     $errores[] = $resultadoFoto['error'];
@@ -269,60 +270,6 @@ class UsuarioController {
         require __DIR__ . '/../views/cuenta.php';
     }
 
-    /* Valida y mueve la imagen subida a public/img/perfiles/.
-       Devuelve ['ruta' => ...] o ['error' => mensaje]. */
-    private function guardarFotoPerfil($archivo) {
-
-        if ($archivo['error'] !== UPLOAD_ERR_OK) {
-            return array('error' => "No se pudo subir la imagen.");
-        }
-
-        $tamanoMaximo = 2 * 1024 * 1024; // 2 MB
-
-        if ($archivo['size'] > $tamanoMaximo) {
-            return array('error' => "La imagen no puede pesar más de 2 MB.");
-        }
-
-        // El tipo real se comprueba con getimagesize(), no con la extensión
-        // que manda el navegador (esa se puede falsificar).
-        $infoImagen = @getimagesize($archivo['tmp_name']);
-
-        if ($infoImagen === false) {
-            return array('error' => "El archivo no es una imagen válida.");
-        }
-
-        $extensionesPermitidas = array(
-            IMAGETYPE_JPEG => 'jpg',
-            IMAGETYPE_PNG  => 'png',
-            IMAGETYPE_GIF  => 'gif',
-            IMAGETYPE_WEBP => 'webp',
-        );
-
-        if (!isset($extensionesPermitidas[$infoImagen[2]])) {
-            return array('error' => "Formato no permitido. Usa JPG, PNG, GIF o WEBP.");
-        }
-
-        $extension = $extensionesPermitidas[$infoImagen[2]];
-
-        $carpetaDestino = __DIR__ . '/../public/img/perfiles/';
-
-        if (!is_dir($carpetaDestino)) {
-            mkdir($carpetaDestino, 0755, true);
-        }
-
-        // Nombre único para no pisar fotos de otros usuarios ni exponer
-        // el nombre original del archivo.
-        $nombreArchivo = 'perfil_' . uniqid() . '.' . $extension;
-
-        $destino = $carpetaDestino . $nombreArchivo;
-
-        if (!move_uploaded_file($archivo['tmp_name'], $destino)) {
-            return array('error' => "No se pudo guardar la imagen en el servidor.");
-        }
-
-        // Ruta relativa que se guarda en la BD y usa la vista.
-        return array('ruta' => 'public/img/perfiles/' . $nombreArchivo);
-    }
     /* Devuelve la página a la que volver tras iniciar sesión o registrarse.
        La manda el campo oculto "volver" del modal; si no llega, se usa la
        página actual como respaldo. Se sanea para no aceptar rutas ni URLs

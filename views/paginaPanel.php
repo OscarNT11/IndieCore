@@ -13,41 +13,72 @@ if (!esGestor()) {
 }
 
 $usuarioPanel = usuarioActual();
+$claseBody = 'body-panel';
+
+// Hoja propia del panel: barra lateral, formularios y listado.
+$cssExtra = ['public/css/paginaPanel.css'];
 
 require __DIR__ . '/header.php';
 ?>
 
-<section class="panel">
-    <h1 class="panel__titulo">Panel de gestión</h1>
+<section class="panel-admin">
 
-    <p class="panel__saludo">
-        Hola, <strong><?php echo escapar($usuarioPanel['nombre']); ?></strong>.
-        <?php if (esAdmin()): ?>
-            Tienes permisos de <strong>administrador</strong>.
-        <?php else: ?>
-            Tienes permisos de <strong>operador</strong>.
-        <?php endif; ?>
-    </p>
+    <aside class="panel-admin__barra">
+        <ul class="panel-admin__menu">
+            <li>
+                <a class="panel-admin__enlace panel-admin__enlace--activo" href="index.php?pagina=admin_producto">
+                    <svg><use href="public/img/iconos.svg#icono-caja"></use></svg>
+                    Productos
+                </a>
+            </li>
+            <li>
+                <a class="panel-admin__enlace" href="index.php?pagina=pedidos">
+                    <svg><use href="public/img/iconos.svg#icono-lista"></use></svg>
+                    Pedidos
+                </a>
+            </li>
 
-    <div class="panel__tarjetas">
+            <?php // Solo el administrador ve las opciones reservadas a su rol. ?>
+            <?php if (esAdmin()): ?>
+                <li>
+                    <a class="panel-admin__enlace" href="index.php?pagina=usuarios">
+                        <svg><use href="public/img/iconos.svg#icono-persona"></use></svg>
+                        Usuarios
+                    </a>
+                </li>
+            <?php endif; ?>
+        </ul>
+    </aside>
 
-        <a class="panel__tarjeta" href="index.php?pagina=catalogo">
-            <h2>Productos</h2>
-            <p>Ver y gestionar el catálogo de la tienda.</p>
-        </a>
+    <div class="panel-admin__contenido">
+        <h1 class="panel__titulo">Panel de gestión</h1>
+        <p class="panel__saludo">
+            Hola, <?= escapar($usuarioPanel['nombre'] ?? '') ?>.
+            Rol: <?= esAdmin() ? 'Administrador' : 'Operador' ?>.
+        </p>
 
-        <?php // Solo el administrador ve las opciones reservadas a su rol. ?>
-        <?php if (esAdmin()): ?>
-            <a class="panel__tarjeta" href="index.php?pagina=cuenta">
-                <h2>Cuentas</h2>
-                <p>Administración de usuarios y roles (desde phpMyAdmin).</p>
+        <div class="panel__tarjetas">
+            <a class="panel__tarjeta" href="index.php?pagina=admin_producto">
+                <svg><use href="public/img/iconos.svg#icono-caja"></use></svg>
+                <h2>Productos</h2>
             </a>
-        <?php endif; ?>
 
+            <a class="panel__tarjeta" href="index.php?pagina=pedidos">
+                <svg><use href="public/img/iconos.svg#icono-lista"></use></svg>
+                <h2>Pedidos</h2>
+            </a>
+
+            <?php if (esAdmin()): ?>
+                <a class="panel__tarjeta" href="index.php?pagina=usuarios">
+                    <svg><use href="public/img/iconos.svg#icono-persona"></use></svg>
+                    <h2>Usuarios</h2>
+                </a>
+            <?php endif; ?>
+        </div>
     </div>
+
 </section>
 
 <?php
-require __DIR__ . '/modalLogin.php';
-require __DIR__ . '/footer.php';
+require __DIR__ . '/footer_simple.php';
 ?>

@@ -34,6 +34,8 @@ CREATE TABLE `productos` (
   `informacion` TEXT,
   `foto` VARCHAR(255),
   `stock` INT NOT NULL DEFAULT 0,
+  `stock_minimo` INT NOT NULL DEFAULT 0,
+  `activo` TINYINT(1) NOT NULL DEFAULT 1,
   `precio` DECIMAL(10, 2) NOT NULL,
   `id_categoria` INT,
   FOREIGN KEY (`id_categoria`) REFERENCES `categorias`(`id_categoria`) 

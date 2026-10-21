@@ -45,7 +45,7 @@
 </head>
 
 
-<body>
+<body<?= isset($claseBody) ? ' class="' . escapar($claseBody) . '"' : '' ?>>
 
     <header class="header">
 

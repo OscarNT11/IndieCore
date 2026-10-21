@@ -89,60 +89,6 @@ OSCAR NUÑEZ - Falta hacer responsive panel, arreglar primero BD
 }
 
 /* ==========================================================
-   PANEL DE GESTIÓN (views/paginaPanel.php)
-   ========================================================== */
-
-.panel {
-    max-width: 960px;
-    margin: 40px auto;
-    padding: 0 20px;
-}
-
-.panel__titulo {
-    margin-bottom: 8px;
-}
-
-.panel__saludo {
-    margin-bottom: 28px;
-    color: #cfcfe0;
-}
-
-.panel__tarjetas {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 18px;
-}
-
-.panel__tarjeta {
-    display: block;
-    padding: 20px;
-
-    background-color: #1e1e2a;
-    color: inherit;
-    text-decoration: none;
-
-    border: 1px solid #33334a;
-    border-radius: 12px;
-
-    transition: transform 150ms ease, border-color 150ms ease;
-}
-
-.panel__tarjeta:hover {
-    transform: translateY(-3px);
-    border-color: #5c6cff;
-}
-
-.panel__tarjeta h2 {
-    margin-bottom: 6px;
-    font-size: 1.1rem;
-}
-
-.panel__tarjeta p {
-    font-size: 0.9rem;
-    color: #b8b8cc;
-}
-
-/* ==========================================================
    PÁGINA SIN PERMISO (views/sin_permiso.php)
    ========================================================== */
 .sin-permiso {
