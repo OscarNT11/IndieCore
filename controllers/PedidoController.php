@@ -34,10 +34,9 @@ class PedidoController {
        ========================================================== */
     public function mostrarCheckout() {
 
-        // La sesión se comprueba DESPUÉS de leer el carrito a propósito:
-        // si se comprobara antes, quien entra a ?pagina=checkout sin sesión
-        // caería al carrito vacío (sin cookies no hay carrito). Así vuelve
-        // con su carrito intacto y el aviso de iniciar sesión.
+        // La sesión se comprueba DESPUÉS de leer el carrito, para que quien
+        // entra a ?pagina=checkout sin sesión vuelva con su carrito intacto
+        // y el aviso de iniciar sesión en lugar de un carrito vacío.
 
         // El carrito puede llegar por POST (formulario del carrito/checkout)
         // o por GET desde el botón "Finalizar compra".

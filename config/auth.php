@@ -15,10 +15,8 @@ function redirigir($pagina) {
 }
 
 /* Devuelve la pagina en la que esta el usuario (el valor de ?pagina=),
-   para el campo oculto "volver" de los formularios del modal.
-   Se usa en views/modalLogin.php: sin esta funcion la vista lanzaba
-   un "Call to undefined function" que cortaba la pagina antes del
-   footer (por eso el footer nunca se veia). */
+   para el campo oculto "volver" de los formularios del modal
+   (views/modalLogin.php). */
 function paginaActual() {
     $pagina = isset($_GET['pagina']) ? (string) $_GET['pagina'] : 'home';
 

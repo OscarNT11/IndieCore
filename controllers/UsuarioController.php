@@ -1,11 +1,8 @@
 <?php
 // controllers/UsuarioController.php
 require_once __DIR__ . '/../models/UsuarioModel.php';
-<<<<<<< HEAD
 
-=======
 require_once __DIR__ . '/../models/PedidoModel.php';
->>>>>>> metodo-pago
 class UsuarioController {
     
     private $conexion;
@@ -80,16 +77,14 @@ class UsuarioController {
             }
         }
 
-        /* La vista se carga SIEMPRE (GET incluido). Antes este require estaba
-        dentro del if de POST, así que al abrir index.php?pagina=registro
-        con GET no se incluía nada y se veía una página en blanco. */
+        /* La vista se carga siempre, tanto en GET como en POST: el GET se
+        encarga de mostrarla y el POST de procesarla. */
         require __DIR__ . '/../views/registro.php';
     }
 
 
     /* Muestra (y procesa) el formulario de inicio de sesión.
-       index.php llama a este método para ?pagina=login; sin él la URL
-       lanzaba un "Call to undefined method" y la página quedaba vacía. */
+       index.php llama a este método para ?pagina=login. */
     public function login() {
 
         $errores = [];

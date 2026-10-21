@@ -1,6 +1,6 @@
 /* ==========================================================
    PÁGINA DEL CARRITO
-   Este script SOLO se carga en views/Carrito.php.
+   Este script SOLO se carga en views/paginaCarrito.php.
    Las funciones obtenerCarrito / guardarCarrito / actualizarContador
    vienen de storage.js, que el footer carga en todas las páginas.
    ========================================================== */
@@ -47,8 +47,8 @@ function escaparHtml(texto) {
 }
 
 /* Stock máximo que se puede pedir de un producto del carrito.
-   Lo guarda catalogo.js en cada línea; si el carrito se llenó antes de
-   este cambio (o el producto no tenía stock declarado), no hay tope. */
+   Lo guarda catalogo.js en cada línea; si la línea no tiene el dato
+   (o el producto no tiene stock declarado), no hay tope. */
 function stockDeProducto(producto) {
 
     const stock = Number(producto ? producto.stock : NaN);

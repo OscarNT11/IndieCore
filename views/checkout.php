@@ -163,16 +163,6 @@ $metodoSeleccionado = isset($envio['metodo_pago']) ? $envio['metodo_pago'] : 'ta
                         </div>
                     </div>
 
-                    <p class="checkout__nota">
-                        Solo se guardan los últimos 4 dígitos de la tarjeta. Los demás datos
-                        no se almacenan en la base de datos.
-                    </p>
-
-                    <p class="checkout__nota">
-                        Pago simulado: si el número de tarjeta termina en un dígito
-                        <strong>par</strong> el pago se aprueba; si termina en
-                        <strong>impar</strong> se rechaza.
-                    </p>
                 </div>
             </fieldset>
 

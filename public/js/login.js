@@ -14,9 +14,9 @@ const formularioLogin = document.getElementById("login");
 
 const limite = 20;
 
-/* El campo de login acepta usuario O correo, y un correo casi siempre
-   supera los 20 caracteres. Con el limite de nombre de usuario, el
-   formulario no se enviaba nunca al escribir un email. */
+/* El campo de login acepta usuario O correo, y un correo puede llegar a
+   superar los 20 caracteres del nombre de usuario; por eso usa su propio
+   limite. */
 const limiteCorreo = 255;
 
 const minimo = 8;
@@ -290,9 +290,8 @@ if (botonIngresar) {
 /* ==========================================================
    CAMBIAR ENTRE LOGIN Y REGISTRO SIN SALIR DE LA PÁGINA
    Los enlaces "Crear cuenta" (#crear-cuenta) y "Inicia sesión"
-   (#volver-login) llevaban a index.php?pagina=registro / login, lo
-   que NAVEGABA a otra URL. Aquí se intercepta el clic y solo se
-   cambia de ventana dentro de la misma página.
+   (#volver-login) cambian de ventana dentro de la misma página
+   en lugar de navegar a otra URL.
    ========================================================== */
 
 function abrirLogin() {

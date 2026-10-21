@@ -91,6 +91,7 @@
     flex-direction: column;
     gap: 0.4rem;
     min-width: 0;
+    padding: 0.25rem 0.5rem;
 }
 
 .checkout__campo label {

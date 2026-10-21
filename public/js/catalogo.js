@@ -62,7 +62,7 @@ botonesAgregar.forEach((boton) => {
 
             productoExistente.cantidad = cantidadFinal;
 
-            // Se refresca el stock: pudo cambiar desde la última visita
+            // Se refresca el stock por si cambió desde la última visita
             productoExistente.stock = stock;
 
         } else {

@@ -1,10 +1,8 @@
 <?php
 
 /* Registra el intento de pago de un pedido y actualiza el estado del pedido.
-   Antes esta clase estaba rota: usaba $this->conexion (que no existe aquí),
-   $idPedido sin definir y una sentencia SQL sin comillas; además abría la
-   transacción dos veces. Ahora el INSERT del pago y el UPDATE del estado del
-   pedido van juntos en una sola transacción. */
+   El INSERT del pago y el UPDATE del estado del pedido van juntos en una
+   sola transacción. */
 
 class PagoModel {
 
