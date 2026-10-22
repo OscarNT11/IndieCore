@@ -34,6 +34,13 @@ $nombresDeMetodo = array(
 
 <section class="cuenta">
 
+    <?php // Enlace al panel de gestión, solo para admin y operador. ?>
+        <?php if (esGestor()): ?>
+            <a href="index.php?pagina=panel" class="enlace-panel">
+                <?php echo esAdmin() ? 'Modo Administrador' : 'Modo Operador'; ?>
+            </a>
+        <?php endif; ?>
+
     <h1 class="cuenta__titulo">Mi cuenta</h1>
 
     <!-- ==========================

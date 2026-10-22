@@ -20,6 +20,13 @@
 
                 <a href="index.php?pagina=catalogo" class="categoria-link">
                     <div class="categorias-objeto">
+                    <img src="public/img/iconoTecnoParts.png" alt="Imagen de Teclado">
+                    <h2>Todos...</h2>
+                    </div>
+                </a>
+
+                <a href="index.php?pagina=catalogo" class="categoria-link">
+                    <div class="categorias-objeto">
                     <img src="public/img/Teclado.png" alt="Imagen de Teclado">
                     <h2>Teclados</h2>
                     </div>
