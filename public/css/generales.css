@@ -101,3 +101,58 @@ OSCAR NUÑEZ - Falta hacer responsive panel, arreglar primero BD
 .sin-permiso h1 {
     margin-bottom: 12px;
 }
+
+/* ===================================
+ESTRELLAS (calificación de productos)
+Se usan en las tarjetas del catálogo y del inicio, en la ficha del producto
+y en el listado de reseñas. Viven acá, y no en paginaProducto.css, porque el
+catálogo y el inicio no cargan esa hoja.
+=================================== */
+
+.estrellas {
+    display: inline-flex;
+    gap: 2px;
+    font-size: 1.15rem;
+    line-height: 1;
+}
+
+.estrellas__item {
+    color: #6b6b6b;
+}
+
+.estrellas__item--llena {
+    color: #ffc94d;
+}
+
+/* Media estrella: se dibuja la estrella vacía y encima la llena recortada
+   al 50 % (no se puede recortar directamente porque el símbolo va centrado
+   en su caja y quedaría descolocado). */
+.estrellas__item--media {
+    position: relative;
+    display: inline-block;
+    color: #6b6b6b;
+}
+
+.estrellas__item--media::after {
+    content: '\2605';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 50%;
+    overflow: hidden;
+    color: #ffc94d;
+}
+
+/* Tarjeta del catálogo y del inicio: estrellas + texto del promedio */
+.tarjeta-producto__estrellas {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+
+    font-size: 0.85rem;
+    color: #9a9a9a;
+}
+
+.tarjeta-producto__estrellas .estrellas {
+    font-size: 0.95rem;
+}

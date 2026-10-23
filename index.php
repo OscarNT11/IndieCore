@@ -7,13 +7,16 @@ session_start();
 
 require_once __DIR__ . "/config/conexion.php";
 require_once __DIR__ . "/config/auth.php";
+require_once __DIR__ . "/config/estrellas.php";
 
 require_once __DIR__ . "/models/ProductoModel.php";
 require_once __DIR__ . "/models/PedidoModel.php";
 require_once __DIR__ . "/models/UsuarioModel.php";
+require_once __DIR__ . "/models/ReseniaModel.php";
 require_once __DIR__ . "/controllers/ProductoController.php";
 require_once __DIR__ . "/controllers/PedidoController.php";
 require_once __DIR__ . "/controllers/UsuarioController.php";
+require_once __DIR__ . "/controllers/ReseniaController.php";
 require_once __DIR__ . "/controllers/AdminProductoController.php";
 require_once __DIR__ . "/controllers/AdminUsuarioController.php";
 require_once __DIR__ . "/controllers/AdminPedidoController.php";
@@ -84,6 +87,13 @@ switch ($paginaSolicitada) {
         // Detalle de un producto puntual: index.php?pagina=producto&id=3
         $controlador = new ProductoController($conn);
         $controlador->mostrarDetalle();
+        break;
+
+    case 'resenias':
+        // Guarda (POST) la reseña con estrellas y comentario del usuario
+        // logueado y vuelve a la ficha del producto.
+        $controlador = new ReseniaController($conn);
+        $controlador->guardar();
         break;
 
     case 'carrito':

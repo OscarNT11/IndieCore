@@ -8,10 +8,19 @@ class ProductoModel {
         $this->conn = $conn;
     }
 
+    /* Promedio de estrellas y cantidad de reseñas de un producto. Se usan en
+       las consultas del catálogo, la página de inicio y el detalle. */
+    private function columnasResenias() {
+        return ReseniaModel::sqlPromedio('p');
+    }
+
     public function listarProductos($idCategoria = null) {
         // Se hace JOIN con categorias para obtener el nombre de la categoría,
         // y se devuelven alias que la vista consume directamente
-        // (nombre, nombre_categoria, imagen).
+        // (nombre, nombre_categoria, imagen). También viaja el promedio de
+        // estrellas calculado con las reseñas de la BD.
+        $columnasResenias = $this->columnasResenias();
+
         $consulta = "
             SELECT
                 p.id_producto,
@@ -21,7 +30,8 @@ class ProductoModel {
                 p.precio,
                 p.stock,
                 p.foto AS imagen,
-                c.nombre AS nombre_categoria
+                c.nombre AS nombre_categoria,
+                $columnasResenias
             FROM productos p
             INNER JOIN categorias c ON p.id_categoria = c.id_categoria
         ";
@@ -48,10 +58,14 @@ class ProductoModel {
         return $listaProductos;
     }
 
-    /* Busca productos por texto libre. Compara el término contra el nombre,
-       la marca, la descripción (informacion) y el nombre de la categoría.
-       Devuelve las filas con los mismos alias que usa la vista del listado. */
-    public function buscarProductos($termino) {
+    /* Productos para la sección "Lo nuevo" del inicio: los más recientes
+       primero. La tabla `productos` no guarda una fecha de alta, así que se
+       usa el id_producto (AUTO_INCREMENT): el número más alto es el último
+       que se cargó en la base. Solo se muestran los activos. */
+    public function listarNuevos($limite = 12) {
+
+        $columnasResenias = $this->columnasResenias();
+        $limite = (int) $limite;
 
         $consulta = "
             SELECT
@@ -62,7 +76,67 @@ class ProductoModel {
                 p.precio,
                 p.stock,
                 p.foto AS imagen,
-                c.nombre AS nombre_categoria
+                c.nombre AS nombre_categoria,
+                $columnasResenias
+            FROM productos p
+            INNER JOIN categorias c ON p.id_categoria = c.id_categoria
+            WHERE p.activo = 1
+            ORDER BY p.id_producto DESC
+            LIMIT $limite";
+
+        return $this->ejecutarConsulta($consulta);
+    }
+
+    /* Productos para la sección "Destacados": primero los que tienen mejor
+       promedio de estrellas y, si empatan, el que tenga más reseñas (más
+       opiniones = más confiable). Los productos sin reseñas quedan al final
+       y, entre ellos, primero los que tienen stock disponible. */
+    public function listarDestacados($limite = 12) {
+
+        $columnasResenias = $this->columnasResenias();
+        $limite = (int) $limite;
+
+        $consulta = "
+            SELECT
+                p.id_producto,
+                p.nombre,
+                p.marca,
+                p.informacion,
+                p.precio,
+                p.stock,
+                p.foto AS imagen,
+                c.nombre AS nombre_categoria,
+                $columnasResenias
+            FROM productos p
+            INNER JOIN categorias c ON p.id_categoria = c.id_categoria
+            WHERE p.activo = 1
+            ORDER BY promedio_estrellas DESC,
+                     total_resenias DESC,
+                     (p.stock > 0) DESC,
+                     p.nombre ASC
+            LIMIT $limite";
+
+        return $this->ejecutarConsulta($consulta);
+    }
+
+    /* Busca productos por texto libre. Compara el término contra el nombre,
+       la marca, la descripción (informacion) y el nombre de la categoría.
+       Devuelve las filas con los mismos alias que usa la vista del listado. */
+    public function buscarProductos($termino) {
+
+        $columnasResenias = $this->columnasResenias();
+
+        $consulta = "
+            SELECT
+                p.id_producto,
+                p.nombre,
+                p.marca,
+                p.informacion,
+                p.precio,
+                p.stock,
+                p.foto AS imagen,
+                c.nombre AS nombre_categoria,
+                $columnasResenias
             FROM productos p
             INNER JOIN categorias c ON p.id_categoria = c.id_categoria
             WHERE p.nombre       LIKE ?
@@ -90,6 +164,8 @@ class ProductoModel {
     }
 
     public function obtenerProductoPorId($idProducto) {
+        $columnasResenias = $this->columnasResenias();
+
         $consulta = "
             SELECT
                 p.id_producto,
@@ -100,7 +176,8 @@ class ProductoModel {
                 p.stock,
                 p.id_categoria,
                 p.foto AS imagen,
-                c.nombre AS nombre_categoria
+                c.nombre AS nombre_categoria,
+                $columnasResenias
             FROM productos p
             INNER JOIN categorias c ON p.id_categoria = c.id_categoria
             WHERE p.id_producto = ?";
@@ -125,6 +202,8 @@ class ProductoModel {
        las 6 de "Juegos" entren con margen y el carrusel tenga qué recorrer. */
     public function listarProductosRelacionados($idCategoria, $idProductoExcluido, $limite = 12) {
 
+        $columnasResenias = $this->columnasResenias();
+
         $consulta = "
             SELECT
                 p.id_producto,
@@ -134,7 +213,8 @@ class ProductoModel {
                 p.precio,
                 p.stock,
                 p.foto AS imagen,
-                c.nombre AS nombre_categoria
+                c.nombre AS nombre_categoria,
+                $columnasResenias
             FROM productos p
             INNER JOIN categorias c ON p.id_categoria = c.id_categoria
             WHERE p.id_categoria = ?

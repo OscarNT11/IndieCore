@@ -82,12 +82,12 @@
 
                 <h2>Lo nuevo</h2>
 
-                <?php if (empty($listaDeProductos)): ?>
+                <?php if (empty($productosNuevos)): ?>
                     <p class="mensaje-vacio">No se encontraron productos.</p>
                 <?php else: ?>
 
                 <div class="grilla-productos">
-                    <?php foreach ($listaDeProductos as $producto): ?>
+                    <?php foreach ($productosNuevos as $producto): ?>
                         <article class="tarjeta-producto">
                             <a
                                 class="tarjeta-producto__enlace"
@@ -102,8 +102,12 @@
                             <span class="categoria-badge"><?php echo htmlspecialchars($producto['nombre_categoria']); ?></span>
                             <h3><?php echo htmlspecialchars($producto['nombre']); ?></h3>
                             <p class="precio">$<?php echo number_format($producto['precio'], 2, ',', '.'); ?></p>
+                            <div class="tarjeta-producto__estrellas">
+                                <?php echo estrellasHtml($producto['promedio_estrellas'] ?? 0); ?>
+                                <span><?php echo escapar(resumenEstrellas($producto['promedio_estrellas'] ?? 0, $producto['total_resenias'] ?? 0)); ?></span>
+                            </div>
                             <p class="stock">Stock: <?php echo (int) $producto['stock']; ?></p>
-                            
+
                             <div class="tarjeta-producto__acciones">
                                 <a
                                     href="index.php?pagina=producto&id=<?php echo $producto['id_producto']; ?>"
@@ -183,12 +187,12 @@
 
                 <h2>Destacados</h2>
 
-                <?php if (empty($listaDeProductos)): ?>
+                <?php if (empty($productosDestacados)): ?>
                     <p class="mensaje-vacio">No se encontraron productos.</p>
                 <?php else: ?>
 
                 <div class="grilla-productos">
-                    <?php foreach ($listaDeProductos as $producto): ?>
+                    <?php foreach ($productosDestacados as $producto): ?>
                         <article class="tarjeta-producto">
                             <a
                                 class="tarjeta-producto__enlace"
@@ -203,6 +207,10 @@
                             <span class="categoria-badge"><?php echo htmlspecialchars($producto['nombre_categoria']); ?></span>
                             <h3><?php echo htmlspecialchars($producto['nombre']); ?></h3>
                             <p class="precio">$<?php echo number_format($producto['precio'], 2, ',', '.'); ?></p>
+                            <div class="tarjeta-producto__estrellas">
+                                <?php echo estrellasHtml($producto['promedio_estrellas'] ?? 0); ?>
+                                <span><?php echo escapar(resumenEstrellas($producto['promedio_estrellas'] ?? 0, $producto['total_resenias'] ?? 0)); ?></span>
+                            </div>
                             <p class="stock">Stock: <?php echo (int) $producto['stock']; ?></p>
 
                             <div class="tarjeta-producto__acciones">

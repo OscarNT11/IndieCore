@@ -253,7 +253,7 @@
 }
 
 .especificaciones-toggle summary::after {
-  content: '▼';
+  content: "\25BC";
   font-size: 1rem;
   transition: transform 0.2s ease;
 }
@@ -309,9 +309,8 @@
 }
 
 /* ==========================
-   DUDAS CLIENTE
+   DUDAS CLIENTE / RESEÑAS
 ========================== */
-
 
 .divisor-negro {
     height: 1px;
@@ -324,6 +323,11 @@
     width: 100%;
     padding: 1rem 2rem;
     background: #444;
+
+    /* El header es sticky (ver header.css). Este margen hace que, al saltar
+       desde "Ver reseñas ↓", el inicio de la sección no quede escondido
+       debajo del header. */
+    scroll-margin-top: 150px;
 }
 
 .dudas h2 {
@@ -333,56 +337,317 @@
     font-weight: 500;
 }
 
-.form-resenia {
+/* ---------- Estrellas (compartidas catálogo / ficha / reseÑas) ----------
+   Los estilos base viven en generales.css porque el catálogo y el inicio
+   no cargan esta hoja. */
+
+/* ---------- Resumen en la ficha de compra ---------- */
+
+.detalle-producto__estrellas {
     display: flex;
-    flex-direction: row;
-    margin-bottom: 1.5rem;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.detalle-producto__estrellas-texto {
+    font-size: 0.95rem;
+    color: #b5b5b5;
+}
+
+.detalle-producto__estrellas-enlace {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+
+    padding: 0.3rem 0.7rem;
+
+    font-size: 0.9rem;
+    color: #6fa8ff;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+
+    border: 1px solid rgba(111, 168, 255, 0.35);
+    border-radius: 999px;
+    transition: color 150ms ease, background-color 150ms ease, border-color 150ms ease;
+}
+
+.detalle-producto__estrellas-enlace:hover {
+    color: #ededed;
+    background-color: rgba(111, 168, 255, 0.12);
+    border-color: #6fa8ff;
+}
+
+/* Flecha que baja al hacer clic en el enlace */
+.flecha-abajo {
+    display: inline-block;
+    font-size: 1rem;
+    line-height: 1;
+    transition: transform 200ms ease;
+}
+
+.detalle-producto__estrellas-enlace:hover .flecha-abajo {
+    transform: translateY(3px);
+}
+
+/* ---------- Cabecera de la sección de opiniones ---------- */
+
+.resenias-cabecera {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
     gap: 1rem;
 }
 
-.form-resenia input {
-    flex: 1;
-    padding: 0.6rem;
+.resenias-resumen {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.resenias-resumen .estrellas {
+    font-size: 1.4rem;
+}
+
+.resenias-resumen__nota {
+    font-size: 1.5rem;
+    color: #ededed;
+}
+
+.resenias-resumen__total {
+    font-size: 0.95rem;
+    color: #9a9a9a;
+}
+
+/* ---------- Avisos y mensajes ---------- */
+
+.aviso-resenia {
+    margin-bottom: 1rem;
+    padding: 0.75rem 1rem;
+
+    font-size: 1rem;
+    border-radius: 0.6rem;
+}
+
+.aviso-resenia--ok {
+    color: #b8f5c8;
+    background-color: rgba(46, 139, 87, 0.25);
+    border: 1px solid rgba(46, 139, 87, 0.6);
+}
+
+.aviso-resenia--error {
+    color: #ffb0b0;
+    background-color: rgba(180, 40, 40, 0.25);
+    border: 1px solid rgba(180, 40, 40, 0.6);
+}
+
+.resenia-invitacion,
+.resenia-vacia {
+    margin-bottom: 1.5rem;
+    font-size: 1.05rem;
+    color: #cccccc;
+}
+
+.resenia-invitacion a {
+    color: #6fa8ff;
+    text-decoration: underline;
+}
+
+/* ---------- Formulario de reseÑa ---------- */
+
+.form-resenia {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+
+    padding: 1.25rem;
+    background-color: #373737;
+    border: 1px solid #4a4a4a;
+    border-radius: 1rem;
+}
+
+/* Selector de estrellas: los radios están ocultos, se pinta el label */
+
+.selector-estrellas {
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+
+.selector-estrellas legend {
+    margin-bottom: 0.4rem;
+    padding: 0;
+
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #9a9a9a;
+}
+
+.selector-estrellas__grupo {
+    display: inline-flex;
+    /* row-reverse para que, con los radios del 5 al 1, el resaltado
+       "hacia atrás" del CSS marque también las estrellas de la izquierda. */
+    flex-direction: row-reverse;
+    gap: 0.15rem;
+}
+
+.selector-estrellas__grupo input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.selector-estrellas__grupo label {
+    font-size: 2rem;
+    line-height: 1;
+    color: #6b6b6b;
+    cursor: pointer;
+    transition: color 120ms ease, transform 120ms ease;
+}
+
+/* La estrella marcada (y las anteriores, por ser hermanas posteriores
+   en row-reverse) se pintan de amarillo. */
+.selector-estrellas__grupo label:hover,
+.selector-estrellas__grupo label:hover ~ label,
+.selector-estrellas__grupo input:checked ~ label {
+    color: #ffc94d;
+}
+
+.selector-estrellas__grupo input:focus-visible + label {
+    outline: 2px solid #6fa8ff;
+    outline-offset: 2px;
+}
+
+.form-resenia__autor {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.form-resenia__comentario {
+    width: 100%;
+    resize: vertical;
+    min-height: 5rem;
+
+    padding: 0.75rem;
+
+    font-family: inherit;
+    font-size: 1.05rem;
+    line-height: 1.5;
+    color: #ededed;
+
+    background-color: transparent;
     border: 2px solid #292929;
     border-radius: 12px;
-    background-color: transparent;
-    color: #ededed;
-    font-size: 1.1rem;
-    font-family: inherit;
-    transition: transform 0.8 ease;
 }
 
-.form-resenia input::placeholder {
-    color: inherit;
+.form-resenia__comentario::placeholder {
+    color: #9a9a9a;
 }
 
-.form-resenia input:focus {
+.form-resenia__comentario:focus {
     outline: none;
-    transform: scale(1.01);
-    border-color: #222;
+    border-color: #6fa8ff;
     box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
 }
 
 .form-resenia button {
-  background: linear-gradient(to left, #340b85, #2573d8);
-  color: #fff;
-  border: none;
-  border-radius: 16px;
-  flex: 1;
-  max-width: 128px;
+    align-self: flex-end;
 
-  font-size: 1.1rem;
-  font-weight: 500;
+    padding: 0.6rem 1.75rem;
 
-  cursor: pointer;
+    font-size: 1.05rem;
+    font-weight: 500;
+    color: #fff;
 
-  padding: 0.5rem 1.5rem;
-  transition: opacity 0.2s;
+    background: linear-gradient(to left, #340b85, #2573d8);
+    border: none;
+    border-radius: 16px;
+    cursor: pointer;
+    transition: opacity 0.2s;
 }
 
 .form-resenia button:hover {
-  opacity: 0.7;
-  box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+    opacity: 0.7;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+}
+
+/* ---------- Listado de reseÑas ---------- */
+
+.lista-resenias {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.resenia {
+    padding: 1rem;
+
+    background-color: #373737;
+    border: 1px solid #4a4a4a;
+    border-radius: 0.75rem;
+}
+
+.resenia__cabecera {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.6rem;
+}
+
+.resenia__foto {
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+
+    object-fit: cover;
+    border-radius: 50%;
+    border: 1px solid #4a4a4a;
+}
+
+.resenia__foto-icono {
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+    padding: 8px;
+
+    fill: #9a9a9a;
+    background-color: #2b2b2b;
+    border-radius: 50%;
+    border: 1px solid #4a4a4a;
+}
+
+.resenia__autor {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 0;
+}
+
+.resenia__nombre {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #ededed;
+}
+
+.resenia__fecha {
+    font-size: 0.8rem;
+    color: #9a9a9a;
+}
+
+.resenia__calificacion {
+    flex-shrink: 0;
+}
+
+.resenia__comentario {
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #ddd;
+    overflow-wrap: anywhere;
 }
 
 .dudas-toggle {
@@ -398,7 +663,7 @@
     padding: 14px 20px;
     font-size: 1.5rem;
     cursor: pointer;
-    
+
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -406,8 +671,8 @@
 }
 
 .dudas-toggle summary::after {
-  content: '▼';
-  font-size: 1rem; 
+  content: "\25BC";
+  font-size: 1rem;
   transition: transform 0.2s ease;
 }
 
@@ -467,8 +732,16 @@
 
 @media (max-width: 481px) {
 
-    .form-resenia {
+    .resenias-cabecera {
         flex-direction: column;
+        align-items: flex-start;
     }
-    
+
+    .resenia__cabecera {
+        flex-wrap: wrap;
+    }
+
+    .form-resenia button {
+        align-self: stretch;
+    }
 }
