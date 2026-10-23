@@ -11,9 +11,11 @@ require_once __DIR__ . "/config/auth.php";
 require_once __DIR__ . "/models/ProductoModel.php";
 require_once __DIR__ . "/models/PedidoModel.php";
 require_once __DIR__ . "/models/UsuarioModel.php";
+require_once __DIR__ . "/models/CarritoModel.php";
 require_once __DIR__ . "/controllers/ProductoController.php";
 require_once __DIR__ . "/controllers/PedidoController.php";
 require_once __DIR__ . "/controllers/UsuarioController.php";
+require_once __DIR__ . "/controllers/CarritoController.php";
 
 $paginaSolicitada = isset($_GET['pagina']) ? $_GET['pagina'] : 'home';
 

@@ -1,6 +1,9 @@
 /* ===================================
 CONFIGURACION GENERAL DE SISTEMA
 =================================== */
+.oculto {
+    display: none !important;
+}
 
 * {
     margin: 0;

@@ -54,75 +54,150 @@ CATALOGO LAYOUT:
 CONTIENE DOS LAYOUTS, UNO DE FILTRAJE Y EL OTRO DE PRODUCTOS
 ============================================================= */
 
+/* Contenedor principal del sidebar de filtros */
 .catalogo-categorias {
     align-self: start;
+    /* position: sticky; */
+    /* top: calc(120px + 1rem); */
+    /* max-height: 80vh; */
 
-    position: sticky;
-    top: calc(120px + 1rem);
-
-    max-height: 80vh;
     flex: 1;
-    min-width: 180px;
-    max-width: 210px;
+    min-width: 200px;
+    max-width: 240px;
     overflow-y: auto;
-
     background-color: #171717;
     border: 1px solid #333;
     border-radius: 0.75rem;
 }
 
-/* Solo para abrir en tamanios menores o iguales a 768 */
-
-
-.tabla-categorias {
-    width: 100%;
-    border-collapse: collapse;
+/* Agrupaciones internas (Categorías, Marcas, Precios) */
+.filtro-grupo {
+    border-bottom: 1px solid #333;
+    padding-bottom: 0.5rem;
 }
 
-.tabla-categorias caption {
-    padding: 0.85rem 1rem;
+.filtro-grupo:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
 
+/* Títulos de cada sección (Estilo similar al caption anterior) */
+.filtro-grupo h3 {
+    margin: 0;
+    padding: 0.85rem 1rem;
     font-size: 1rem;
     text-transform: uppercase;
     letter-spacing: 1px;
     text-align: left;
-
     color: #ededed;
     background-color: #212121;
     border-bottom: 1px solid #333;
 }
 
-.tabla-categorias td {
-    padding: 0;
-    border-bottom: 1px solid #2b2b2b;
+/* Estilos para el buscador de marcas */
+.marcas-buscador-wrapper {
+    padding: 0.5rem 1rem;
+    box-sizing: border-box;
 }
 
-.tabla-categorias tr:last-child td {
-    border-bottom: none;
+#buscador-marca {
+    width: 100%;
+    padding: 0.5rem;
+    background-color: #212121;
+    border: 1px solid #333;
+    border-radius: 0.4rem;
+    color: #ededed;
+    font-size: 0.9rem;
+    box-sizing: border-box;
+    transition: border-color 150ms ease;
 }
 
-.categoria-enlace {
+#buscador-marca:focus {
+    outline: none;
+    border-color: #6a09e0;
+}
+
+#buscador-marca::placeholder {
+    color: #888;
+}
+
+/* Ocultar los inputs nativos (radio y checkbox) */
+.radio-label input[type="radio"],
+.checkbox-label input[type="checkbox"] {
+    display: none;
+}
+
+/* Estilo de los labels para que parezcan los enlaces anteriores */
+.radio-label,
+.checkbox-label {
     display: block;
     width: 100%;
-
     padding: 0.7rem 1rem;
-
     font-size: 1rem;
     color: #ededed;
-
     border-left: 3px solid transparent;
+    cursor: pointer;
+    box-sizing: border-box;
     transition: background-color 150ms ease, border-color 150ms ease;
+    user-select: none;
 }
 
-.categoria-enlace:hover {
+/* Efecto Hover (similar al enlace anterior) */
+.radio-label:hover,
+.checkbox-label:hover {
     background-color: #3f3f3f;
 }
 
-.categoria-enlace--activa {
+/* Estado Activo / Seleccionado (Aplica cuando el input interno está checked) */
+.radio-label:has(input:checked),
+.checkbox-label:has(input:checked) {
     background-color: #2a2a2a;
     border-left-color: #6a09e0;
     color: #ffffff;
     font-weight: 700;
+}
+
+/* Sección de Precios */
+.precio-inputs {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.85rem 1rem;
+}
+
+.precio-inputs input[type="number"] {
+    width: 100%;
+    padding: 0.5rem;
+    background-color: #212121;
+    border: 1px solid #333;
+    border-radius: 0.4rem;
+    color: #ededed;
+    font-size: 0.9rem;
+}
+
+.precio-inputs input[type="number"]:focus {
+    outline: none;
+    border-color: #6a09e0;
+}
+
+.precio-inputs span {
+    color: #888;
+}
+
+/* Botón OK de precios */
+#btn-filtrar-precio {
+    padding: 0.5rem 0.8rem;
+    background-color: #212121;
+    border-radius: 0.4rem;
+    color: #ededed;
+    font-weight: 600;
+    cursor: pointer;
+    transition:  filter 150ms ease;
+    background: linear-gradient(to right, #6a09e0, #3480d7);
+}
+
+#btn-filtrar-precio:hover {
+    filter: brightness(125%);
 }
 
 /* =============================================================
@@ -182,4 +257,11 @@ CONTIENE DOS LAYOUTS, UNO DE FILTRAJE Y EL OTRO DE PRODUCTOS
        width: 100%;
        padding: 0.5rem;
     }
+
+    .mostrar-filtrado {
+        max-height: 80dvh;
+        overflow-y: auto;
+
+    }
+
 }

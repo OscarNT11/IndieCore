@@ -1,10 +1,6 @@
 <?php require __DIR__ . '/header.php'; ?>
 
-<?php
-// Si la búsqueda del header mandó un término (?q=), el controlador rellenó
-// $listaDeProductos con los resultados y aquí se avisa de ello.
-$terminoBusqueda = isset($_GET['q']) ? trim((string) $_GET['q']) : '';
-?>
+
 
 <section class="catalogo">
 
@@ -22,35 +18,77 @@ $terminoBusqueda = isset($_GET['q']) ? trim((string) $_GET['q']) : '';
 
     <div class="catalogo-layout">
 
-        <!-- Tabla lateral con las categorías disponibles -->
+
+        <!-- Tabla lateral de filtraje -->
         <aside class="catalogo-categorias ocultar-filtro">
+            <!-- Envolvemos todo en un formulario GET para que envíe los filtros -->
+            <form action="index.php" method="GET" id="form-filtros">
+                <!-- Mantenemos la página actual en el formulario para no perder la ruta del catálogo -->
+                <input type="hidden" name="pagina" value="catalogo">
 
-            <table class="tabla-categorias">
-                <caption>Categorías</caption>
-                <tbody>
-                    <tr>
-                        <td>
-                            <a
-                                href="index.php?pagina=catalogo"
-                                class="categoria-enlace <?php echo empty($idCategoriaSeleccionada) ? 'categoria-enlace--activa' : ''; ?>">
-                                Todas las categorías
-                            </a>
-                        </td>
-                    </tr>
+                <!-- Categorías (Radio: una sola opción) -->
+                <div class="filtro-grupo categorias-group">
+                    <h3>Categorías</h3>
+                    
+                    <!-- Seleccion "Predeterminada" -->
+                    <label class="radio-label">
+                        <input type="radio" name="categoria" value="" <?php echo empty($idCategoriaSeleccionada) ? 'checked' : ''; ?> onchange="this.form.submit()">
+                        <span>Todas</span>
+                    </label>
+
+                    <!-- Genera todas las opciones de a partir de $listaDeCategorias -->
                     <?php foreach ($listaDeCategorias as $categoria): ?>
-                        <tr>
-                            <td>
-                                <a
-                                    href="index.php?pagina=catalogo&categoria=<?php echo $categoria['id_categoria']; ?>"
-                                    class="categoria-enlace <?php echo ($idCategoriaSeleccionada == $categoria['id_categoria']) ? 'categoria-enlace--activa' : ''; ?>">
-                                    <?php echo htmlspecialchars($categoria['nombre']); ?>
-                                </a>
-                            </td>
-                        </tr>
+                        <label class="radio-label">
+                            <input type="radio" name="categoria" value="<?php echo $categoria['id_categoria']; ?>" 
+                                <?php echo ($idCategoriaSeleccionada == $categoria['id_categoria']) ? 'checked' : ''; ?>
+                                onchange="this.form.submit()">
+                            <span><?php echo htmlspecialchars($categoria['nombre']); ?></span>
+                        </label>
                     <?php endforeach; ?>
-                </tbody>
-            </table>
+                </div>
 
+                <!-- Precio -->
+                <div class="filtro-grupo">
+                    <h3>Precio ($)</h3>
+                    <div class="precio-inputs">
+                    <input type="number" id="precio-min" name="precio_min" placeholder="Mín" min="0" value="<?php echo htmlspecialchars($precioMin ?? ''); ?>">
+                    <span>-</span>
+                    <input type="number" id="precio-max" name="precio_max" placeholder="Máx" min="0" value="<?php echo htmlspecialchars($precioMax ?? ''); ?>">
+                    <button type="submit" id="btn-filtrar-precio">OK</button>
+                    </div>
+                </div>
+
+                <!-- Marcas (Checkbox: múltiple opción) -->
+                <div class="filtro-grupo">
+                    <h3>Marcas</h3>
+                    
+                    <!-- Input para buscar/filtrar marcas en tiempo real -->
+                    <div class="marcas-buscador-wrapper" style="padding: 0.5rem 1rem;">
+                        <input type="text" id="buscador-marca" placeholder="Buscar otras marcas..." autocomplete="off">
+                    </div>
+
+                    <div class="marcas-container">
+                        <?php 
+                        // Array estático de ejemplo con 5 marcas (puedes cambiarlo o hacerlo dinámico después)
+                        // Por ahora es así porque marca es atributo, no tabla propia (en la bd)
+                        $marcasDisponibles = ['Asus', 'MSI', 'Gigabyte', 'Corsair', 'Kingston', "Sony", "Apple"];
+                        // Obtenemos las marcas que ya estaban seleccionadas en la URL (si las hay)
+                        $marcasSeleccionadas = isset($_GET['marca']) ? (array)$_GET['marca'] : [];
+
+                        foreach ($marcasDisponibles as $marca): 
+                            $marcaSlug = strtolower($marca);
+                            $isChecked = in_array($marcaSlug, $marcasSeleccionadas) ? 'checked' : '';
+                            
+                        ?>
+                            <label class="checkbox-label" data-nombre="<?php echo strtolower($marca); ?>">
+                                <input type="checkbox" name="marca[]" value="<?php echo $marcaSlug; ?>" <?php echo $isChecked; ?> onchange="this.form.submit()"> 
+                                <?php echo $marca; ?>
+                            </label>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+
+            </form>
         </aside>
 
 

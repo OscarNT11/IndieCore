@@ -97,6 +97,24 @@ CREATE TABLE `resenias` (
   FOREIGN KEY (`id_producto`) REFERENCES `productos`(`id_producto`) ON DELETE CASCADE
 );
 
+-- 7. Carrito
+CREATE TABLE `carritos` (
+    `id_carrito` INT AUTO_INCREMENT PRIMARY KEY,
+    `id_usuario` INT NOT NULL,
+
+    FOREIGN KEY (`id_usuario`) REFERENCES `usuarios`(`id_usuario`)
+);
+
+-- 8. Detalles Carrito
+CREATE TABLE `detalles_carrito` (
+  `id_carrito` INT NOT NULL,
+  `id_producto` INT NOT NULL,
+  `cantidad` INT NOT NULL,
+  PRIMARY KEY (`id_carrito`, `id_producto`),
+  FOREIGN KEY (`id_carrito`) REFERENCES `carritos`(`id_carrito`) ON DELETE CASCADE,
+  FOREIGN KEY (`id_producto`) REFERENCES `productos`(`id_producto`) ON DELETE CASCADE
+);
+
 INSERT INTO categorias (nombre, descripcion) VALUES
 ('Juegos',                  'Videojuegos para todas las plataformas'),
 ('Consolas',                'Consolas y controles'),

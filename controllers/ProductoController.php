@@ -19,18 +19,26 @@ class ProductoController {
     }
 
     public function mostrarCatalogo() {
+        // Capturar categoria y busqueda
         $idCategoriaSeleccionada = isset($_GET['categoria']) ? $_GET['categoria'] : null;
-
-        // La barra de búsqueda del header envía el texto en ?q=.
-        // Si hay término, se muestran los resultados de búsqueda en esta
-        // misma página de catálogo; si no, el listado normal por categoría.
         $terminoBusqueda = isset($_GET['q']) ? trim((string) $_GET['q']) : '';
 
-        if ($terminoBusqueda !== '') {
-            $listaDeProductos = $this->productoModel->buscarProductos($terminoBusqueda);
-        } else {
-            $listaDeProductos = $this->productoModel->listarProductos($idCategoriaSeleccionada);
-        }
+        // Capturar marca y precios del catalogo
+        $marcasSeleccionadas = isset($_GET['marca']) && is_array($_GET['marca']) ? $_GET['marca'] : [];
+        $precioMin = isset($_GET['precio_min']) && $_GET['precio_min'] !== '' ? $_GET['precio_min'] : null;
+        $precioMax = isset($_GET['precio_max']) && $_GET['precio_max'] !== '' ? $_GET['precio_max'] : null;
+
+        // Agrupando en un array 
+        $filtros = [
+            'categoria' => $idCategoriaSeleccionada,
+            'busqueda' => $terminoBusqueda,
+            'marca' => $marcasSeleccionadas,
+            'precio_min' => $precioMin,
+            'precio_max' => $precioMax
+        ];
+
+        // Funciones de ProductoModel.php
+        $listaDeProductos = $this->productoModel->obtenerFiltrados($filtros);
 
         $listaDeCategorias = $this->productoModel->listarCategorias();
 
