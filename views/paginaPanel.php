@@ -26,13 +26,13 @@ require __DIR__ . '/header.php';
     <aside class="panel-admin__barra">
         <ul class="panel-admin__menu">
             <li>
-                <a class="panel-admin__enlace panel-admin__enlace--activo" href="index.php?pagina=admin_producto">
+                <a class="panel-admin__enlace" href="index.php?pagina=admin_producto">
                     <svg><use href="public/img/iconos.svg#icono-caja"></use></svg>
                     Productos
                 </a>
             </li>
             <li>
-                <a class="panel-admin__enlace" href="index.php?pagina=pedidos">
+                <a class="panel-admin__enlace" href="index.php?pagina=admin_pedidos">
                     <svg><use href="public/img/iconos.svg#icono-lista"></use></svg>
                     Pedidos
                 </a>
@@ -63,7 +63,7 @@ require __DIR__ . '/header.php';
                 <h2>Productos</h2>
             </a>
 
-            <a class="panel__tarjeta" href="index.php?pagina=pedidos">
+            <a class="panel__tarjeta" href="index.php?pagina=admin_pedidos">
                 <svg><use href="public/img/iconos.svg#icono-lista"></use></svg>
                 <h2>Pedidos</h2>
             </a>

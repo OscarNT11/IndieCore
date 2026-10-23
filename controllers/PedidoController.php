@@ -240,14 +240,22 @@ class PedidoController {
 
         // Al llamarlo desde confirmarPedido() el id viene por parámetro;
         // si se entra por URL, se toma de ?id=.
-        if ($idPedidoCreado === null) {
+        $recienConfirmado = ($idPedidoCreado !== null);
+
+        if (!$recienConfirmado) {
             $idPedidoCreado = isset($_GET['id']) ? (int) $_GET['id'] : 0;
         }
 
         $idUsuario = (int) $_SESSION['id_usuario'];
 
-        // obtenerPorId filtra por id_usuario: nadie ve pedidos ajenos.
-        $pedido = $this->pedidoModel->obtenerPorId($idPedidoCreado, $idUsuario);
+        // Un administrador u operador puede abrir CUALQUIER pedido desde el
+        // panel de pedidos (?pagina=pedido&id=N). Un cliente solo ve los
+        // suyos: obtenerPorId filtra por id_usuario.
+        if (esGestor()) {
+            $pedido = $this->pedidoModel->obtenerPorIdAdmin($idPedidoCreado);
+        } else {
+            $pedido = $this->pedidoModel->obtenerPorId($idPedidoCreado, $idUsuario);
+        }
 
         if (!$pedido) {
             header('Location: index.php?pagina=catalogo');
@@ -257,6 +265,19 @@ class PedidoController {
         $detallesDelPedido = $this->pedidoModel->obtenerDetallesPorPedido($idPedidoCreado);
 
         $pagoDelPedido = $this->pagoModel->obtenerPorPedido($idPedidoCreado);
+
+        // Datos del cliente que hizo el pedido (solo los usa la vista cuando
+        // la abre un gestor desde el panel).
+        $clienteDelPedido = $this->pedidoModel->obtenerClientePorPedido($idPedidoCreado);
+
+        // La factura se muestra en modo "panel" cuando un gestor la abre sin
+        // venir del flujo de compra ni de "Mi cuenta" (?origen=cuenta). Así
+        // funciona también si la URL se escribe a mano o llega de una pestaña
+        // vieja sin &panel=1. Cuando el gestor acaba de comprar en la tienda
+        // (confirmarPedido llama a este método con el id) ve su confirmación.
+        $desdeMiCuenta = (($_GET['origen'] ?? '') === 'cuenta');
+
+        $vistoDesdePanel = esGestor() && !$recienConfirmado && !$desdeMiCuenta;
 
         // views/pedido.php espera estas variables.
         $totalDelPedido = $pedido['precio_total'];

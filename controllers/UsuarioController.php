@@ -91,6 +91,12 @@ class UsuarioController {
         $errores = [];
         $usuarioIngresado = '';
 
+        // Sesión cerrada automáticamente porque la cuenta fue suspendida
+        // (lo redirige index.php al detectarlo).
+        if (isset($_GET['suspendida']) && !usuarioLogueado()) {
+            $errores[] = "Cuenta suspendida. Contacta con el administrador de la tienda.";
+        }
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $usuarioIngresado = trim($_POST['usuario'] ?? '');
@@ -111,6 +117,10 @@ class UsuarioController {
 
                 if (!$usuario || !password_verify($password, $usuario['contrasenia'])) {
                     $errores[] = "Usuario o contraseña incorrectos.";
+                } elseif ((int) ($usuario['suspendida'] ?? 0) === 1) {
+                    // La cuenta existe y la contraseña es correcta, pero un
+                    // administrador la suspendió: no se abre la sesión.
+                    $errores[] = "Cuenta suspendida. Contacta con el administrador de la tienda.";
                 } else {
                     $_SESSION['id_usuario'] = $usuario['id_usuario'];
                     $_SESSION['nombre_usuario'] = $usuario['nombre'];

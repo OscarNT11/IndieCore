@@ -23,6 +23,7 @@ CREATE TABLE `usuarios` (
   `contrasenia` VARCHAR(255) NOT NULL,
   `foto` VARCHAR(255),
   `rol` ENUM('cliente', 'administrador', 'operador') NOT NULL DEFAULT 'cliente',
+  `suspendida` TINYINT(1) NOT NULL DEFAULT 0,
   `fecha_registro` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -166,3 +167,16 @@ INSERT INTO productos (nombre, marca, informacion, foto, stock, precio, id_categ
 
 
 
+
+-- 7. Usuarios de prueba
+-- ----------------------------------------------------------------------------
+--
+--   comprador@tecnoparts.com  / TiendaCompra2026   (rol cliente)
+--   operador@tecnoparts.com   / TiendaOpera2026    (rol operador)
+--   admin@tecnoparts.com      / TiendaAdmin2026    (rol administrador)
+--
+-- Cambiá estas contraseñas antes de publicar la tienda.
+INSERT INTO usuarios (nombre, email, contrasenia, foto, rol, suspendida) VALUES
+('Comprador', 'comprador@tecnoparts.com', '$2y$10$b5tSLCKDBf7terUfz2BYcecLrLfwAUDWsSm80uHXi.QV77//RTk8O', NULL, 'cliente',       0),
+('Operador',  'operador@tecnoparts.com',  '$2y$10$BzsSoh4in70lhAWfzl6hkexZ5EV3YqEyFzrLNpnuJwHNbeYB4Y/nm', NULL, 'operador',      0),
+('Admin',     'admin@tecnoparts.com',     '$2y$10$9ajTFxrmyQfL.krQjs1g1.NHqK8zWU87Hr/.k9nfrKa3aikuIrdp6', NULL, 'administrador', 0);

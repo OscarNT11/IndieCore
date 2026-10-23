@@ -9,16 +9,12 @@ body.body-panel {
     min-height: 100dvh;
 }
 
+/* El header se muestra COMPLETO también en el panel (logo, buscador,
+   usuario y la barra de navegación inferior del menú). */
 body.body-panel .contenido-principal {
     flex: 1;
-    min-height: calc(100dvh - 70px);
+    min-height: calc(100dvh - 110px);
     padding: 0;
-}
-
-/* En el panel el header no lleva la barra de navegación inferior:
-   el menú queda en la barra lateral. */
-body.body-panel #nav-inferior {
-    display: none;
 }
 
 body.body-panel .header {
@@ -31,7 +27,9 @@ body.body-panel .header {
     display: grid;
     grid-template-columns: 215px minmax(0, 1fr);
     align-items: stretch;
-    min-height: calc(100dvh - 70px);
+    /* El panel ocupa la ventana menos el header completo (barra superior +
+       navegación inferior), que ahora también se muestra aquí. */
+    min-height: calc(100dvh - 110px);
 }
 
 /* Las vistas sin barra lateral usan una sola columna a todo el ancho. */
@@ -308,6 +306,85 @@ body.body-panel .header {
 
     border: 1px solid #3f6b48;
     border-radius: 6px;
+}
+
+/* Los listados usan .alert-danger, que NO entra en la regla de arriba. */
+.panel-admin .alert-danger {
+    background-color: #4a2a2a;
+    color: #ffd6d6;
+    border-color: #7a3b3b;
+}
+
+/* Aviso neutro (por ejemplo, la propia cuenta no se puede modificar). */
+.panel-admin .alert-info {
+    background-color: #2f3a46;
+    color: #d6e5f5;
+    border-color: #3f5b78;
+}
+
+/* ---------- Listado y formulario de usuarios ---------- */
+
+.panel-admin__datos {
+    margin-bottom: 22px;
+    color: #d6d6d6;
+}
+
+.rol {
+    display: inline-block;
+    padding: 3px 10px;
+
+    font-size: 0.85rem;
+    border-radius: 999px;
+
+    background-color: #4a4a4a;
+}
+
+.rol-administrador {
+    background-color: #5c4a2e;
+}
+
+.rol-operador {
+    background-color: #2e4a5c;
+}
+
+/* Varias acciones por fila: se separan y no se cortan. */
+.panel-productos .table td .btn-sm {
+    margin: 2px 2px 2px 0;
+    white-space: nowrap;
+}
+
+/* ---------- Listado de pedidos ---------- */
+
+.panel-pedidos__resumen {
+    margin-bottom: 26px;
+}
+
+.panel-pedidos__resumen .panel__tarjeta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+}
+
+.panel-pedidos__dato h2 {
+    font-size: 1.7rem;
+    color: #ededed;
+}
+
+.panel-pedidos__dato p {
+    font-size: 0.95rem;
+    color: #c4c4c4;
+}
+
+/* La etiqueta de estado reutiliza .pedido-confirmado__estado de
+   paginaPedido.css, pero aquí va dentro de una celda: no debe estirarse. */
+.panel-pedidos .table .pedido-confirmado__estado {
+    align-self: auto;
+    display: inline-block;
+    white-space: nowrap;
+}
+
+.panel-pedidos .table small {
+    color: #bcbcbc;
 }
 
 /* ---------- Listado de productos ---------- */
