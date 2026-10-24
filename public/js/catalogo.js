@@ -8,82 +8,78 @@
 
 const botonesAgregar = document.querySelectorAll(".boton-agregar-carrito");
 
+
 botonesAgregar.forEach((boton) => {
 
-    boton.addEventListener("click", () => {
+    boton.addEventListener("click", async () => {
+
+        // Evita enviar varias solicitudes por clics repetidos.
+        if (boton.disabled) return;
 
         const id = boton.dataset.idProducto;
-
         const nombre = boton.dataset.nombreProducto;
+        const cantidad = leerCantidadDelBoton(boton);
 
-        const precio = normalizarPrecio(boton.dataset.precioProducto);
-
-        // Stock real del producto (lo manda la vista desde la BD).
-        // Sin atributo o sin número => sin límite conocido.
-        const stockDeclarado = Number(boton.dataset.stockProducto);
-
-        const stock = Number.isFinite(stockDeclarado) ? stockDeclarado : Infinity;
-
-        // Cantidad a agregar: en el detalle la elige el usuario con el
-        // contador; en las tarjetas del catálogo es siempre 1.
-        const cantidadPedida = leerCantidadDelBoton(boton);
-
-        // La imagen está dentro de la misma tarjeta que el botón,
-        // o en el bloque de imagen del detalle de producto.
-        const contenedorImagen = boton.closest(".tarjeta-producto")
-            || document.querySelector(".detalle-producto__imagen");
-
-        const imagen = contenedorImagen ? contenedorImagen.querySelector("img") : null;
-
-        const carrito = obtenerCarrito();
-
-        // Si el producto ya está en el carrito se suma la cantidad
-        // pedida en vez de duplicar la fila.
-        const productoExistente = carrito.find((producto) => {
-
-            return String(producto.id) === String(id);
-        });
-
-        const cantidadActual = productoExistente ? Number(productoExistente.cantidad) || 0 : 0;
-
-        // No se puede pasar del stock disponible
-        const cantidadFinal = Math.min(cantidadActual + cantidadPedida, stock);
-
-        const agregadas = cantidadFinal - cantidadActual;
-
-        if (agregadas <= 0) {
-
-            mostrarAviso(`No hay más unidades de ${nombre} disponibles`);
-
+        if (!id || cantidad < 1) {
+            mostrarAviso("Los datos del producto no son válidos.");
             return;
         }
 
-        if (productoExistente) {
+        boton.disabled = true;
 
-            productoExistente.cantidad = cantidadFinal;
+        try {
+            const respuesta = await fetch(
+                "index.php?pagina=carrito-api&accion=agregar",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded"
+                    },
+                    body: new URLSearchParams({
+                        id_producto: id,
+                        cantidad: cantidad
+                    })
+                }
+            );
 
-            // Se refresca el stock por si cambió desde la última visita
-            productoExistente.stock = stock;
+            const datos = await respuesta.json();
 
-        } else {
+            if (!respuesta.ok || !datos.ok) {
+                mostrarAviso(
+                    datos.mensaje || "No se pudo agregar el producto."
+                );
+                return;
+            }
 
-            carrito.push({
-                id: id,
-                nombre: nombre,
-                precio: precio,
-                imagen: imagen ? imagen.getAttribute("src") : "",
-                cantidad: cantidadFinal,
-                // Se guarda para que carrito.js pueda aplicar el mismo
-                // tope al editar la cantidad desde la página del carrito.
-                stock: stock
-            });
+            if (!Array.isArray(datos.carrito)) {
+                mostrarAviso("El servidor devolvió una respuesta inesperada.");
+                return;
+            }
+
+            const contador = document.getElementById("contador-carrito");
+
+            if (contador) {
+                const cantidadTotal = datos.carrito.reduce(
+                    (total, producto) =>
+                        total + Number(producto.cantidad),
+                    0
+                );
+
+                contador.textContent = cantidadTotal;
+            }
+
+            mostrarAviso(`${cantidad} x ${nombre} se agregó al carrito`);
+
+        } catch (error) {
+            console.error("Error al agregar el producto:", error);
+
+            mostrarAviso(
+                "No se pudo conectar con el servidor. Intenta nuevamente."
+            );
+
+        } finally {
+            boton.disabled = false;
         }
-
-        guardarCarrito(carrito);
-
-        actualizarContador();
-
-        mostrarAviso(`${agregadas} x ${nombre} se agregó al carrito`);
     });
 });
 
@@ -131,7 +127,7 @@ function mostrarAviso(mensaje) {
 
         aviso.classList.remove("aviso-carrito--visible");
 
-    }, 2000);
+    }, 2500);
 }
 
 /* ==========================================================

@@ -42,6 +42,11 @@ switch ($paginaSolicitada) {
         require __DIR__ . '/views/paginaCarrito.php';
         break;
 
+    case 'carrito-api':
+        $controlador = new CarritoController($conn);
+        $controlador->procesarSolicitud();
+        break;
+
     case 'cuenta':
         // Datos del usuario logueado y foto de perfil.
         $controlador = new UsuarioController($conn);

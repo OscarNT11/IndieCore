@@ -100,7 +100,7 @@ CREATE TABLE `resenias` (
 -- 7. Carrito
 CREATE TABLE `carritos` (
     `id_carrito` INT AUTO_INCREMENT PRIMARY KEY,
-    `id_usuario` INT NOT NULL,
+    `id_usuario` INT NOT NULL UNIQUE,
 
     FOREIGN KEY (`id_usuario`) REFERENCES `usuarios`(`id_usuario`)
 );

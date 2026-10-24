@@ -1,211 +1,63 @@
+
 /* ==========================================================
-   PÁGINA DEL CARRITO
-   Este script SOLO se carga en views/paginaCarrito.php.
-   Las funciones obtenerCarrito / guardarCarrito / actualizarContador
-   vienen de storage.js, que el footer carga en todas las páginas.
+   CARRITO DE COMPRAS
+   Los productos y las cantidades se obtienen de SQL mediante
+   CarritoController.php. Ya no se utiliza localStorage aquí.
    ========================================================== */
 
-/* Pinta el resumen de compra: cantidad de productos y total.
-   Los elementos están en Carrito.php. */
-function actualizarResumen() {
+let carritoSQL = [];
 
-    const carrito = obtenerCarrito();
+/* ==========================================================
+   SOLICITUDES AL CONTROLADOR
+   ========================================================== */
 
-    const cantidadProductos = document.getElementById("cantidad-carrito");
-    const totalCarrito = document.getElementById("totalCarrito");
 
-    let cantidadTotal = 0;
-    let total = 0;
+async function solicitarCarrito(accion, datos = {}, metodo = "POST") {
+    const opciones = {
+        method: metodo
+    };
 
-    carrito.forEach((producto) => {
+    if (metodo === "POST") {
+        opciones.headers = {
+            "Content-Type": "application/x-www-form-urlencoded"
+        };
 
-        const cantidad = Number(producto.cantidad) || 0;
-
-        cantidadTotal += cantidad;
-
-        total += normalizarPrecio(producto.precio) * cantidad;
-    });
-
-    if (cantidadProductos) {
-        cantidadProductos.textContent = `Cantidad de productos (${cantidadTotal})`;
+        opciones.body = new URLSearchParams(datos);
     }
 
-    if (totalCarrito) {
-        totalCarrito.textContent = `Total: $${formatearPrecio(total)}`;
+    try {
+        const respuesta = await fetch(
+            `index.php?pagina=carrito-api&accion=${encodeURIComponent(accion)}`,
+            opciones
+        );
+
+        const datosRespuesta = await respuesta.json();
+
+        if (!respuesta.ok) {
+            return {
+                ok: false,
+                mensaje: datosRespuesta.mensaje ||
+                    "El servidor no pudo procesar la solicitud."
+            };
+        }
+
+        return datosRespuesta;
+
+    } catch (error) {
+        console.error("Error al comunicarse con el carrito:", error);
+
+        return {
+            ok: false,
+            mensaje: "No se pudo conectar con el servidor. Intenta nuevamente."
+        };
     }
 }
 
-/* Escapa el texto que viene del nombre del producto para que no
-   pueda inyectar HTML dentro de la tarjeta. */
-function escaparHtml(texto) {
 
-    const contenedor = document.createElement("div");
+/* ==========================================================
+   AVISOS
+   ========================================================== */
 
-    contenedor.textContent = String(texto ?? "");
-
-    return contenedor.innerHTML;
-}
-
-/* Stock máximo que se puede pedir de un producto del carrito.
-   Lo guarda catalogo.js en cada línea; si la línea no tiene el dato
-   (o el producto no tiene stock declarado), no hay tope. */
-function stockDeProducto(producto) {
-
-    const stock = Number(producto ? producto.stock : NaN);
-
-    return Number.isFinite(stock) && stock > 0 ? stock : Infinity;
-}
-
-/* Dibuja en pantalla la lista de productos guardados en el carrito. */
-function mostrarCarrito() {
-
-    const carrito = obtenerCarrito();
-
-    const lista = document.getElementById("contenedorCarrito");
-
-    const estadoVacio = document.getElementById("carritoVacio");
-
-    const resumen = document.getElementById("resumenCarrito");
-
-    if (!lista) return;
-
-    lista.innerHTML = "";
-
-    // Carrito vacío: se muestra el mensaje y se oculta el resumen
-    if (carrito.length === 0) {
-
-        if (estadoVacio) estadoVacio.hidden = false;
-
-        if (resumen) resumen.hidden = true;
-
-        return;
-    }
-
-    if (estadoVacio) estadoVacio.hidden = true;
-
-    if (resumen) resumen.hidden = false;
-
-    carrito.forEach((producto, indice) => {
-
-        const cantidad = Number(producto.cantidad) || 1;
-
-        const precio = normalizarPrecio(producto.precio);
-
-        const stockMaximo = stockDeProducto(producto);
-
-        // El input del carrito también respeta el stock de la BD
-        const atributoMax = Number.isFinite(stockMaximo)
-            ? ` max="${stockMaximo}"`
-            : "";
-
-        const tarjeta = document.createElement("article");
-
-        tarjeta.classList.add("producto-carrito");
-
-        tarjeta.innerHTML = `
-            <a class="producto-carrito__enlace"
-               href="index.php?pagina=producto&id=${encodeURIComponent(producto.id)}"
-               title="Ver detalle de ${escaparHtml(producto.nombre)}">
-                <img class="producto-carrito__imagen"
-                     src="${escaparHtml(producto.imagen)}"
-                     alt="${escaparHtml(producto.nombre)}">
-            </a>
-
-            <div class="producto-carrito__info">
-                <h2>${escaparHtml(producto.nombre)}</h2>
-
-                <p class="producto-carrito__unitario">
-                    $${formatearPrecio(precio)} c/u
-                </p>
-            </div>
-
-            <div class="producto-carrito__cantidad">
-                <button type="button" class="boton-cantidad" data-accion="restar" aria-label="Quitar una unidad">-</button>
-
-                <input
-                    type="number"
-                    class="entrada-cantidad"
-                    value="${cantidad}"
-                    min="1"${atributoMax}
-                    aria-label="Cantidad de ${escaparHtml(producto.nombre)}">
-
-                <button type="button" class="boton-cantidad" data-accion="sumar" aria-label="Agregar una unidad">+</button>
-            </div>
-
-            <h3 class="producto-carrito__subtotal">$${formatearPrecio(precio * cantidad)}</h3>
-
-            <button type="button" class="boton-eliminar" aria-label="Eliminar del carrito">Quitar</button>
-        `;
-
-        // --- Cambiar la cantidad con los botones - / + ---
-        tarjeta.querySelectorAll(".boton-cantidad").forEach((boton) => {
-
-            boton.addEventListener("click", () => {
-
-                const actual = Number(carrito[indice].cantidad) || 1;
-
-                const nueva = boton.dataset.accion === "sumar" ? actual + 1 : actual - 1;
-
-                actualizarCantidad(indice, nueva);
-            });
-        });
-
-        // El botón "+" se bloquea al llegar al stock disponible
-        const botonSumar = tarjeta.querySelector('[data-accion="sumar"]');
-
-        if (botonSumar) botonSumar.disabled = cantidad >= stockMaximo;
-
-        // --- Cambiar la cantidad escribiendo en el input ---
-        const entradaCantidad = tarjeta.querySelector(".entrada-cantidad");
-
-        entradaCantidad.addEventListener("change", () => {
-
-            actualizarCantidad(indice, Number(entradaCantidad.value));
-        });
-
-        // --- Quitar el producto del carrito ---
-        tarjeta.querySelector(".boton-eliminar").addEventListener("click", () => {
-
-            eliminarProducto(indice);
-        });
-
-        lista.appendChild(tarjeta);
-    });
-}
-
-/* Cambia la cantidad de un producto; si queda en 0 o menos, lo elimina.
-   La cantidad nunca supera el stock que el producto traía de la BD. */
-function actualizarCantidad(indice, nuevaCantidad) {
-
-    const carrito = obtenerCarrito();
-
-    if (!carrito[indice]) return;
-
-    if (!Number.isFinite(nuevaCantidad) || nuevaCantidad <= 0) {
-
-        eliminarProducto(indice);
-
-        return;
-    }
-
-    const stockMaximo = stockDeProducto(carrito[indice]);
-
-    // Se pedían más unidades de las que hay: se avisa al usuario
-    // y se deja la cantidad en el máximo disponible.
-    if (nuevaCantidad > stockMaximo) {
-
-        mostrarAviso(`Solo quedan ${stockMaximo} unidades de ${carrito[indice].nombre}`);
-    }
-
-    carrito[indice].cantidad = Math.min(Math.floor(nuevaCantidad), stockMaximo);
-
-    guardarCarrito(carrito);
-
-    refrescarCarrito();
-}
-
-/* Aviso flotante (misma mecánica que en catalogo.js, pero catalogo.js
-   solo se carga en el catálogo, el inicio y el detalle). */
 function mostrarAviso(mensaje) {
 
     let aviso = document.getElementById("aviso-carrito");
@@ -213,7 +65,6 @@ function mostrarAviso(mensaje) {
     if (!aviso) {
 
         aviso = document.createElement("div");
-
         aviso.id = "aviso-carrito";
 
         document.body.appendChild(aviso);
@@ -232,99 +83,358 @@ function mostrarAviso(mensaje) {
     }, 2000);
 }
 
-/* Elimina un producto puntual de la lista. */
-function eliminarProducto(indice) {
+/* Escapa texto antes de insertarlo dentro del HTML generado. */
+function escaparHtml(texto) {
 
-    const carrito = obtenerCarrito();
+    return String(texto ?? "").replace(/[&<>"']/g, (caracter) => {
 
-    carrito.splice(indice, 1);
+        const caracteres = {
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': "&quot;",
+            "'": "&#039;"
+        };
 
-    guardarCarrito(carrito);
-
-    refrescarCarrito();
+        return caracteres[caracter];
+    });
 }
 
-/* Vuelve a dibujar todo: lista, resumen y contador del header. */
+/* ==========================================================
+   MOSTRAR CARRITO
+   ========================================================== */
+
+function mostrarCarrito() {
+
+    const lista = document.getElementById("contenedorCarrito");
+    const estadoVacio = document.getElementById("carritoVacio");
+    const resumen = document.getElementById("resumenCarrito");
+
+    if (!lista) return;
+
+    lista.innerHTML = "";
+
+    if (carritoSQL.length === 0) {
+
+        if (estadoVacio) estadoVacio.hidden = false;
+        if (resumen) resumen.hidden = true;
+
+        return;
+    }
+
+    if (estadoVacio) estadoVacio.hidden = true;
+    if (resumen) resumen.hidden = false;
+
+    carritoSQL.forEach((producto) => {
+
+        const idProducto = Number(producto.id_producto);
+        const cantidad = Number(producto.cantidad);
+        const precio = normalizarPrecio(producto.precio);
+        const stock = Math.max(0, Number(producto.stock) || 0);
+
+        const atributoMax = `max="${stock}"`;
+
+        const tarjeta = document.createElement("article");
+
+        tarjeta.classList.add("producto-carrito");
+
+        tarjeta.innerHTML = `
+            <a class="producto-carrito__enlace"
+               href="index.php?pagina=producto&id=${encodeURIComponent(idProducto)}"
+               title="Ver detalle de ${escaparHtml(producto.nombre)}">
+
+                <img class="producto-carrito__imagen"
+                     src="public/img/ImagenesProductos/${escaparHtml(producto.imagen)}"
+                     alt="${escaparHtml(producto.nombre)}">
+            </a>
+
+            <div class="producto-carrito__info">
+                <h2>${escaparHtml(producto.nombre)}</h2>
+
+                <p class="producto-carrito__unitario">
+                    $${formatearPrecio(precio)} c/u
+                </p>
+            </div>
+
+            <div class="producto-carrito__cantidad">
+
+                <button type="button"
+                        class="boton-cantidad"
+                        data-accion="restar"
+                        aria-label="Quitar una unidad">-</button>
+
+                <input type="number"
+                       class="entrada-cantidad"
+                       value="${cantidad}"
+                       min="1"
+                       ${atributoMax}
+                       aria-label="Cantidad de ${escaparHtml(producto.nombre)}">
+
+                <button type="button"
+                        class="boton-cantidad"
+                        data-accion="sumar"
+                        aria-label="Agregar una unidad"
+                        ${cantidad >= stock ? "disabled" : ""}>+</button>
+            </div>
+
+            <h3 class="producto-carrito__subtotal">
+                $${formatearPrecio(precio * cantidad)}
+            </h3>
+
+            <button type="button"
+                    class="boton-eliminar"
+                    aria-label="Eliminar del carrito">Quitar</button>
+        `;
+
+        // Botones para aumentar o disminuir la cantidad.
+        tarjeta.querySelectorAll(".boton-cantidad").forEach((boton) => {
+
+            boton.addEventListener("click", () => {
+
+                const actual = Number(producto.cantidad);
+
+                const nuevaCantidad =
+                    boton.dataset.accion === "sumar"
+                        ? actual + 1
+                        : actual - 1;
+
+                actualizarCantidad(idProducto, nuevaCantidad);
+            });
+        });
+
+        // Cambio manual de cantidad.
+        const entradaCantidad = tarjeta.querySelector(".entrada-cantidad");
+
+        entradaCantidad.addEventListener("change", () => {
+
+            actualizarCantidad(
+                idProducto,
+                Number(entradaCantidad.value)
+            );
+        });
+
+        // Eliminar el producto.
+        tarjeta.querySelector(".boton-eliminar")
+            .addEventListener("click", () => {
+
+                eliminarProducto(idProducto);
+            });
+
+        lista.appendChild(tarjeta);
+    });
+}
+
+/* ==========================================================
+   RESUMEN Y CONTADOR
+   ========================================================== */
+
+function actualizarResumen() {
+
+    let cantidadTotal = 0;
+    let total = 0;
+
+    carritoSQL.forEach((producto) => {
+
+        const cantidad = Number(producto.cantidad) || 0;
+        const precio = normalizarPrecio(producto.precio);
+
+        cantidadTotal += cantidad;
+        total += precio * cantidad;
+    });
+
+    const cantidadProductos = document.getElementById("cantidad-carrito");
+    const totalCarrito = document.getElementById("totalCarrito");
+    const contador = document.getElementById("contador-carrito");
+
+    if (cantidadProductos) {
+
+        cantidadProductos.textContent =
+            `Cantidad de productos (${cantidadTotal})`;
+    }
+
+    if (totalCarrito) {
+
+        totalCarrito.textContent =
+            `Total: $${formatearPrecio(total)}`;
+    }
+
+    if (contador) {
+
+        contador.textContent = cantidadTotal;
+    }
+}
+
+/* Actualiza toda la interfaz con el estado actual de SQL. */
 function refrescarCarrito() {
 
     mostrarCarrito();
-
     actualizarResumen();
-
-    actualizarContador();
 }
 
-/* --- Botón "Vaciar carrito" --- */
+/* Consulta el carrito al entrar a la página. */
+
+async function cargarCarrito() {
+    const datos = await solicitarCarrito("listar", {}, "GET");
+
+    if (!datos.ok || !Array.isArray(datos.carrito)) {
+        mostrarAviso(
+            datos.mensaje || "No se pudo cargar el carrito."
+        );
+        return;
+    }
+
+    carritoSQL = datos.carrito;
+    refrescarCarrito();
+}
+
+
+/* ==========================================================
+   MODIFICAR CANTIDADES
+   ========================================================== */
+
+
+async function actualizarCantidad(idProducto, nuevaCantidad) {
+    if (!Number.isFinite(nuevaCantidad)) {
+        mostrarCarrito();
+        return;
+    }
+
+    if (nuevaCantidad <= 0) {
+        await eliminarProducto(idProducto);
+        return;
+    }
+
+    const producto = carritoSQL.find(
+        (item) => Number(item.id_producto) === Number(idProducto)
+    );
+
+    if (!producto) return;
+
+    const stock = Number(producto.stock);
+
+    if (nuevaCantidad > stock) {
+        mostrarAviso(`Solo hay ${stock} unidades disponibles.`);
+        mostrarCarrito();
+        return;
+    }
+
+    const datos = await solicitarCarrito("actualizar", {
+        id_producto: idProducto,
+        cantidad: nuevaCantidad
+    });
+
+    if (!datos.ok || !Array.isArray(datos.carrito)) {
+        mostrarAviso(
+            datos.mensaje || "No se pudo actualizar la cantidad."
+        );
+
+        // Restaura la cantidad que conserva el estado confirmado.
+        mostrarCarrito();
+        return;
+    }
+
+    carritoSQL = datos.carrito;
+    refrescarCarrito();
+}
+
+
+/* ==========================================================
+   ELIMINAR PRODUCTO
+   ========================================================== */
+
+
+async function eliminarProducto(idProducto) {
+    const datos = await solicitarCarrito("eliminar", {
+        id_producto: idProducto
+    });
+
+    if (!datos.ok || !Array.isArray(datos.carrito)) {
+        mostrarAviso(
+            datos.mensaje || "No se pudo eliminar el producto."
+        );
+
+        mostrarCarrito();
+        return;
+    }
+
+    carritoSQL = datos.carrito;
+    refrescarCarrito();
+
+    mostrarAviso("Producto eliminado del carrito.");
+}
+
+
+/* ==========================================================
+   VACIAR CARRITO
+   ========================================================== */
+
 const botonVaciar = document.getElementById("botonVaciarCarrito");
 
 if (botonVaciar) {
 
-    botonVaciar.addEventListener("click", () => {
+    botonVaciar.addEventListener("click", async () => {
 
         if (!confirm("¿Seguro que quieres vaciar el carrito?")) return;
 
-        guardarCarrito([]);
+        const datos = await solicitarCarrito("vaciar");
+
+        if (!datos.ok) {
+
+            mostrarAviso("No se pudo vaciar el carrito.");
+
+            return;
+        }
+
+        carritoSQL = Array.isArray(datos.carrito)
+            ? datos.carrito
+            : [];
 
         refrescarCarrito();
+
+        mostrarAviso("Carrito vaciado.");
     });
 }
 
-/* --- Botón "Finalizar compra" --- */
+/* ==========================================================
+   FINALIZAR COMPRA
+   ========================================================== */
+
 const botonFinalizar = document.getElementById("botonFinalizarCompra");
 
 if (botonFinalizar) {
 
     botonFinalizar.addEventListener("click", () => {
 
-        if (obtenerCarrito().length === 0) {
+        if (carritoSQL.length === 0) {
 
             alert("Tu carrito está vacío.");
 
             return;
         }
 
-        // Se envía el carrito al checkout (index.php?pagina=checkout),
-        // donde el usuario completa el envío y elige el método de pago.
-        // El pedido todavía NO se guarda: eso pasa al confirmar el checkout.
-        const carrito = obtenerCarrito();
-
-        const formulario = document.createElement("form");
-
-        formulario.method = "POST";
-
-        formulario.action = "index.php?pagina=checkout";
-
-        const campoCarrito = document.createElement("input");
-
-        campoCarrito.type = "hidden";
-
-        campoCarrito.name = "carritoJson";
-
-        campoCarrito.value = JSON.stringify(carrito);
-
-        formulario.appendChild(campoCarrito);
-
-        document.body.appendChild(formulario);
-
-        formulario.submit();
+        // El checkout obtiene los productos directamente desde SQL.
+        window.location.href = "index.php?pagina=checkout";
     });
 }
 
-/* Al entrar a la página dibujamos lo que ya había guardado. */
-refrescarCarrito();
+/* ==========================================================
+   MENSAJES DEL PEDIDO
+   ========================================================== */
 
-/* --- Resultado del pedido ---
-   Solo se llega acá cuando algo impidió seguir: el caso correcto termina en
-   views/pedido.php, que vacía el carrito por su cuenta. */
 const MENSAJES_DEL_PEDIDO = {
+
     error: "No se pudo registrar el pedido. Intenta nuevamente.",
+
     sesion: "Iniciá sesión para poder confirmar tu pedido.",
-    vacio: "Algunos productos de tu carrito ya no tienen stock. Revisalo y volvé a intentarlo."
+
+    vacio: "Algunos productos ya no tienen stock. Revisá el carrito."
 };
 
 function avisarResultadoDelPedido() {
 
-    const resultado = new URLSearchParams(window.location.search).get("pedido");
+    const resultado = new URLSearchParams(
+        window.location.search
+    ).get("pedido");
 
     const mensaje = MENSAJES_DEL_PEDIDO[resultado];
 
@@ -332,20 +442,29 @@ function avisarResultadoDelPedido() {
 
     alert(mensaje);
 
-    // Si el problema fue la sesión, se abre el modal de login directamente.
     if (resultado === "sesion") {
 
-        const pantallaLogin = document.getElementById("pantalla-transparente");
+        const pantallaLogin = document.getElementById(
+            "pantalla-transparente"
+        );
 
-        if (pantallaLogin) pantallaLogin.style.display = "flex";
+        if (pantallaLogin) {
+
+            pantallaLogin.style.display = "flex";
+        }
     }
 
-    // Se quita el parámetro de la URL para que un refresco no repita el aviso.
-    const urlLimpia = window.location.pathname + window.location.search
-        .replace(/([?&])pedido=[a-z]+&?/, "$1")
-        .replace(/[?&]$/, "");
+    const urlLimpia = new URL(window.location.href);
+
+    urlLimpia.searchParams.delete("pedido");
 
     window.history.replaceState({}, "", urlLimpia);
 }
+
+/* ==========================================================
+   INICIALIZACIÓN
+   ========================================================== */
+
+cargarCarrito();
 
 avisarResultadoDelPedido();

@@ -1,34 +1,10 @@
 /* ==========================================================
-   ALMACENAMIENTO DEL CARRITO (localStorage)
-   Este archivo se carga en TODAS las páginas (footer.php),
-   por eso aquí viven las funciones que usan catalogo.js y
-   carrito.js: obtenerCarrito, guardarCarrito y el contador
-   del header.
+   UTILIDADES DEL CARRITO
+   Este archivo se carga en todas las páginas.
+   Contiene funciones para formatear precios y actualizar
+   el contador del carrito mediante datos obtenidos desde SQL.
    ========================================================== */
-
-const CLAVE_CARRITO = "carrito";
-
-/* Devuelve siempre un array, aunque el localStorage esté vacío,
-   corrupto o guardado con otra forma (evita romper el resto de los
-   scripts con un JSON.parse fallido). */
-function obtenerCarrito() {
-
-    try {
-
-        const guardado = JSON.parse(localStorage.getItem(CLAVE_CARRITO));
-
-        return Array.isArray(guardado) ? guardado : [];
-
-    } catch (error) {
-
-        return [];
-    }
-}
-
-function guardarCarrito(carrito) {
-    localStorage.setItem(CLAVE_CARRITO, JSON.stringify(carrito));
-}
-
+   
 /* Normaliza un precio que puede llegar como número (4.99) o como
    texto ya formateado ("4.99" o "1.234,56"). Devuelve siempre un número. */
 function normalizarPrecio(precio) {
@@ -53,26 +29,38 @@ function normalizarPrecio(precio) {
     return isFinite(numero) ? numero : 0;
 }
 
-/* Suma la cantidad de TODOS los productos del carrito y actualiza
-   el contador del header (<span id="contador-carrito">). */
-function actualizarContador() {
 
+async function actualizarContador() {
     const contador = document.getElementById("contador-carrito");
 
     if (!contador) return;
 
-    const carrito = obtenerCarrito();
+    contador.textContent = "0";
 
-    const cantidadTotal = carrito.reduce((acumulado, producto) => {
+    try {
+        const respuesta = await fetch(
+            "index.php?pagina=carrito-api&accion=listar"
+        );
 
-        const cantidad = Number(producto.cantidad) || 0;
+        const datos = await respuesta.json();
 
-        return acumulado + cantidad;
+        if (!respuesta.ok || !datos.ok || !Array.isArray(datos.carrito)) {
+            console.error("No se pudo obtener el carrito:", datos.mensaje);
+            return;
+        }
 
-    }, 0);
+        const cantidadTotal = datos.carrito.reduce(
+            (total, producto) => total + Number(producto.cantidad),
+            0
+        );
 
-    contador.textContent = cantidadTotal;
+        contador.textContent = cantidadTotal;
+
+    } catch (error) {
+        console.error("Error al actualizar el contador:", error);
+    }
 }
+
 
 /* Formatea un número al estilo usado en las vistas de PHP:
    number_format($precio, 2, ',', '.')  ->  1.234,56 */

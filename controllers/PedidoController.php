@@ -4,6 +4,7 @@ require_once __DIR__ . '/../models/PedidoModel.php';
 require_once __DIR__ . '/../models/PagoModel.php';
 require_once __DIR__ . '/../models/ProductoModel.php';
 require_once __DIR__ . '/../config/auth.php';
+require_once __DIR__ . '/../models/CarritoModel.php';
 
 class PedidoController {
 
@@ -11,6 +12,7 @@ class PedidoController {
     private $pedidoModel;
     private $pagoModel;
     private $productoModel;
+    private $carritoModel;
 
     /* Departamentos de Uruguay: alimentan el <select> del checkout. */
     private $departamentos = [
@@ -25,6 +27,7 @@ class PedidoController {
         $this->pedidoModel = new PedidoModel($conexion);
         $this->pagoModel = new PagoModel($conexion);
         $this->productoModel = new ProductoModel($conexion);
+        $this->carritoModel = new CarritoModel($conexion);
     }
 
     /* ==========================================================
@@ -32,20 +35,24 @@ class PedidoController {
        Recibe el carrito del navegador, recalcula todo contra la BD y
        muestra el formulario de envío + método de pago.
        ========================================================== */
+    
+    // Se modificó el mostrarCheckout con la nueva versión de carrito
+
     public function mostrarCheckout() {
 
-        // La sesión se comprueba DESPUÉS de leer el carrito, para que quien
-        // entra a ?pagina=checkout sin sesión vuelva con su carrito intacto
-        // y el aviso de iniciar sesión en lugar de un carrito vacío.
-
-        // El carrito puede llegar por POST (formulario del carrito/checkout)
-        // o por GET desde el botón "Finalizar compra".
-        $carritoRecibido = $this->leerCarrito();
-
-        // Solo se puede comprar con la sesión iniciada: el pedido guarda
-        // id_usuario y el envío se rellena con los datos de la cuenta.
         if (!usuarioLogueado()) {
             header('Location: index.php?pagina=carrito&pedido=sesion');
+            exit;
+        }
+
+        $idUsuario = (int) $_SESSION['id_usuario'];
+
+        // Obtener el carrito del usuario
+        $carritoRecibido = $this->carritoModel->obtenerDetallesCarrito($idUsuario);
+
+        if ($carritoRecibido === false) {
+            $this->registrarError('mostrarCheckout: no se pudo consultar el carrito SQL.');
+            header('Location: index.php?pagina=carrito&pedido=error');
             exit;
         }
 
@@ -65,10 +72,6 @@ class PedidoController {
 
         $departamentos = $this->departamentos;
 
-        // El carrito original se conserva para reenviarlo al confirmar.
-        $carritoJson = json_encode($carritoRecibido);
-
-        // Datos de envío precargados con el nombre del usuario logueado.
         $usuario = usuarioActual();
 
         $datosEnvio = array(
@@ -85,6 +88,7 @@ class PedidoController {
         require __DIR__ . '/../views/checkout.php';
     }
 
+
     /* ==========================================================
        PASO 2: CONFIRMAR (index.php?pagina=confirmar-pedido, POST)
        Valida el envío y el pago, guarda pedido + detalle + pago y
@@ -98,11 +102,22 @@ class PedidoController {
             exit;
         }
 
-        $carritoRecibido = $this->leerCarrito();
+        $idUsuario = (int) $_SESSION['id_usuario'];
+
+        // Volver a consultar SQL al confirmar: no confiar en el
+        // carrito que se mostró anteriormente en el navegador
+        // Esto por si el usuario logró modificar cosas en el frontend 
+        $carritoRecibido = $this->carritoModel->obtenerDetallesCarrito($idUsuario);
+
+        if ($carritoRecibido === false) {
+        $this->registrarError('confirmarPedido: no se pudo consultar el carrito SQL.');
+        header('Location: index.php?pagina=carrito&pedido=error');
+        exit;
+        }
 
         if (empty($carritoRecibido)) {
-            header('Location: index.php?pagina=carrito');
-            exit;
+        header('Location: index.php?pagina=carrito');
+        exit;
         }
 
         $lineasDelPedido = $this->recalcularLineas($carritoRecibido);
@@ -122,7 +137,6 @@ class PedidoController {
             // Se vuelve a mostrar el checkout con lo que el usuario escribió
             // y la lista de errores. El carrito sigue intacto en el navegador.
             $departamentos = $this->departamentos;
-            $carritoJson = json_encode($carritoRecibido);
 
             require __DIR__ . '/../views/checkout.php';
             return;
@@ -150,12 +164,28 @@ class PedidoController {
             $resultadoPago = ($ultimoDigito % 2 === 0) ? 'aprobado' : 'rechazado';
         }
 
+        // ---------- Tratamiento del pago rechazado ----------
+        // Si la tarjeta es rechazada, no se registra la compra,
+        // no se descuenta el stock y se conserva el carrito SQL.
+
+        if ($resultadoPago === 'rechazado') {
+
+            $erroresCheckout = array(
+                'El pago fue rechazado. Verificá los datos de la tarjeta o utilizá otro método de pago.'
+            );
+
+            $departamentos = $this->departamentos;
+
+            require __DIR__ . '/../views/checkout.php';
+            return;
+        }
+
         // ---------- Guardado ----------
         // El pedido y su detalle se guardan juntos: si algo falla, se
         // revierte todo para no dejar un pedido incompleto en la BD.
-        $this->pedidoModel->iniciarTransaccion();
-
+        
         try {
+            $this->pedidoModel->iniciarTransaccion();
             $idPedidoCreado = $this->pedidoModel->crearPedido(
                 $totalDelPedido,
                 $datosEnvio,
@@ -191,10 +221,25 @@ class PedidoController {
                     throw new Exception('No hay stock suficiente del producto ' . $linea['id'] . '.');
                 }
             }
+            // Registrar el pago dentro de la misma transacción del pedido.
+            // Si falla, la excepción provoca que se reviertan todas las operaciones.
+            $pagoRegistrado = $this->pagoModel->registrarIntentoEnTransaccion(
+                $idPedidoCreado,
+                $totalDelPedido,
+                $datosEnvio['metodo_pago'],
+                $ultimos4,
+                $resultadoPago
+            );
 
+            if ($pagoRegistrado === false) {
+                throw new Exception('No se pudo registrar el pago.');
+            }
+
+            // Confirmar solamente cuando el pedido, sus detalles, el stock
+            // y el pago se hayan procesado correctamente.
             $this->pedidoModel->confirmarTransaccion();
 
-        } catch (Exception $error) {
+        } catch (Throwable $error) {
             $this->pedidoModel->revertirTransaccion();
 
             // El mensaje que ve el usuario no dice QUÉ falló. La causa real
@@ -203,26 +248,13 @@ class PedidoController {
 
             $erroresCheckout = array('No se pudo registrar el pedido. Intentá nuevamente.');
             $departamentos = $this->departamentos;
-            $carritoJson = json_encode($carritoRecibido);
 
             require __DIR__ . '/../views/checkout.php';
             return;
         }
 
-        // El pedido ya existe: se registra el intento de pago. Si el pago
-        // no se pudiera guardar, el pedido igual queda registrado.
-        $pagoRegistrado = $this->pagoModel->registrarIntento(
-            $idPedidoCreado,
-            $totalDelPedido,
-            $datosEnvio['metodo_pago'],
-            $ultimos4,
-            $resultadoPago
-        );
-
-        if (!$pagoRegistrado) {
-            $this->pedidoModel->actualizarEstado($idPedidoCreado, 'rechazado');
-        }
-
+        $this->carritoModel->vaciarCarrito($idUsuario);
+        
         $this->mostrarConfirmacion($idPedidoCreado);
     }
 
@@ -269,27 +301,6 @@ class PedidoController {
        AYUDANTES PRIVADOS
        ========================================================== */
 
-    /* Lee el carrito enviado por el cliente (POST o GET) y lo devuelve
-       como arreglo. Devuelve array() si no llegó nada válido. */
-    private function leerCarrito() {
-
-        $json = '';
-
-        if (isset($_POST['carritoJson'])) {
-            $json = (string) $_POST['carritoJson'];
-        } elseif (isset($_GET['carritoJson'])) {
-            $json = (string) $_GET['carritoJson'];
-        }
-
-        if ($json === '') {
-            return array();
-        }
-
-        $carrito = json_decode($json, true);
-
-        return is_array($carrito) ? $carrito : array();
-    }
-
     /* Recalcula las líneas del pedido contra la BD: se toman el nombre y
        el precio REALES del producto, nunca los que manda el navegador.
        Además se respeta el stock disponible. */
@@ -299,11 +310,11 @@ class PedidoController {
 
         foreach ($carritoRecibido as $itemDelCarrito) {
 
-            if (!is_array($itemDelCarrito) || !isset($itemDelCarrito['id'])) {
+            if (!is_array($itemDelCarrito) || !isset($itemDelCarrito['id_producto'])) {
                 continue;
             }
 
-            $idProducto = (int) $itemDelCarrito['id'];
+            $idProducto = (int) $itemDelCarrito['id_producto'];
             $cantidad = isset($itemDelCarrito['cantidad']) ? (int) $itemDelCarrito['cantidad'] : 0;
 
             if ($idProducto <= 0 || $cantidad <= 0) {
@@ -325,13 +336,11 @@ class PedidoController {
 
             $cantidad = min($cantidad, $stockDisponible);
 
-            $precioUnitario = (float) $producto['precio'];
-
             $lineasDelPedido[] = array(
                 'id' => $idProducto,
                 'nombre' => (string) $producto['nombre'],
                 'cantidad' => $cantidad,
-                'precio' => $precioUnitario,
+                'precio' => (float) $producto['precio'],
             );
         }
 

@@ -124,6 +124,33 @@
     filter: none;
 }
 
+/* ---------- Aviso al agregar un producto ---------- */
+
+#aviso-carrito {
+    position: fixed;
+    left: 50%;
+    bottom: 2rem;
+
+    z-index: 2000;
+
+    padding: 0.85rem 1.5rem;
+
+    color: #ffffff;
+    background-color: #274c77;
+    border-radius: 0.75rem;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
+
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(-50%, 1rem);
+    transition: opacity 250ms ease, transform 250ms ease;
+}
+
+#aviso-carrito.aviso-carrito--visible {
+    opacity: 1;
+    transform: translate(-50%, 0);
+}
+
 /* ==========================
    CARRUSEL DE PRODUCTOS
    Flechas laterales para recorrer la fila cuando hay

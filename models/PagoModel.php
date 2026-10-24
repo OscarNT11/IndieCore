@@ -27,94 +27,145 @@ class PagoModel {
 
        $ultimos4 solo se guarda cuando el método usa tarjeta; en los demás
        casos se manda NULL. Devuelve true si se guardó todo, false si no. */
+    
     public function registrarIntento($idPedido, $monto, $metodoPago, $ultimos4, $resultado) {
 
-        $idPedido = (int) $idPedido;
-        $monto = (float) $monto;
-
-        if ($idPedido <= 0) {
-            return false;
-        }
-
-        // La columna `resultado` es un ENUM('aprobado','rechazado'): no admite
-        // "pendiente". Un pago en efectivo o por transferencia todavía NO está
-        // cobrado, así que se guarda como 'rechazado' = intento no cobrado
-        // (no significa que el cliente haya fallado) y el PEDIDO queda en
-        // estado 'pendiente' hasta que se cobre.
-        $resultado = ($resultado === 'aprobado') ? 'aprobado' : 'rechazado';
-
-        // El método debe ser uno de los del ENUM; si no, se usa tarjeta_credito.
-        if (!in_array($metodoPago, self::METODOS_VALIDOS, true)) {
-            $metodoPago = 'tarjeta_credito';
-        }
-
-        $pagaConTarjeta = ($metodoPago === 'tarjeta_credito' || $metodoPago === 'tarjeta_debito');
-
-        // Sin tarjeta no hay "últimos 4 dígitos" que guardar.
-        if (!$pagaConTarjeta) {
-            $ultimos4 = null;
-        }
-
-        if ($pagaConTarjeta) {
-            $nuevoEstado = ($resultado === 'aprobado') ? 'pagado' : 'rechazado';
-        } else {
-            // Efectivo o transferencia: el pedido se registra pero el pago
-            // todavía no está hecho, así que queda 'pendiente'.
-            $resultado = 'rechazado';
-            $nuevoEstado = 'pendiente';
-        }
-
-        mysqli_begin_transaction($this->conn);
+        $transaccionIniciada = false;
 
         try {
-            $stmt = mysqli_prepare(
-                $this->conn,
-                "INSERT INTO pagos (id_pedido, fecha_pago, monto, metodo_pago, ultimos4, resultado)
-                 VALUES (?, NOW(), ?, ?, ?, ?)"
+            mysqli_begin_transaction($this->conn);
+            $transaccionIniciada = true;
+
+            $this->registrarIntentoEnTransaccion(
+                $idPedido,
+                $monto,
+                $metodoPago,
+                $ultimos4,
+                $resultado
             );
-
-            if (!$stmt) {
-                throw new Exception('No se pudo preparar el registro del pago.');
-            }
-
-            // "idsss": id_pedido (int), monto (double) y el resto strings.
-            // ultimos4 admite NULL, por eso se enlaza igual que los demás.
-            mysqli_stmt_bind_param($stmt, "idsss", $idPedido, $monto, $metodoPago, $ultimos4, $resultado);
-
-            if (!mysqli_stmt_execute($stmt)) {
-                mysqli_stmt_close($stmt);
-                throw new Exception('No se pudo guardar el pago.');
-            }
-
-            mysqli_stmt_close($stmt);
-
-            $stmtEstado = mysqli_prepare(
-                $this->conn,
-                "UPDATE pedidos SET estado = ? WHERE id_pedido = ?"
-            );
-
-            if (!$stmtEstado) {
-                throw new Exception('No se pudo preparar la actualización del pedido.');
-            }
-
-            mysqli_stmt_bind_param($stmtEstado, "si", $nuevoEstado, $idPedido);
-
-            if (!mysqli_stmt_execute($stmtEstado)) {
-                mysqli_stmt_close($stmtEstado);
-                throw new Exception('No se pudo actualizar el estado del pedido.');
-            }
-
-            mysqli_stmt_close($stmtEstado);
 
             mysqli_commit($this->conn);
+            $transaccionIniciada = false;
 
             return true;
 
         } catch (Throwable $error) {
-            mysqli_rollback($this->conn);
+
+            if ($transaccionIniciada) {
+                mysqli_rollback($this->conn);
+            }
+
             return false;
         }
     }
+
+
+    /* Registra el pago y actualiza el estado del pedido SIN iniciar,
+    confirmar ni revertir una transacción.
+
+    Permite que PedidoController incluya estas operaciones en la misma
+    transacción que crea el pedido y descuenta el stock.
+
+    Devuelve true si todo sale bien. Si una operación falla, lanza una
+    excepción para que quien inició la transacción pueda revertirla. */
+    public function registrarIntentoEnTransaccion(
+        $idPedido,
+        $monto,
+        $metodoPago,
+        $ultimos4,
+        $resultado
+    ) {
+
+    $idPedido = (int) $idPedido;
+    $monto = (float) $monto;
+
+    if ($idPedido <= 0) {
+        throw new Exception('El ID del pedido no es válido.');
+    }
+
+    // La columna resultado solo admite 'aprobado' o 'rechazado'.
+    // Para efectivo y transferencia se registra como 'rechazado'
+    // porque todavía no se cobró; el pedido queda 'pendiente'.
+    $resultado = ($resultado === 'aprobado') ? 'aprobado' : 'rechazado';
+
+    if (!in_array($metodoPago, self::METODOS_VALIDOS, true)) {
+        throw new Exception('El método de pago no es válido.');
+    }
+
+    $pagaConTarjeta = (
+        $metodoPago === 'tarjeta_credito' ||
+        $metodoPago === 'tarjeta_debito'
+    );
+
+    if (!$pagaConTarjeta) {
+        $ultimos4 = null;
+    }
+
+    if ($pagaConTarjeta) {
+        $nuevoEstado = ($resultado === 'aprobado')
+            ? 'pagado'
+            : 'rechazado';
+    } else {
+        $resultado = 'rechazado';
+        $nuevoEstado = 'pendiente';
+    }
+
+    // 1. Registrar el intento de pago.
+    $stmt = mysqli_prepare(
+        $this->conn,
+        "INSERT INTO pagos
+            (id_pedido, fecha_pago, monto, metodo_pago, ultimos4, resultado)
+         VALUES (?, NOW(), ?, ?, ?, ?)"
+    );
+
+    if (!$stmt) {
+        throw new Exception('No se pudo preparar el registro del pago.');
+    }
+
+    mysqli_stmt_bind_param(
+        $stmt,
+        "idsss",
+        $idPedido,
+        $monto,
+        $metodoPago,
+        $ultimos4,
+        $resultado
+    );
+
+    if (!mysqli_stmt_execute($stmt)) {
+        mysqli_stmt_close($stmt);
+        throw new Exception('No se pudo guardar el pago.');
+    }
+
+    mysqli_stmt_close($stmt);
+
+    // 2. Actualizar el estado del pedido.
+    $stmtEstado = mysqli_prepare(
+        $this->conn,
+        "UPDATE pedidos SET estado = ? WHERE id_pedido = ?"
+    );
+
+    if (!$stmtEstado) {
+        throw new Exception('No se pudo preparar la actualización del pedido.');
+    }
+
+    mysqli_stmt_bind_param(
+        $stmtEstado,
+        "si",
+        $nuevoEstado,
+        $idPedido
+    );
+
+    if (!mysqli_stmt_execute($stmtEstado)) {
+        mysqli_stmt_close($stmtEstado);
+        throw new Exception('No se pudo actualizar el estado del pedido.');
+    }
+
+    mysqli_stmt_close($stmtEstado);
+
+    return true;
+}
+
 
     /* Devuelve el último pago registrado de un pedido (o null si no hay). */
     public function obtenerPorPedido($idPedido) {

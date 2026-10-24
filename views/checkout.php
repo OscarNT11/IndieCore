@@ -36,10 +36,6 @@ $metodoSeleccionado = isset($envio['metodo_pago']) ? $envio['metodo_pago'] : 'ta
              ========================== -->
         <form id="formularioCheckout" class="checkout__form" action="index.php?pagina=confirmar-pedido" method="POST" novalidate>
 
-            <!-- El carrito viaja oculto: el servidor recalcula precios y total. -->
-            <input type="hidden" name="carritoJson" id="checkoutCarritoJson"
-                   value="<?php echo escapar($carritoJson ?? ''); ?>">
-
             <fieldset class="checkout__bloque">
                 <legend>Datos de envío</legend>
 
@@ -123,7 +119,7 @@ $metodoSeleccionado = isset($envio['metodo_pago']) ? $envio['metodo_pago'] : 'ta
                 </div>
 
                 <!-- Estos campos solo se muestran (y se exigen) con tarjeta;
-                     carrito-checkout.js los habilita según el método elegido. -->
+                    checkout.js los habilita según el método elegido. -->
                 <div class="checkout__tarjeta" id="checkoutDatosTarjeta" hidden>
                     <div class="checkout__campo">
                         <label for="tarjeta-numero">Número de tarjeta</label>
@@ -202,7 +198,7 @@ $metodoSeleccionado = isset($envio['metodo_pago']) ? $envio['metodo_pago'] : 'ta
 <?php require __DIR__ . '/modalLogin.php'; ?>
 
 <?php
-// carrito-checkout.js habilita los campos de tarjeta según el método elegido.
+// checkout.js habilita los campos de tarjeta según el método elegido.
 // (footer.php ya carga storage.js y login.js)
 $scriptsExtra = ['public/js/checkout.js'];
 require __DIR__ . '/footer.php';

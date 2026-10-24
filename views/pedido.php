@@ -225,10 +225,7 @@ $scriptsExtra = ['public/js/pedido.js'];
 $scriptEnLinea = "";
 
 if ($estadoDelPedido !== 'rechazado') {
-    $scriptEnLinea = "
-        guardarCarrito([]);
-        actualizarContador();
-    ";
+    $scriptEnLinea = "actualizarContador();";
 }
 
 require __DIR__ . '/footer.php';
