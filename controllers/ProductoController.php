@@ -1,19 +1,29 @@
 <?php
+require_once __DIR__ . '/../models/ReseniaModel.php';
 
 class ProductoController {
-    
+
     private $conexion;
     private $productoModel;
+    private $reseniaModel;
 
     public function __construct($conexion) {
         $this->conexion = $conexion;
         $this->productoModel = new ProductoModel($conexion);
+        $this->reseniaModel = new ReseniaModel($conexion);
     }
 
     public function mostrarInicio() {
-        // La página de inicio muestra los productos recientes ("Lo nuevo")
-        // y los destacados, ambos provienen del mismo modelo.
-        $listaDeProductos = $this->productoModel->listarProductos();
+        // La página de inicio tiene dos secciones con criterios distintos:
+        //  - "Lo nuevo": los productos más recientes primero (id más alto).
+        //  - "Destacados": mejor promedio de estrellas y, a igualdad,
+        //    el producto con más reseñas.
+        $productosNuevos = $this->productoModel->listarNuevos();
+        $productosDestacados = $this->productoModel->listarDestacados();
+
+        // Alias con el que trabajaban las vistas existentes. Se deja apuntando
+        // a los nuevos por compatibilidad, pero la vista usa las dos de arriba.
+        $listaDeProductos = $productosNuevos;
 
         require __DIR__ . '/../views/paginaInicio.php';
     }
@@ -64,6 +74,21 @@ class ProductoController {
             $listaDeProductos = $this->productoModel->listarProductosRelacionados(
                 $producto['id_categoria'],
                 $producto['id_producto']
+            );
+        }
+
+        // Reseñas del producto, con nombre y foto del autor. La vista pinta
+        // las estrellas a partir de $producto['promedio_estrellas'] (lo trae
+        // la consulta del producto) y el promedio lo calcula la BD.
+        $listaDeResenias = $this->reseniaModel->listarPorProducto($producto['id_producto']);
+
+        // Si el usuario ya opinó, el formulario se precarga con su reseña.
+        $reseniaDelUsuario = null;
+
+        if (usuarioLogueado()) {
+            $reseniaDelUsuario = $this->reseniaModel->obtenerDeUsuario(
+                (int) $_SESSION['id_usuario'],
+                (int) $producto['id_producto']
             );
         }
 

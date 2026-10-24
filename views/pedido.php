@@ -51,13 +51,28 @@ $datosDeLaEmpresa = array(
     'direccion' => 'Av. 18 de Julio 1234, Montevideo, Uruguay',
     'contacto'  => 'Tel. 095 756 103',
 );
+
+// Un gestor puede abrir la factura de otro usuario desde el panel de pedidos.
+// En ese caso el pedido es ajeno: no se toca el carrito ni se ofrece "mi cuenta".
+$vistoDesdePanel = !empty($vistoDesdePanel);
+$clienteDelPedido = $clienteDelPedido ?? null;
 ?>
 
 <section class="pedido-confirmado">
 
     <!-- Aviso de resultado (no se imprime: es solo para la pantalla) -->
     <div class="pedido-confirmado__aviso no-imprimir">
-        <?php if ($estadoDelPedido === 'rechazado'): ?>
+        <?php if ($vistoDesdePanel): ?>
+            <h1>Factura confirmada</h1>
+            <p>
+                Pedido <strong>#<?php echo (int) $pedido['id_pedido']; ?></strong>
+                hecho por
+                <?php echo escapar($clienteDelPedido['nombre'] ?? 'un usuario'); ?>.
+                <?php if (!empty($clienteDelPedido) && (int) $clienteDelPedido['id_usuario'] === (int) $idUsuario): ?>
+                    Es tu propio pedido.
+                <?php endif; ?>
+            </p>
+        <?php elseif ($estadoDelPedido === 'rechazado'): ?>
             <h1>No pudimos procesar el pago</h1>
             <p>
                 Tu pedido quedó registrado con el número
@@ -130,6 +145,13 @@ $datosDeLaEmpresa = array(
                     <?php echo escapar($pedido['envio_departamento'] ?? ''); ?>
                 </p>
                 <p>Teléfono: <?php echo escapar($pedido['envio_telefono'] ?? ''); ?></p>
+
+                <?php if (!empty($clienteDelPedido)): ?>
+                    <p class="factura__cuenta">
+                        Cuenta: <?php echo escapar($clienteDelPedido['nombre']); ?>
+                        (<?php echo escapar($clienteDelPedido['email']); ?>)
+                    </p>
+                <?php endif; ?>
             </section>
 
             <section class="factura__parte">
@@ -198,17 +220,35 @@ $datosDeLaEmpresa = array(
 
     <!-- ---------- Acciones (no se imprimen) ---------- -->
     <div class="pedido-confirmado__acciones no-imprimir">
-        <button type="button" class="boton boton--secundario" id="botonImprimirFactura">
-            Imprimir factura
-        </button>
+        <?php if ($vistoDesdePanel): ?>
 
-        <a href="index.php?pagina=cuenta" class="boton boton--secundario">
-            Volver a mi cuenta
-        </a>
+            <button type="button" class="boton boton--secundario" id="botonImprimirFactura">
+                Imprimir factura
+            </button>
 
-        <a href="index.php?pagina=catalogo" class="boton boton--principal">
-            Seguir comprando
-        </a>
+            <a href="index.php?pagina=admin_pedidos" class="boton boton--secundario">
+                Volver a pedidos
+            </a>
+
+            <a href="index.php?pagina=panel" class="boton boton--principal">
+                Volver al panel
+            </a>
+
+        <?php else: ?>
+
+            <button type="button" class="boton boton--secundario" id="botonImprimirFactura">
+                Imprimir factura
+            </button>
+
+            <a href="index.php?pagina=cuenta" class="boton boton--secundario">
+                Volver a mi cuenta
+            </a>
+
+            <a href="index.php?pagina=catalogo" class="boton boton--principal">
+                Seguir comprando
+            </a>
+
+        <?php endif; ?>
     </div>
 </section>
 
@@ -224,7 +264,9 @@ $scriptsExtra = ['public/js/pedido.js'];
 
 $scriptEnLinea = "";
 
-if ($estadoDelPedido !== 'rechazado') {
+// Solo se vacía el carrito cuando el dueño del pedido acaba de comprar. Si un
+// gestor abre la factura de otra persona, su carrito no tiene nada que ver.
+if ($estadoDelPedido !== 'rechazado' && !$vistoDesdePanel) {
     $scriptEnLinea = "
         guardarCarrito([]);
         actualizarContador();

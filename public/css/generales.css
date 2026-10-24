@@ -67,60 +67,6 @@ svg {
 }
 
 /* ==========================================================
-   PANEL DE GESTIÓN (views/paginaPanel.php)
-   ========================================================== */
-
-.panel {
-    max-width: 960px;
-    margin: 40px auto;
-    padding: 0 20px;
-}
-
-.panel__titulo {
-    margin-bottom: 8px;
-}
-
-.panel__saludo {
-    margin-bottom: 28px;
-    color: #cfcfe0;
-}
-
-.panel__tarjetas {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 18px;
-}
-
-.panel__tarjeta {
-    display: block;
-    padding: 20px;
-
-    background-color: #1e1e2a;
-    color: inherit;
-    text-decoration: none;
-
-    border: 1px solid #33334a;
-    border-radius: 12px;
-
-    transition: transform 150ms ease, border-color 150ms ease;
-}
-
-.panel__tarjeta:hover {
-    transform: translateY(-3px);
-    border-color: #5c6cff;
-}
-
-.panel__tarjeta h2 {
-    margin-bottom: 6px;
-    font-size: 1.1rem;
-}
-
-.panel__tarjeta p {
-    font-size: 0.9rem;
-    color: #b8b8cc;
-}
-
-/* ==========================================================
    PÁGINA SIN PERMISO (views/sin_permiso.php)
    ========================================================== */
 .sin-permiso {
@@ -132,4 +78,59 @@ svg {
 
 .sin-permiso h1 {
     margin-bottom: 12px;
+}
+
+/* ===================================
+ESTRELLAS (calificación de productos)
+Se usan en las tarjetas del catálogo y del inicio, en la ficha del producto
+y en el listado de reseñas. Viven acá, y no en paginaProducto.css, porque el
+catálogo y el inicio no cargan esa hoja.
+=================================== */
+
+.estrellas {
+    display: inline-flex;
+    gap: 2px;
+    font-size: 1.15rem;
+    line-height: 1;
+}
+
+.estrellas__item {
+    color: #6b6b6b;
+}
+
+.estrellas__item--llena {
+    color: #ffc94d;
+}
+
+/* Media estrella: se dibuja la estrella vacía y encima la llena recortada
+   al 50 % (no se puede recortar directamente porque el símbolo va centrado
+   en su caja y quedaría descolocado). */
+.estrellas__item--media {
+    position: relative;
+    display: inline-block;
+    color: #6b6b6b;
+}
+
+.estrellas__item--media::after {
+    content: '\2605';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 50%;
+    overflow: hidden;
+    color: #ffc94d;
+}
+
+/* Tarjeta del catálogo y del inicio: estrellas + texto del promedio */
+.tarjeta-producto__estrellas {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+
+    font-size: 0.85rem;
+    color: #9a9a9a;
+}
+
+.tarjeta-producto__estrellas .estrellas {
+    font-size: 0.95rem;
 }
