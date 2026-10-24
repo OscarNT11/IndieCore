@@ -256,7 +256,7 @@ $nombresDeMetodo = array(
 
                         <a
                             class="cuenta__pedido-enlace"
-                            href="index.php?pagina=pedido&id=<?php echo (int) $pedidoHistorial['id_pedido']; ?>">
+                            href="index.php?pagina=pedido&id=<?php echo (int) $pedidoHistorial['id_pedido']; ?>&origen=cuenta">
                             Ver detalle
                         </a>
                     </li>

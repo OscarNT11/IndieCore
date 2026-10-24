@@ -1,5 +1,8 @@
 </main>
 
+        <!-- El footer no se muestra en el panel de gestión: las vistas del
+             panel cierran la página con views/footer_simple.php. -->
+        <?php if (!isset($sinFooter) || !$sinFooter): ?>
         <footer class="footer">
 
             <section id="redes">
@@ -42,6 +45,7 @@
             </section>
 
         </footer>
+        <?php endif; ?>
 
         <?php
             // Se añade ?v=filemtime(...) a cada JS igual que se hace con los CSS

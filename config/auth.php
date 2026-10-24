@@ -10,7 +10,7 @@ function nombreUsuarioValido($nombre) {
 
 
 function redirigir($pagina) {
-    header("Location: index.php?pagina=" . $pagina . $extra);
+    header("Location: index.php?pagina=" . $pagina);
     exit;
 }
 
@@ -34,6 +34,11 @@ function paginaActual() {
 
 function usuarioLogueado() {
     return !empty($_SESSION['id_usuario']);
+}
+
+/* Nombre del usuario logueado (o cadena vacía). */
+function usuarioActualNombre() {
+    return usuarioActual()['nombre'] ?? '';
 }
 
 /* Datos del usuario logueado (o null si no hay sesión). */

@@ -124,6 +124,10 @@
                         <span class="categoria-badge"><?php echo htmlspecialchars($producto['nombre_categoria']); ?></span>
                         <h3><?php echo htmlspecialchars($producto['nombre']); ?></h3>
                         <p class="precio">$<?php echo number_format($producto['precio'], 2, ',', '.'); ?></p>
+                        <div class="tarjeta-producto__estrellas">
+                            <?php echo estrellasHtml($producto['promedio_estrellas'] ?? 0); ?>
+                            <span><?php echo escapar(resumenEstrellas($producto['promedio_estrellas'] ?? 0, $producto['total_resenias'] ?? 0)); ?></span>
+                        </div>
                         <p class="stock">Stock: <?php echo (int) $producto['stock']; ?></p>
 
                         <div class="tarjeta-producto__acciones">

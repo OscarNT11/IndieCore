@@ -145,6 +145,56 @@ class PedidoModel {
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
+    /* Un pedido por su id, sin importar quién lo hizo. Solo lo usa el panel
+       de gestión (pedido visto por un administrador u operador). */
+    public function obtenerPorIdAdmin($idPedido) {
+
+        $stmt = $this->conn->prepare("SELECT * FROM pedidos WHERE id_pedido = ? LIMIT 1");
+
+        if (!$stmt) {
+            return null;
+        }
+
+        $idPedido = (int) $idPedido;
+
+        $stmt->bind_param("i", $idPedido);
+        $stmt->execute();
+
+        $resultado = $stmt->get_result();
+        $pedido = $resultado ? $resultado->fetch_assoc() : null;
+
+        $stmt->close();
+
+        return $pedido ?: null;
+    }
+
+    /* Nombre y correo del usuario que hizo el pedido (o null si no existe).
+       Es lo que la factura muestra como cliente cuando la abre el panel. */
+    public function obtenerClientePorPedido($idPedido) {
+
+        $stmt = $this->conn->prepare("
+            SELECT u.id_usuario, u.nombre, u.email
+            FROM pedidos p
+            INNER JOIN usuarios u ON u.id_usuario = p.id_usuario
+            WHERE p.id_pedido = ? LIMIT 1");
+
+        if (!$stmt) {
+            return null;
+        }
+
+        $idPedido = (int) $idPedido;
+
+        $stmt->bind_param("i", $idPedido);
+        $stmt->execute();
+
+        $resultado = $stmt->get_result();
+        $cliente = $resultado ? $resultado->fetch_assoc() : null;
+
+        $stmt->close();
+
+        return $cliente ?: null;
+    }
+
     public function actualizarEstado($idPedido, $nuevoEstado) {
         $stmt = $this->conn->prepare("UPDATE pedidos SET estado = ? WHERE id_pedido = ?");
         $stmt->bind_param("si", $nuevoEstado, $idPedido);
@@ -219,5 +269,71 @@ class PedidoModel {
         }
 
         return $pedidos;
+    }
+
+    /* ---------- Panel de administración de pedidos ---------- */
+
+    /* TODOS los pedidos (de cualquier usuario) para el panel del gestor,
+       del más nuevo al más viejo. Cada fila trae además el nombre y correo
+       del cliente, el último pago registrado y cuántas unidades lleva.
+
+       Se resuelve con UNA consulta: el detalle no se trae aquí (la factura
+       lo carga al abrirse), solo el conteo de unidades con una subconsulta. */
+    public function listarTodosAdmin() {
+
+        $sql = "
+            SELECT
+                p.id_pedido,
+                p.fecha,
+                p.estado,
+                p.precio_total,
+                u.nombre AS cliente_nombre,
+                u.email AS cliente_email,
+                pg.metodo_pago,
+                pg.ultimos4,
+                (SELECT SUM(dp.cantidad) FROM detalles_pedido dp
+                    WHERE dp.id_pedido = p.id_pedido) AS unidades
+            FROM pedidos p
+            INNER JOIN usuarios u ON u.id_usuario = p.id_usuario
+            LEFT JOIN pagos pg ON pg.id_pago = (
+                SELECT MAX(pg2.id_pago) FROM pagos pg2
+                WHERE pg2.id_pedido = p.id_pedido
+            )
+            ORDER BY p.fecha DESC, p.id_pedido DESC";
+
+        $consultaPreparada = mysqli_prepare($this->conn, $sql);
+
+        if (!$consultaPreparada) {
+            return array();
+        }
+
+        mysqli_stmt_execute($consultaPreparada);
+
+        $resultado = mysqli_stmt_get_result($consultaPreparada);
+        $pedidos = $resultado ? mysqli_fetch_all($resultado, MYSQLI_ASSOC) : array();
+
+        mysqli_stmt_close($consultaPreparada);
+
+        return $pedidos;
+    }
+
+    /* Resumen para las tarjetas del panel: cuántos pedidos hay y cuánto suman
+       (sin contar los cancelados, que no representan una venta). */
+    public function resumenAdmin() {
+
+        $resultado = mysqli_query(
+            $this->conn,
+            "SELECT
+                COUNT(*) AS total_pedidos,
+                COALESCE(SUM(CASE WHEN estado <> 'cancelado' THEN precio_total ELSE 0 END), 0) AS total_facturado
+             FROM pedidos"
+        );
+
+        $fila = $resultado ? mysqli_fetch_assoc($resultado) : null;
+
+        return array(
+            'total_pedidos'    => (int) ($fila['total_pedidos'] ?? 0),
+            'total_facturado'  => (float) ($fila['total_facturado'] ?? 0),
+        );
     }
 }
