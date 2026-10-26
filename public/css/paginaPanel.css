@@ -1,19 +1,19 @@
 /* ==========================================================
-   PANEL DE GESTIÓN (views/paginaPanel.php y vistas de admin)
+   PANEL DE GESTION (views/paginaPanel.php y vistas de admin)
    ========================================================== */
 
-/* El panel no lleva footer: la página ocupa toda la ventana para que
+/* El panel no lleva footer: la pagina ocupa toda la ventana para que
    el fondo de la barra lateral llegue hasta abajo.
    Las vistas del panel marcan el <body> con la clase "body-panel". */
 body.body-panel {
     min-height: 100dvh;
 }
 
-/* El header se muestra COMPLETO también en el panel (logo, buscador,
-   usuario y la barra de navegación inferior del menú). */
+/* El header conserva el logo, el buscador y el usuario, pero sin la barra
+   de navegacion de la tienda (header.php la omite en el panel). */
 body.body-panel .contenido-principal {
     flex: 1;
-    min-height: calc(100dvh - 110px);
+    min-height: calc(100dvh - 72px);
     padding: 0;
 }
 
@@ -27,9 +27,8 @@ body.body-panel .header {
     display: grid;
     grid-template-columns: 215px minmax(0, 1fr);
     align-items: stretch;
-    /* El panel ocupa la ventana menos el header completo (barra superior +
-       navegación inferior), que ahora también se muestra aquí. */
-    min-height: calc(100dvh - 110px);
+    /* El panel ocupa la ventana menos el header (solo la barra superior). */
+    min-height: calc(100dvh - 72px);
 }
 
 /* Las vistas sin barra lateral usan una sola columna a todo el ancho. */
@@ -132,7 +131,7 @@ body.body-panel .header {
     height: 30px;
 }
 
-/* ---------- Título de sección con icono ---------- */
+/* ---------- Titulo de seccion con icono ---------- */
 
 .panel-admin__cabecera {
     display: flex;
@@ -145,6 +144,7 @@ body.body-panel .header {
 .panel-admin__cabecera h1 {
     font-size: 2rem;
     font-weight: 400;
+    margin-bottom: 0;
 }
 
 .panel-admin__icono-boton {
@@ -349,7 +349,19 @@ body.body-panel .header {
 
 /* Varias acciones por fila: se separan y no se cortan. */
 .panel-productos .table td .btn-sm {
-    margin: 2px 2px 2px 0;
+    display: inline-block;
+    margin: 2px 4px 2px 0;
+    white-space: nowrap;
+}
+
+/* La columna de acciones no se comprime: los botones van uno al lado del
+   otro mientras la pantalla lo permita. */
+.panel-productos .table td[data-etiqueta="Acciones"] {
+    white-space: nowrap;
+}
+
+/* Las etiquetas de estado no se parten en dos lineas. */
+.panel-productos .table .stock {
     white-space: nowrap;
 }
 
@@ -376,7 +388,7 @@ body.body-panel .header {
 }
 
 /* La etiqueta de estado reutiliza .pedido-confirmado__estado de
-   paginaPedido.css, pero aquí va dentro de una celda: no debe estirarse. */
+   paginaPedido.css, pero aqui va dentro de una celda: no debe estirarse. */
 .panel-pedidos .table .pedido-confirmado__estado {
     align-self: auto;
     display: inline-block;
@@ -384,10 +396,10 @@ body.body-panel .header {
 }
 
 .panel-pedidos .table small {
-    color: #bcbcbc;
+    color: #b5b5b5;
 }
 
-/* ---------- Listado de productos ---------- */
+/* ---------- Listado de productos / usuarios ---------- */
 
 .panel-productos h1 {
     margin-bottom: 24px;
@@ -401,13 +413,21 @@ body.body-panel .header {
     margin-bottom: 22px;
 }
 
+/* Tabla de los listados. El redondeo va en un contenedor porque la tabla
+   necesita poder desplazarse en horizontal en pantallas medianas. */
+.panel-productos__tabla {
+    width: 100%;
+    overflow-x: auto;
+    background-color: #3a3a3a;
+    border-radius: 8px;
+    -webkit-overflow-scrolling: touch;
+}
+
 .panel-productos .table {
     width: 100%;
     border-collapse: collapse;
 
     background-color: #3a3a3a;
-    border-radius: 8px;
-    overflow: hidden;
 }
 
 .panel-productos .table th,
@@ -431,6 +451,12 @@ body.body-panel .header {
 .panel-productos .table .btn-sm {
     padding: 6px 12px;
     font-size: 0.9rem;
+}
+
+.panel-productos .table img {
+    width: 70px;
+    height: auto;
+    border-radius: 4px;
 }
 
 .stock {
@@ -457,36 +483,81 @@ body.body-panel .header {
 
 .stock-inactivo {
     background-color: #4a4a4a;
-    color: #bdbdbd;
+    color: #c4c4c4;
 }
 
-/* ---------- Pantallas chicas ---------- */
+/* ==========================================================
+   DISENO RESPONSIVE DEL PANEL
+   ========================================================== */
+
+/* ---------- Tablets y pantallas medianas ---------- */
+
+@media (max-width: 900px) {
+
+    .panel-admin__contenido {
+        padding: 26px 22px 40px;
+    }
+
+    .panel-productos .table th,
+    .panel-productos .table td {
+        padding: 10px 12px;
+        font-size: 0.95rem;
+    }
+}
+
+/* ---------- Tablets chicas: la barra lateral pasa arriba ---------- */
 
 @media (max-width: 760px) {
 
+    /* Al pasar a una columna, la barra no debe estirarse con la grilla:
+       ocupa solo su alto y los enlaces no se estiran en vertical. */
     .panel-admin {
         grid-template-columns: 1fr;
+        grid-auto-rows: min-content;
+        align-items: start;
     }
 
     .panel-admin--sin-barra {
         display: block;
     }
 
+    /* Barra como menu horizontal con desplazamiento, sin desbordar la pagina. */
     .panel-admin__barra {
         flex-direction: row;
+        align-self: start;
         border-right: none;
         border-bottom: 1px solid #5c5c5c;
+        min-width: 0;
     }
 
     .panel-admin__menu {
         flex-direction: row;
+        align-items: stretch;
+        width: 100%;
+        min-width: 0;
         overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: thin;
+    }
+
+    .panel-admin__menu li {
+        display: flex;
+        flex: 0 0 auto;
     }
 
     .panel-admin__enlace {
+        align-items: center;
+        height: 100%;
+        padding: 12px 14px;
+        font-size: 0.95rem;
         border-bottom: none;
         border-right: 1px solid #3c3c3c;
         white-space: nowrap;
+    }
+
+    .panel-admin__enlace svg {
+        width: 22px;
+        height: 22px;
     }
 
     .panel-admin__contenido {
@@ -495,5 +566,287 @@ body.body-panel .header {
 
     .panel-admin__tarjeta {
         padding: 20px 16px;
+    }
+
+    .panel__titulo,
+    .panel-admin__cabecera h1,
+    .panel-productos h1 {
+        font-size: 1.6rem;
+    }
+
+    .panel__tarjetas {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        gap: 12px;
+    }
+
+    .panel__tarjeta {
+        padding: 16px;
+    }
+
+    .panel-pedidos__dato h2 {
+        font-size: 1.35rem;
+    }
+
+    /* Las tablas se desplazan en horizontal dentro de su contenedor. El ancho
+       minimo se queda corto a proposito: las columnas de texto (cliente, pago)
+       se reparten lo que sobra en vez de forzar un ancho fijo grande. */
+    .panel-productos .table {
+        min-width: 600px;
+    }
+
+    /* La tabla de pedidos tiene ocho columnas: en tablet ya no entra y el
+       desplazamiento horizontal deja la ultima columna fuera de vista, asi
+       que desde aqui pasa a fichas, una por pedido. */
+    .panel-pedidos .table {
+        min-width: 0;
+    }
+}
+
+/* ---------- Celulares ---------- */
+
+@media (max-width: 600px) {
+
+    .panel-admin__contenido {
+        padding: 18px 12px 32px;
+    }
+
+    .panel-admin__cabecera {
+        gap: 10px;
+        margin-bottom: 18px;
+        flex-wrap: wrap;
+    }
+
+    .panel-admin__icono-boton {
+        width: 38px;
+        height: 38px;
+        flex-shrink: 0;
+    }
+
+    .panel-admin__tarjeta {
+        padding: 16px 12px;
+    }
+
+    .panel-admin__tarjeta .form-control,
+    .panel-admin__tarjeta .form-select {
+        font-size: 16px; /* evita el zoom automatico de iOS al enfocar */
+        padding: 10px 12px;
+    }
+
+    .panel-admin__tarjeta .btn {
+        display: block;
+        width: 100%;
+        text-align: center;
+    }
+
+    .panel__tarjetas {
+        grid-template-columns: 1fr;
+    }
+
+    .panel__tarjeta {
+        justify-content: flex-start;
+    }
+
+    .panel-productos__acciones {
+        margin-bottom: 18px;
+    }
+}
+
+/* ---------- Listados convertidos en fichas ----------
+   Una tabla de 7 u 8 columnas no entra en una pantalla angosta. Cada fila
+   pasa a ser una ficha: el nombre de la columna va arriba (data-etiqueta)
+   y el valor debajo. La tabla de productos lo hace en celulares chicos y
+   la de pedidos ya desde tablet, que es donde deja de entrar. */
+
+@media (max-width: 760px) {
+
+    /* Pedidos: ocho columnas, no entran ni en tablet. */
+    .panel-pedidos .panel-productos__tabla {
+        background-color: transparent;
+        border-radius: 0;
+        overflow-x: visible;
+    }
+
+    .panel-pedidos .table {
+        min-width: 0;
+        background-color: transparent;
+    }
+
+    .panel-pedidos .table thead {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+    }
+
+    .panel-pedidos .table,
+    .panel-pedidos .table tbody,
+    .panel-pedidos .table tr,
+    .panel-pedidos .table td {
+        display: block;
+        width: 100%;
+    }
+
+    .panel-pedidos .table tr {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0 12px;
+
+        margin-bottom: 14px;
+        padding: 6px 0;
+
+        background-color: #3a3a3a;
+        border: 1px solid #4c4c4c;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    .panel-pedidos .table tbody tr:hover {
+        background-color: #3a3a3a;
+    }
+
+    .panel-pedidos .table td {
+        padding: 8px 14px;
+        text-align: left;
+        border-bottom: 1px solid #474747;
+    }
+
+    .panel-pedidos .table td::before {
+        content: attr(data-etiqueta);
+
+        display: block;
+        margin-bottom: 3px;
+
+        color: #a9a9a9;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.4px;
+    }
+
+    /* Cliente y la accion de la factura ocupan la fila completa. */
+    .panel-pedidos .table td[data-etiqueta="Cliente"],
+    .panel-pedidos .table td[data-etiqueta="Pago"],
+    .panel-pedidos .table td[data-etiqueta=""] {
+        grid-column: 1 / -1;
+    }
+
+    .panel-pedidos .table td[data-etiqueta="Cliente"],
+    .panel-pedidos .table td[data-etiqueta="Pago"] {
+        border-bottom: 1px solid #474747;
+    }
+
+    .panel-pedidos .table td[data-etiqueta=""] {
+        border-bottom: none;
+        padding-top: 12px;
+    }
+
+    .panel-pedidos .table td[data-etiqueta=""]::before {
+        content: none;
+    }
+
+    .panel-pedidos .table td[data-etiqueta=""] .btn {
+        display: block;
+        width: 100%;
+        text-align: center;
+    }
+
+    .panel-pedidos .table td small {
+        display: block;
+        color: #b5b5b5;
+    }
+}
+
+@media (max-width: 560px) {
+
+    /* Productos y usuarios: mismo tratamiento en celulares. */
+    .panel-productos__tabla {
+        background-color: transparent;
+        border-radius: 0;
+        overflow-x: visible;
+    }
+
+    .panel-productos .table {
+        min-width: 0;
+        background-color: transparent;
+    }
+
+    .panel-productos .table thead {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+    }
+
+    .panel-productos .table,
+    .panel-productos .table tbody,
+    .panel-productos .table tr,
+    .panel-productos .table td {
+        display: block;
+        width: 100%;
+    }
+
+    .panel-productos .table tr {
+        margin-bottom: 14px;
+        background-color: #3a3a3a;
+        border: 1px solid #4c4c4c;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    .panel-productos .table tbody tr:hover {
+        background-color: #3a3a3a;
+    }
+
+    .panel-productos .table td {
+        padding: 10px 14px;
+        text-align: right;
+        border-bottom: 1px solid #474747;
+    }
+
+    .panel-productos .table td:last-child {
+        border-bottom: none;
+    }
+
+    .panel-productos .table td::before {
+        content: attr(data-etiqueta);
+
+        display: block;
+        margin-bottom: 4px;
+
+        color: #a9a9a9;
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 0.4px;
+        text-align: left;
+    }
+
+    /* Celdas sin etiqueta (acciones) no muestran el rotulo. */
+    .panel-productos .table td[data-etiqueta=""]::before {
+        content: none;
+    }
+
+    .panel-productos .table td small {
+        display: block;
+    }
+
+    .panel-productos .table td img {
+        margin-left: auto;
+    }
+
+    /* Botones de accion a todo el ancho, uno debajo del otro. */
+    .panel-productos .table td .btn-sm {
+        display: block;
+        width: 100%;
+        margin: 6px 0 0;
+        text-align: center;
+    }
+
+    .panel-productos .table td .btn-sm:first-child {
+        margin-top: 0;
+    }
+
+    .panel-productos .table img {
+        width: 90px;
     }
 }

@@ -149,13 +149,16 @@
                 <div id="cat-arriba">
 
                     <!-- Cada tarjeta es un enlace a la categoria real de la BD
-                         (index.php?pagina=catalogo&categoria=ID) -->
+                         (index.php?pagina=catalogo&categoria=ID).
+                         La imagen va siempre al centro y el texto a los lados;
+                         cuando la tarjeta es angosta (responsive) el texto sube
+                         a la parte de arriba para no superponerse con la imagen. -->
                     <a class="cat-container" id="cat-internos" href="index.php?pagina=catalogo&categoria=4">
-                        <div class="cat-image" id="img-cat-internos">
-                            <img src="public/img/Grafica-edit.png" alt="Tarjetas gráficas y componentes internos">
-                        </div>
                         <div class="cat-contenido" id="cont-cat-internos">
                             <h2>Componentes<br>internos</h2>
+                        </div>
+                        <div class="cat-image" id="img-cat-internos">
+                            <img src="public/img/Grafica-edit.png" alt="Tarjetas gráficas y componentes internos">
                         </div>
                     </a>
 
@@ -172,12 +175,11 @@
 
 
                 <a class="cat-container" id="cat-larga" href="index.php?pagina=catalogo&categoria=5">
+                    <div class="cat-contenido" id="cont-cat-larga">
+                        <h2>Otros<br>dispositivos</h2>
+                    </div>
                     <div class="cat-image" id="img-cat-larga">
                         <img src="public/img/Celulares-edit.png" alt="Celulares y otros dispositivos">
-                    </div>
-                    <div class="cat-contenido" id="cont-cat-larga">
-                        <h2>Otros
-                            <br> dispositivos</h2>
                     </div>
                 </a>
 

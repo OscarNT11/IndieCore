@@ -115,6 +115,9 @@
         </div>
 
             <!-- AQUÍ VA EL VERDEDADERO NAV, ENLACES DE ANCLAS -->
+        <?php // En el panel de gestión la navegación de la tienda no hace falta:
+              // la barra del panel ya permite moverse entre las secciones. ?>
+        <?php if (!isset($claseBody) || $claseBody !== 'body-panel'): ?>
         <nav class="header-nav" id="nav-inferior">
             <ul class="nav-list">
                 <li class="nav-item"><a href="index.php?pagina=catalogo">Catalogo</a></li>
@@ -123,6 +126,7 @@
                 <li class="nav-item"><a href="index.php?pagina=home#redes">Contactanos</a></li>
             </ul>
         </nav>
+        <?php endif; ?>
 
 
     </header>
