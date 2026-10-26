@@ -1,4 +1,4 @@
-/* ==================================================
+﻿/* ==================================================
                     HERO SECTION
 ================================================== */
 .hero {
@@ -140,9 +140,11 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+    /* El HTML pone primero el texto y despues la imagen; el estilo de cada
+       tarjeta decide donde va la imagen (derecha o izquierda). */
     justify-content: space-between;
     min-height: 180px;
-    
+
     background:linear-gradient(to right, #303030, #747474);
     border-radius: 24px;
     text-transform: uppercase;
@@ -150,23 +152,22 @@
     gap: 0.5rem;
 
     transition: transform 0.3s ease;
-    padding: 0.5rem;
+    padding: 0;
+    overflow: hidden;
 }
 
 #cat-larga {
-    padding-bottom: 0;
+    padding: 0;
 }
 
 .cat-container div {
-    flex: 1; 
+    flex: 1;
+    min-width: 0;
 }
 
 #cat-internos, #cat-perifericos {
     flex: 1;
-    justify-content: space-between;
-    min-width: 280px;
-    margin: 0 auto;
-    overflow: hidden;
+    min-width: 0;
 }
 
 .cat-container:hover {
@@ -178,11 +179,54 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 0 0.75rem;
 }
 
 .cat-contenido h2{
     transition: text-shadow 200ms ease;
     font-size: 1.5rem;
+    line-height: 1.15;
+}
+
+/* Imagenes: pegadas al borde de la tarjeta, sin padding/margen.
+   El alto manda (la tarjeta crece con la imagen) y el ancho se ajusta solo;
+   el contenedor de la imagen se ajusta a la imagen y no ocupa espacio de mas. */
+.cat-image {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    min-width: 0;
+    padding: 0;
+    margin: 0;
+}
+
+.cat-image img {
+    display: block;
+    width: auto;
+    flex: 0 0 auto;
+    max-width: none;
+    height: auto;
+    margin: 0;
+}
+
+/* Componentes internos y Otros dispositivos: imagen a la derecha */
+#img-cat-internos img {
+    height: 210px;
+}
+
+#img-cat-larga img {
+    height: 220px;
+}
+
+/* Perifericos: imagen a la izquierda */
+#cat-perifericos .cat-image {
+    order: -1;
+    justify-content: flex-start;
+}
+
+#img-cat-perifericos img {
+    height: 190px;
 }
 
 .cat-container:hover h2{
@@ -191,7 +235,7 @@
 
 /* ==========================
    PRODUCTOS DESTACADOS y LO NUEVO
-   Como el diseño de los produtos
+   Como el diseÃ±o de los produtos
    es exactamente igual para
    los productos nuevos y los
    produtos destacados, solo cambiare
@@ -213,7 +257,7 @@
 
 
 /* ==========================
-   DISEÑO RESPONSIVE
+   DISEÃ‘O RESPONSIVE
    Ajustes para celulares
    (pantallas de hasta 1023 px)
 ========================== */
@@ -225,7 +269,7 @@
 }
 
 /* ==========================
-   DISEÑO RESPONSIVE
+   DISEÃ‘O RESPONSIVE
    Ajustes para celulares
    (pantallas de hasta 767 px)
 ========================== */
@@ -252,58 +296,80 @@
         width: 180px;
     }
 
-    #img-cat-internos {
-    max-width: 210px;
+    /* Tarjetas de categoria: con la pantalla angosta la imagen ocupaba el
+       ancho completo y el texto quedaba encima. El texto pasa arriba y la
+       imagen al medio, centrada, sin superposiciones. */
+    .cat-container {
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 1rem 0.75rem 0;
+        min-height: 0;
     }
 
-    #img-cat-perifericos {
-    max-width: 180px;
+    .cat-contenido,
+    .cat-image {
+        flex: 0 0 auto;
+        width: 100%;
     }
-    
-    .cat-container {
-    gap: 0;
+
+    .cat-contenido {
+        order: 1;
+        padding: 0;
+    }
+
+    /* En vertical la imagen vuelve al centro, salvo Perifericos que
+       mantiene su orden (imagen arriba del texto no es deseable):
+       todas quedan con el texto arriba. */
+    .cat-image,
+    #cat-perifericos .cat-image {
+        order: 2;
+        justify-content: center;
+        align-items: flex-end;
     }
 
     .cat-contenido h2 {
-    font-size: 1.25rem;
+        font-size: 1.25rem;
+        line-height: 1.1;
     }
 
-    .cat-larga {
-        padding-right: 0;
-    }
-
-    #img-cat-larga {
-        max-width: 240px;
+    /* Imagenes mas chicas que en escritorio para que el bloque (texto + imagen)
+       entre completo en la tarjeta. */
+    #img-cat-internos img,
+    #img-cat-perifericos img,
+    #img-cat-larga img {
+        width: auto;
+        max-width: 100%;
+        height: auto;
+        max-height: 150px;
     }
 
 }
 
 
 /* ==========================
-   DISEÑO RESPONSIVE
-   Ajustes para celulares más pequeños
+   DISEÃ‘O RESPONSIVE
+   Ajustes para celulares mÃ¡s pequeÃ±os
    (pantallas de hasta 481 px)
 ========================== */
 
 @media (max-width:481px) {
 
-    #img-cat-internos img{
-        width: 180px;
-        max-width: 100%;
-        margin-right: 0;
-        padding: 0;
+    #cat-variadas {
+        padding: 0 0.75rem;
     }
-
-
-    #img-cat-perifericos img{
-        width: 160px;
-        max-width: 100%;
-        margin-left: 0;
-        padding: 0;
+    .cat-container {
+        padding: 0.85rem 0.5rem 0;
+        border-radius: 18px;
     }
-
+    #img-cat-internos img,
+    #img-cat-perifericos img,
     #img-cat-larga img {
-        max-width: 160px;
+        max-height: 115px;
+    }
+    .cat-contenido h2 {
+        font-size: 1.1rem;
     }
 
 

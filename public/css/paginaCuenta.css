@@ -29,21 +29,22 @@
    ========================================================== */
 
 .enlace-panel {
-    background-color: #5c6cff;
+    /* Colores azules, los mismos del botón principal del sitio. */
+    background: linear-gradient(to right, #6a09e0, #3480d7);
+    color: #ffffff;
+    border: 1px solid #2a63a8;
     font-weight: 700;
     border-radius: 1rem;
     font-size: 2rem;
     text-align: center;
-    padding:0.5rem 1.5rem;
-    background: linear-gradient(#7a2f2f, #4a1f1f);
-    border: 1px solid #400;
-    transition: transform 250ms ease;
-    transition: box-shadow 250ms ease;
+    padding: 0.5rem 1.5rem;
+    transition: transform 250ms ease, box-shadow 250ms ease, filter 200ms ease;
 }
 
 .enlace-panel:hover {
     transform: scale(0.98);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.45);
+    filter: brightness(115%);
+    box-shadow: 0 4px 8px rgba(38, 110, 200, 0.45);
 }
 
 /* ---------- Panel principal ---------- */
