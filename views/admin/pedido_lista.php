@@ -47,7 +47,7 @@ $nombresDeMetodo = [
     <?php if (empty($pedidos)): ?>
         <p>Todavía no hay pedidos registrados.</p>
     <?php else: ?>
-        <table class="table table-striped">
+        <div class="panel-productos__tabla"><table class="table table-striped">
             <thead>
                 <tr>
                     <th>Factura</th>
@@ -71,26 +71,26 @@ $nombresDeMetodo = [
                         $metodo = $pedido['metodo_pago'] ?? '';
                     ?>
                     <tr>
-                        <td>N.º <?= escapar($numeroFactura) ?></td>
-                        <td><?= escapar($fecha) ?></td>
-                        <td>
+                        <td data-etiqueta="Factura">N.º <?= escapar($numeroFactura) ?></td>
+                        <td data-etiqueta="Fecha"><?= escapar($fecha) ?></td>
+                        <td data-etiqueta="Cliente">
                             <?= escapar($pedido['cliente_nombre']) ?><br>
                             <small><?= escapar($pedido['cliente_email']) ?></small>
                         </td>
-                        <td><?= (int) ($pedido['unidades'] ?? 0) ?> u.</td>
-                        <td>
+                        <td data-etiqueta="Artículos"><?= (int) ($pedido['unidades'] ?? 0) ?> u.</td>
+                        <td data-etiqueta="Pago">
                             <?= escapar($nombresDeMetodo[$metodo] ?? 'Sin método de pago') ?>
                             <?php if (!empty($pedido['ultimos4'])): ?>
                                 <br><small>•••• <?= escapar($pedido['ultimos4']) ?></small>
                             <?php endif; ?>
                         </td>
-                        <td>
+                        <td data-etiqueta="Estado">
                             <span class="pedido-confirmado__estado pedido-confirmado__estado--<?= escapar($estado) ?> stock">
                                 <?= escapar($nombresDeEstado[$estado] ?? $estado) ?>
                             </span>
                         </td>
-                        <td>$<?= number_format((float) $pedido['precio_total'], 2, ',', '.') ?></td>
-                        <td>
+                        <td data-etiqueta="Total">$<?= number_format((float) $pedido['precio_total'], 2, ',', '.') ?></td>
+                        <td data-etiqueta="">
                             <a href="index.php?pagina=pedido&id=<?= (int) $pedido['id_pedido'] ?>&panel=1"
                                class="btn btn-sm btn-primary" target="_blank" rel="noopener">
                                 Ver factura
@@ -99,7 +99,7 @@ $nombresDeMetodo = [
                     </tr>
                 <?php endforeach; ?>
             </tbody>
-        </table>
+        </table></div>
     <?php endif; ?>
 
     </div>

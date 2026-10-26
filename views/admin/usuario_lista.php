@@ -34,7 +34,7 @@ $idPropio = (int) ($_SESSION['id_usuario'] ?? 0);
     <?php if (empty($usuarios)): ?>
         <p>No hay usuarios registrados.</p>
     <?php else: ?>
-        <table class="table table-striped">
+        <div class="panel-productos__tabla"><table class="table table-striped">
             <thead>
                 <tr>
                     <th>Usuario</th>
@@ -54,22 +54,22 @@ $idPropio = (int) ($_SESSION['id_usuario'] ?? 0);
                         $esPropio = ($idUsuario === $idPropio);
                     ?>
                     <tr>
-                        <td><?= escapar($usuario['nombre']) ?><?= $esPropio ? ' (vos)' : '' ?></td>
-                        <td><?= escapar($usuario['email']) ?></td>
-                        <td>
+                        <td data-etiqueta="Usuario"><?= escapar($usuario['nombre']) ?><?= $esPropio ? ' (vos)' : '' ?></td>
+                        <td data-etiqueta="Correo"><?= escapar($usuario['email']) ?></td>
+                        <td data-etiqueta="Rol">
                             <span class="rol rol-<?= escapar($rol) ?>">
                                 <?= escapar($etiquetasRol[$rol] ?? $rol) ?>
                             </span>
                         </td>
-                        <td>
+                        <td data-etiqueta="Estado">
                             <?php if ($suspendida): ?>
                                 <span class="stock stock-agotado">suspendida</span>
                             <?php else: ?>
                                 <span class="stock stock-normal">activa</span>
                             <?php endif; ?>
                         </td>
-                        <td><?= escapar(date('d/m/Y', strtotime($usuario['fecha_registro']))) ?></td>
-                        <td>
+                        <td data-etiqueta="Registro"><?= escapar(date('d/m/Y', strtotime($usuario['fecha_registro']))) ?></td>
+                        <td data-etiqueta="Acciones">
                             <a href="index.php?pagina=admin_usuario_editar&id=<?= $idUsuario ?>" class="btn btn-sm btn-warning">
                                 Editar
                             </a>
@@ -102,7 +102,7 @@ $idPropio = (int) ($_SESSION['id_usuario'] ?? 0);
                     </tr>
                 <?php endforeach; ?>
             </tbody>
-        </table>
+        </table></div>
     <?php endif; ?>
 
     </div>

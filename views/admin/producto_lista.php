@@ -31,7 +31,7 @@ $etiquetas = [
     <?php if (empty($productos)): ?>
         <p>No hay productos registrados.</p>
     <?php else: ?>
-        <table class="table table-striped">
+        <div class="panel-productos__tabla"><table class="table table-striped">
             <thead>
                 <tr>
                     <th>Nombre</th>
@@ -46,19 +46,19 @@ $etiquetas = [
             <tbody>
                 <?php foreach ($productos as $producto): ?>
                     <tr>
-                        <td><?= escapar($producto['nombre']) ?></td>
-                        <td>
+                        <td data-etiqueta="Nombre"><?= escapar($producto['nombre']) ?></td>
+                        <td data-etiqueta="Foto">
                             <?php if (!empty($producto['imagen'])): ?>
                                 <img src="public/img/ImagenesProductos/<?= escapar($producto['imagen']) ?>"
-                                     alt="Foto de <?= escapar($producto['nombre']) ?>" style="max-width: 100px;">
+                                     alt="Foto de <?= escapar($producto['nombre']) ?>" >
                             <?php else: ?>
                                 Sin foto
                             <?php endif; ?>
                         </td>
-                        <td><?= (int) $producto['stock'] ?></td>
-                        <td>$<?= number_format((float) $producto['precio'], 2, ',', '.') ?></td>
-                        <td><?= escapar($producto['nombre_categoria']) ?></td>
-                        <td>
+                        <td data-etiqueta="Stock"><?= (int) $producto['stock'] ?></td>
+                        <td data-etiqueta="Precio">$<?= number_format((float) $producto['precio'], 2, ',', '.') ?></td>
+                        <td data-etiqueta="Categoría"><?= escapar($producto['nombre_categoria']) ?></td>
+                        <td data-etiqueta="Estado">
                             <span class="stock stock-<?= escapar($producto['nivel_stock']) ?>">
                                 <?= escapar($etiquetas[$producto['nivel_stock']] ?? '') ?>
                             </span>
@@ -66,7 +66,7 @@ $etiquetas = [
                                 <span class="stock stock-inactivo">inactivo</span>
                             <?php endif; ?>
                         </td>
-                        <td>
+                        <td data-etiqueta="Acciones">
                             <a href="index.php?pagina=admin_producto_editar&id=<?= (int) $producto['id_producto'] ?>" class="btn btn-sm btn-warning">
                                 Editar
                             </a>
@@ -77,7 +77,7 @@ $etiquetas = [
                     </tr>
                 <?php endforeach; ?>
             </tbody>
-        </table>
+        </table></div>
     <?php endif; ?>
 
     </div>
