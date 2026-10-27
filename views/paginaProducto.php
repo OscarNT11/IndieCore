@@ -133,18 +133,6 @@ require __DIR__ . '/header.php';
                 </aside>
             </div>
 
-            <!-- ---------- Especificaciones ---------- -->
-            <div class="especificaciones-producto">
-                <details class="especificaciones-toggle">
-                    <summary>Ver Especificaciones Técnicas</summary>
-
-                    <div class="contenido-especificaciones">
-                        <h3>Detalles del Producto</h3>
-                        <p class="descripcion"><?php echo htmlspecialchars($producto['informacion'] ?? ''); ?></p>
-                    </div>
-                </details>
-            </div>
-
         </section>
 
 
