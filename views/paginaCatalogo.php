@@ -25,6 +25,8 @@
             <form action="index.php" method="GET" id="form-filtros">
                 <!-- Mantenemos la página actual en el formulario para no perder la ruta del catálogo -->
                 <input type="hidden" name="pagina" value="catalogo">
+                <!-- Conserva el término de búsqueda al aplicar los filtros del catálogo -->
+                <input type="hidden" name="q" value="<?php echo htmlspecialchars($terminoBusqueda, ENT_QUOTES, 'UTF-8'); ?>">
 
                 <!-- Categorías (Radio: una sola opción) -->
                 <div class="filtro-grupo categorias-group">
