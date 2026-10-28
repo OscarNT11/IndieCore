@@ -34,6 +34,7 @@ class ProductoModel {
                 $columnasResenias
             FROM productos p
             INNER JOIN categorias c ON p.id_categoria = c.id_categoria
+            WHERE p.activo = 1
         ";
 
         if (!empty($idCategoria)) {
@@ -143,6 +144,7 @@ class ProductoModel {
                OR p.marca        LIKE ?
                OR p.informacion  LIKE ?
                OR c.nombre       LIKE ?
+               AND p.activo = 1
             ORDER BY p.nombre ASC";
 
         $consultaPreparada = mysqli_prepare($this->conn, $consulta);
@@ -219,6 +221,7 @@ class ProductoModel {
             INNER JOIN categorias c ON p.id_categoria = c.id_categoria
             WHERE p.id_categoria = ?
               AND p.id_producto <> ?
+              AND p.activo = 1
             ORDER BY p.nombre ASC
             LIMIT ?";
 
@@ -261,79 +264,80 @@ class ProductoModel {
                 p.id_producto, p.nombre, p.marca, p.informacion, p.precio, p.stock, p.foto AS imagen, c.nombre AS nombre_categoria
             FROM productos p
             INNER JOIN categorias c ON p.id_categoria = c.id_categoria
-            WHERE 1=1
+            WHERE p.activo = 1 
         ";
 
-    // Variable y Array para almacenar el tipo y valores
-        $tipos = "";
-        $valores = [];
+        // Variable y Array para almacenar el tipo y valores
+            $tipos = "";
+            $valores = [];
 
-        // Filtrar por categoria (si no esta vacio)
-        if (!empty($filtros['categoria'])) {
-            $consulta .= " AND p.id_categoria = ?";
-            $tipos .= "i";
-            $valores[] = (int) $filtros['categoria'];
-        }
-
-        // 2. Filtro por Búsqueda de texto (si viene desde el header)
-        if (!empty($filtros['busqueda'])) {
-            $consulta .= " AND (p.nombre LIKE ? OR p.marca LIKE ? OR p.informacion LIKE ? OR c.nombre LIKE ?)";
-            $patron = '%' . $filtros['busqueda'] . '%';
-            $tipos .= "ssss";
-            $valores[] = $patron;
-            $valores[] = $patron;
-            $valores[] = $patron;
-            $valores[] = $patron;
-        }
-
-        // 3. Filtro por Marcas Múltiples (Checkbox)
-        if (!empty($filtros['marca']) && is_array($filtros['marca'])) {
-            $placeholders = implode(',', array_fill(0, count($filtros['marca']), '?'));
-            $consulta .= " AND LOWER(p.marca) IN ($placeholders)";
-            
-            foreach ($filtros['marca'] as $m) {
-                $tipos .= "s";
-                $valores[] = strtolower($m);
+            // Filtrar por categoria (si no esta vacio)
+            if (!empty($filtros['categoria'])) {
+                $consulta .= " AND p.id_categoria = ?";
+                $tipos .= "i";
+                $valores[] = (int) $filtros['categoria'];
             }
+
+            // 2. Filtro por Búsqueda de texto (si viene desde el header)
+            if (!empty($filtros['busqueda'])) {
+                $consulta .= " AND (p.nombre LIKE ? OR p.marca LIKE ? OR p.informacion LIKE ? OR c.nombre LIKE ?)";
+                $patron = '%' . $filtros['busqueda'] . '%';
+                $tipos .= "ssss";
+                $valores[] = $patron;
+                $valores[] = $patron;
+                $valores[] = $patron;
+                $valores[] = $patron;
+            }
+
+            // 3. Filtro por Marcas Múltiples (Checkbox)
+            if (!empty($filtros['marca']) && is_array($filtros['marca'])) {
+                $placeholders = implode(',', array_fill(0, count($filtros['marca']), '?'));
+                $consulta .= " AND LOWER(p.marca) IN ($placeholders)";
+                
+                foreach ($filtros['marca'] as $m) {
+                    $tipos .= "s";
+                    $valores[] = strtolower($m);
+                }
+            }
+
+            // 4. Filtro por Precio Mínimo
+            if (isset($filtros['precio_min']) && $filtros['precio_min'] !== '') {
+                $consulta .= " AND p.precio >= ?";
+                $tipos .= "d"; // o "i" dependiendo si manejas enteros o decimales
+                $valores[] = (float) $filtros['precio_min'];
+            }
+
+            // 5. Filtro por Precio Máximo
+            if (isset($filtros['precio_max']) && $filtros['precio_max'] !== '') {
+                $consulta .= " AND p.precio <= ?";
+                $tipos .= "d";
+                $valores[] = (float) $filtros['precio_max'];
+            }
+
+            $consulta .= " ORDER BY p.nombre ASC";
+
+            $consultaPreparada = mysqli_prepare($this->conn, $consulta);
+
+            if (!$consultaPreparada) {
+                return [];
+            }
+
+            // Si hay parámetros dinámicos, los vinculamos de forma segura
+            if (!empty($valores)) {
+                mysqli_stmt_bind_param($consultaPreparada, $tipos, ...$valores);
+            }
+
+            mysqli_stmt_execute($consultaPreparada);
+            $resultado = mysqli_stmt_get_result($consultaPreparada);
+
+            $listaProductos = array();
+            while ($row = mysqli_fetch_assoc($resultado)) {
+                $listaProductos[] = $row;
+            }
+
+            return $listaProductos;
         }
 
-        // 4. Filtro por Precio Mínimo
-        if (isset($filtros['precio_min']) && $filtros['precio_min'] !== '') {
-            $consulta .= " AND p.precio >= ?";
-            $tipos .= "d"; // o "i" dependiendo si manejas enteros o decimales
-            $valores[] = (float) $filtros['precio_min'];
-        }
-
-        // 5. Filtro por Precio Máximo
-        if (isset($filtros['precio_max']) && $filtros['precio_max'] !== '') {
-            $consulta .= " AND p.precio <= ?";
-            $tipos .= "d";
-            $valores[] = (float) $filtros['precio_max'];
-        }
-
-        $consulta .= " ORDER BY p.nombre ASC";
-
-        $consultaPreparada = mysqli_prepare($this->conn, $consulta);
-
-        if (!$consultaPreparada) {
-            return [];
-        }
-
-        // Si hay parámetros dinámicos, los vinculamos de forma segura
-        if (!empty($valores)) {
-            mysqli_stmt_bind_param($consultaPreparada, $tipos, ...$valores);
-        }
-
-        mysqli_stmt_execute($consultaPreparada);
-        $resultado = mysqli_stmt_get_result($consultaPreparada);
-
-        $listaProductos = array();
-        while ($row = mysqli_fetch_assoc($resultado)) {
-            $listaProductos[] = $row;
-        }
-
-        return $listaProductos;
-    }
 
     /* Descuenta del stock las unidades compradas de un producto.
 
@@ -343,6 +347,7 @@ class ProductoModel {
        y se devuelve false para que el pedido se cancele.
 
        Se llama dentro de la transacción del pedido. */
+
     public function descontarStock($idProducto, $cantidad) {
 
         $idProducto = (int) $idProducto;
@@ -564,4 +569,5 @@ class ProductoModel {
         return $filas;
     }
 }
+
 ?>

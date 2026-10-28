@@ -102,7 +102,7 @@ class CarritoModel {
             FROM detalles_carrito dc
             INNER JOIN productos p
                 ON dc.id_producto = p.id_producto
-            WHERE dc.id_carrito = ?
+            WHERE dc.id_carrito = ? AND p.activo = 1
             ORDER BY p.nombre ASC
         ";
 
