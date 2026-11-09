@@ -239,6 +239,17 @@ class PedidoController {
             // y el pago se hayan procesado correctamente.
             $this->pedidoModel->confirmarTransaccion();
 
+            // ENVIAMOS CORREO SOBRE CREACION DE TIENDA
+            $usuario = (new UsuarioModel($this->conexion))->obtenerPorId($idUsuario);
+
+            enviarCorreo(
+                $usuario['email'],
+                $usuario['nombre'],
+                'Confirmación de tu pedido N.° ' . (int)$idPedidoCreado,
+                '<p>Hola! ' . escapar($usuario['nombre']) . ', recibimos tu pago.</p>'
+                . '<p>Pedido N.° ' . (int)$idPedidoCreado . ' por $ ' . escapar(number_format($totalDelPedido, 2, ',', '.')) . '.</p>'
+            );
+
         } catch (Throwable $error) {
             $this->pedidoModel->revertirTransaccion();
 

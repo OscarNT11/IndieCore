@@ -24,6 +24,8 @@ require_once __DIR__ . "/controllers/AdminProductoController.php";
 require_once __DIR__ . "/controllers/AdminUsuarioController.php";
 require_once __DIR__ . "/controllers/AdminPedidoController.php";
 
+require_once __DIR__ . '/config/correo.php';
+
 /* Si el usuario de la sesión fue suspendido con la sesión ya iniciada, se le
    cierra en la siguiente página que abra. Se consulta la base en cada
    petición para que la suspensión tenga efecto sin esperar a que salga. */

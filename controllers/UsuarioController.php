@@ -70,6 +70,17 @@ class UsuarioController {
                     // al volver a iniciar sesión, se carga en $_SESSION['rol'].
                     $_SESSION['rol'] = 'cliente';
 
+                    // ENVIAMOS CORREO SOBRE CREACION DE TIENDA
+                    enviarCorreo(
+                        $email,
+                        $nombre,
+                        '¡Bienvenido/a a nuestra tienda!',
+                        '<p>Hola! ' . escapar($nombre) . ', tu cuenta 
+                        fue creada con éxito!.</p>' . '<p>Ya puedes 
+                        iniciar sesión y empezar a comprar tus productos preferidos! </p>'
+                    );
+
+
                     // Vuelve a la MISMA página donde estaba el usuario
                     // (la manda el campo oculto "volver" del modal).
                     header("Location: index.php?pagina=" . $this->paginaVolver() . "&registro=ok");
