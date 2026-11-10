@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="../Miniproyecto/css/estilos.css">
+        <title>Lista de Tareas</title>
+    </head>
+    <body>
+        <header>
+            <h1>Tareas pendientes</h1>
+        </header>
+        <main>
+            <div id="contenedor">
+                <h2>Agregar una tarea</h2>
+
+                <input type="text" id="tituloTarea" name="tituloTarea" required placeholder="Agrega el titulo para tu tarea">
+
+                <input type="text" id="tarea" name="tarea" required placeholder="Escribe una tarea pendiente">
+
+                <button id="agregar">Agregar</button>
+
+                <div id="listaTareas"></div>
+            </div>
+        </main>
+        <script src="../Miniproyecto/js/almacenamiento.js"></script>
+        <script src="../Miniproyecto/js/tareas.js"></script>
+        <script src="../Miniproyecto/js/app.js"></script>
+    </body>
+</html>
